@@ -63,6 +63,7 @@
                             android:background="@drawable/black_curves_bg"
                             android:paddingStart="@dimen/dimen7dp"
                             android:paddingTop="@dimen/dimen2dp"
+                            android:layout_marginTop="3dp"
                             android:paddingEnd="@dimen/dimen7dp"
                             android:paddingBottom="@dimen/dimen2dp">
 
@@ -71,6 +72,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
                                 android:text="member"
+
                                 android:textAllCaps="true"
                                 android:textColor="@color/color_white"
                                 android:textSize="16sp" />
@@ -95,7 +97,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="250dp"
-                                android:layout_marginTop="@dimen/dimen10dp"
+                                android:layout_gravity="center"
                                 android:fontFamily="@font/poppins_bold"
                                 android:text="payment sucessfull    ₹ 440.50  "
                                 android:textAllCaps="true"
@@ -314,7 +316,7 @@
                         android:textColor="@color/white"
 
                         android:textSize="17sp"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <ImageView

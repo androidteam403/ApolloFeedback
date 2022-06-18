@@ -43,7 +43,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                 activityFeedBackBinding.poorTick.setVisibility(View.VISIBLE);
                 activityFeedBackBinding.poor.setVisibility(View.GONE);
                 activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-                activityFeedBackBinding.price.setVisibility(View.GONE);
+                activityFeedBackBinding.price.setVisibility(View.INVISIBLE);
                 activityFeedBackBinding.payment.setVisibility(View.INVISIBLE);
                 activityFeedBackBinding.paymentsuccesful.setVisibility(View.VISIBLE);
             }
@@ -85,7 +85,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                 activityFeedBackBinding.fairtick.setVisibility(View.VISIBLE);
                 activityFeedBackBinding.fair.setVisibility(View.GONE);
                 activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-                activityFeedBackBinding.price.setVisibility(View.GONE);
+                activityFeedBackBinding.price.setVisibility(View.INVISIBLE);
                 activityFeedBackBinding.paymentsuccesful.setVisibility(View.VISIBLE);
 
             }
@@ -120,7 +120,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                 activityFeedBackBinding.averagetick.setVisibility(View.VISIBLE);
                 activityFeedBackBinding.average.setVisibility(View.GONE);
                 activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-                activityFeedBackBinding.price.setVisibility(View.GONE);
+                activityFeedBackBinding.price.setVisibility(View.INVISIBLE);
                 activityFeedBackBinding.payment.setVisibility(View.INVISIBLE);
 
 
@@ -161,7 +161,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                 activityFeedBackBinding.payment.setVisibility(View.INVISIBLE);
 
                 activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-                activityFeedBackBinding.price.setVisibility(View.GONE);
+                activityFeedBackBinding.price.setVisibility(View.INVISIBLE);
                 activityFeedBackBinding.paymentsuccesful.setVisibility(View.VISIBLE);
             }
         });
@@ -197,7 +197,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                 activityFeedBackBinding.payment.setVisibility(View.INVISIBLE);
 
                 activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-                activityFeedBackBinding.price.setVisibility(View.GONE);
+                activityFeedBackBinding.price.setVisibility(View.INVISIBLE);
                 activityFeedBackBinding.paymentsuccesful.setVisibility(View.VISIBLE);
             }
         });
