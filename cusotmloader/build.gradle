@@ -1,0 +1,87 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+repositories {
+    google()
+    jcenter()
+}
+
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.1"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+task sourcePackage(type: Jar) {
+    baseName = "spots-dialog"
+    classifier = "sources"
+    version "1.1"
+    from android.sourceSets.main.java.srcDirs
+    destinationDir file("$buildDir/artifacts")
+}
+
+task generatePom {
+    doLast {
+        pom {
+            project {
+                groupId "com.github.d-max"
+                artifactId "spots-dialog"
+                version "1.1"
+                packaging "aar"
+                name "spots progress dialog"
+                description "Android AlertDialog with moving spots progress indicator"
+                url "https://github.com/d-max/spots-dialog"
+                scm {
+                    url "https://github.com/d-max/spots-dialog"
+                    connection "scm:git@github.com:d-max/spots-dialog.git"
+                    developerConnection "scm:git@github.com:d-max/spots-dialog.git"
+                }
+                licenses {
+                    license {
+                        name "MIT License"
+                        url "http://www.opensource.org/licenses/mit-license.php"
+                        distribution "repo"
+                    }
+                }
+                developers {
+                    developer {
+                        id "d-max"
+                        name "Maksym Dybarskyi"
+                        email "maxim.dybarskyy@gmail.com"
+                    }
+                }
+            }
+        }.writeTo("$buildDir/artifacts/${"spots-dialog"}-${"1.1"}.pom")
+    }
+}
+
+task createArtifacts {
+    dependsOn sourcePackage, generatePom
+}
+
+android.libraryVariants.all { variant ->
+    if (variant.buildType.name == "release") {
+        File outDir = file("$buildDir/artifacts")
+        File apkFile = variant.outputs[0].outputFile
+
+        def task = project.tasks.create("copy${variant.name.capitalize()}Aar", Copy)
+        task.from apkFile
+        task.into outDir
+        task.rename apkFile.name, "${"spots-dialog"}-${"1.1"}.aar"
+
+        task.dependsOn variant.assemble
+        task.dependsOn sourcePackage
+        createArtifacts.dependsOn task
+    }
+}

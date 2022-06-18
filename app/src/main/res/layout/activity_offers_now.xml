@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/app_bg"
+        android:gravity="center"
+        tools:context=".offersnow.OffersNowActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen60dp"
+                    android:layout_height="@dimen/dimen60dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_apollo_circle_logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginLeft="@dimen/dimen10dp"
+                    android:text="@string/label_offers_now"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/dimen25sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen150dp"
+                    android:layout_height="@dimen/dimen220dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/mothers_days" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen150dp"
+                    android:layout_height="@dimen/dimen220dp"
+                    android:layout_marginStart="@dimen/dimen3dp"
+                    android:layout_marginLeft="@dimen/dimen3dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/upto_fiftypercent" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen150dp"
+                    android:layout_height="@dimen/dimen220dp"
+                    android:layout_marginStart="@dimen/dimen3dp"
+                    android:layout_marginLeft="@dimen/dimen3dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/one_touch_program_saving" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen150dp"
+                    android:layout_height="@dimen/dimen220dp"
+                    android:layout_marginStart="@dimen/dimen3dp"
+                    android:layout_marginLeft="@dimen/dimen3dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/live_healthier_with_ayurvedha" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen15dp"
+                android:layout_marginEnd="@dimen/dimen30dp"
+                android:layout_marginRight="@dimen/dimen30dp"
+                android:gravity="end">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/black_curves_bg"
+                    android:gravity="center"
+                    android:onClick="@{()-> callback.onClickSkip()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/dimen7dp"
+                    android:paddingTop="@dimen/dimen2dp"
+                    android:paddingEnd="@dimen/dimen7dp"
+                    android:paddingBottom="@dimen/dimen2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_skip"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dimen18sp" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen10dp"
+                        android:layout_height="@dimen/dimen10dp"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:layout_marginLeft="@dimen/dimen5dp"
+                        android:contentDescription="@string/app_name"
+                        android:rotation="270"
+                        android:src="@drawable/ic_white_triangle" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <data>
+
+        <variable
+            name="callback"
+            type="com.thresholdsoft.apollofeedback.offersnow.OffersNowActivityCallback" />
+    </data>
+</layout>

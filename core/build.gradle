@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+    implementation "com.android.support:support-annotations:${'27.0.2'}"
+    
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'com.google.truth:truth:0.39'
+}
+
+android {
+    defaultConfig {
+        minSdkVersion 14
+    }
+
+    compileSdkVersion 27
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+//publish {
+//    userOrg = 'novoda'
+//    groupId = 'com.novoda'
+//    artifactId = 'merlin'
+////    publishVersion = project.version
+//
+//    uploadName = 'merlin'
+//    desc = 'Observes network connection status & gives callbacks'
+//    website = 'https://github.com/novoda/merlin'
+//}

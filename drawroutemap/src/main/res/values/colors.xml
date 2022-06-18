@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorRouteLine">#0000A0</color>
+    <color name="colorRouteYellowLine">#FFFF00</color>
+    <color name="delivery_pharmacy">#ffb300</color>
+    <color name="delivery_user">#00a550</color>
+
+    <color name="routePrimaryColor">#63c495</color>
+    <color name="routeSecondaryColor">#4e487c</color>
+    <color name="routeShadowColor">#db949494</color>
+</resources>

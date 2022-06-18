@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ApolloFeedback</string>
+    <string name="label_offers_now">offers now</string>
+    <string name="label_skip">skip</string>
+    <string name="label_items_payment">items / payment</string>
+    <string name="label_advertisement">Advertisement</string>
+    <string name="label_items_in_your_cart">items\nin your cart</string>
+    <string name="label_rupee_symbol">\u20B9</string>
+    <string name="label_continue_npayment">continue\npayment</string>
+</resources>
