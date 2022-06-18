@@ -1,6 +1,6 @@
-package com.thresholdsoft.apollofeedback.itemspayment;
+package com.thresholdsoft.apollofeedback.ui.itemspayment;
 
-import com.thresholdsoft.apollofeedback.itemspayment.model.GetAdvertisementResponse;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 
 public interface ItemsPaymentActivityCallback {
     void onClickContinuePayment();

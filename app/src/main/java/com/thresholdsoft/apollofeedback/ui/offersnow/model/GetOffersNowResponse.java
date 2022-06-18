@@ -1,4 +1,4 @@
-package com.thresholdsoft.apollofeedback.offersnow.model;
+package com.thresholdsoft.apollofeedback.ui.offersnow.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

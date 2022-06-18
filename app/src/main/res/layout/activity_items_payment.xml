@@ -331,6 +331,6 @@
 
         <variable
             name="callback"
-            type="com.thresholdsoft.apollofeedback.itemspayment.ItemsPaymentActivityCallback" />
+            type="com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivityCallback" />
     </data>
 </layout>

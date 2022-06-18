@@ -1,4 +1,4 @@
-package com.thresholdsoft.apollofeedback.itemspayment;
+package com.thresholdsoft.apollofeedback.ui.itemspayment;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,7 +22,8 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivityItemsPaymentBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogQrcodeBinding;
-import com.thresholdsoft.apollofeedback.itemspayment.model.GetAdvertisementResponse;
+import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -59,6 +60,10 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
         qrCodeDialog.setCancelable(false);
         dialogQrcodeBinding.closeIcon.setOnClickListener(view -> qrCodeDialog.dismiss());
         qrCodeGeneration("upi://pay?pa=APOLLOPREPROD@ybl&pn=APOLLOPREPROD&am=4.00&mam=4.00&tr=160021&tn=Payment%20for%20160021&mc=5311&mode=04&purpose=00", dialogQrcodeBinding, this);
+        dialogQrcodeBinding.qrCodeImage.setOnClickListener(view -> {
+            startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this));
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+        });
         qrCodeDialog.show();
     }
 

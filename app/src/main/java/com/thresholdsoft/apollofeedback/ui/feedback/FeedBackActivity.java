@@ -1,17 +1,25 @@
-package com.thresholdsoft.apollofeedback.feedback;
+package com.thresholdsoft.apollofeedback.ui.feedback;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.databinding.DataBindingUtil;
 
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivityFeedBackBinding;
 
-public class FeedBackActivity  extends BaseActivity implements FeedBackActivityCallBack {
-private ActivityFeedBackBinding activityFeedBackBinding;
+public class FeedBackActivity extends BaseActivity implements FeedBackActivityCallBack {
+    private ActivityFeedBackBinding activityFeedBackBinding;
+
+    public static Intent getStartIntent(Context mContext) {
+        Intent intent = new Intent(mContext, FeedBackActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +40,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
                 activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
 
 
-
-
-
                 activityFeedBackBinding.poorTick.setVisibility(View.VISIBLE);
                 activityFeedBackBinding.poor.setVisibility(View.GONE);
                 activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
@@ -48,8 +53,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
         activityFeedBackBinding.poorTick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
 
                 activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -77,7 +80,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
                 activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
 
 
-
                 activityFeedBackBinding.payment.setVisibility(View.INVISIBLE);
 
                 activityFeedBackBinding.fairtick.setVisibility(View.VISIBLE);
@@ -91,15 +93,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
         activityFeedBackBinding.fairtick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-
-
-
-
-
 
 
                 activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -124,7 +117,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
                 activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
 
 
-
                 activityFeedBackBinding.averagetick.setVisibility(View.VISIBLE);
                 activityFeedBackBinding.average.setVisibility(View.GONE);
                 activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
@@ -138,13 +130,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
         activityFeedBackBinding.averagetick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-
-
-
 
 
                 activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -171,8 +156,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
                 activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
 
 
-
-
                 activityFeedBackBinding.happytick.setVisibility(View.VISIBLE);
                 activityFeedBackBinding.happy.setVisibility(View.GONE);
                 activityFeedBackBinding.payment.setVisibility(View.INVISIBLE);
@@ -185,9 +168,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
         activityFeedBackBinding.happytick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
 
 
                 activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -210,7 +190,6 @@ private ActivityFeedBackBinding activityFeedBackBinding;
                 activityFeedBackBinding.average.setVisibility(View.VISIBLE);
                 activityFeedBackBinding.happytick.setVisibility(View.GONE);
                 activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
-
 
 
                 activityFeedBackBinding.excellenttick.setVisibility(View.VISIBLE);
@@ -240,7 +219,4 @@ private ActivityFeedBackBinding activityFeedBackBinding;
     }
 
 
-
-
-   
 }

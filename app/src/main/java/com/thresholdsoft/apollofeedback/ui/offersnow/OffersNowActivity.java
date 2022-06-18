@@ -1,4 +1,4 @@
-package com.thresholdsoft.apollofeedback.offersnow;
+package com.thresholdsoft.apollofeedback.ui.offersnow;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import com.bumptech.glide.Glide;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
-import com.thresholdsoft.apollofeedback.itemspayment.ItemsPaymentActivity;
-import com.thresholdsoft.apollofeedback.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 
 public class OffersNowActivity extends BaseActivity implements OffersNowActivityCallback {
     private ActivityOffersNowBinding offersNowBinding;

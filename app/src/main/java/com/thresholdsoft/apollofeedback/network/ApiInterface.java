@@ -1,7 +1,7 @@
 package com.thresholdsoft.apollofeedback.network;
 
-import com.thresholdsoft.apollofeedback.itemspayment.model.GetAdvertisementResponse;
-import com.thresholdsoft.apollofeedback.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

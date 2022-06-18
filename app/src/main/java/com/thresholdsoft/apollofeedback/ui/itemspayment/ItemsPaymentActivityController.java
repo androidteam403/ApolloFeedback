@@ -1,10 +1,10 @@
-package com.thresholdsoft.apollofeedback.offersnow;
+package com.thresholdsoft.apollofeedback.ui.itemspayment;
 
 import android.content.Context;
 
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
-import com.thresholdsoft.apollofeedback.offersnow.model.GetOffersNowResponse;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
 
@@ -14,32 +14,32 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OffersNowActivityController {
+public class ItemsPaymentActivityController {
     private Context mContext;
-    private OffersNowActivityCallback mCallback;
+    private ItemsPaymentActivityCallback mCallback;
 
-    public OffersNowActivityController(Context mContext, OffersNowActivityCallback mCallback) {
+    public ItemsPaymentActivityController(Context mContext, ItemsPaymentActivityCallback mCallback) {
         this.mContext = mContext;
         this.mCallback = mCallback;
     }
 
-    public void getOffersNowApiCall() {
+    public void getAdvertisementApiCall() {
         if (NetworkUtils.isNetworkConnected(mContext)) {
             CommonUtils.showDialog(mContext, "Please wait.");
 
             ApiInterface apiInterface = ApiClient.getApiService();
-            Call<GetOffersNowResponse> call = apiInterface.GET_OFFERS_NOW_API_CALL();
-            call.enqueue(new Callback<GetOffersNowResponse>() {
+            Call<GetAdvertisementResponse> call = apiInterface.GET_ADVERTISEMENT_API_CALL();
+            call.enqueue(new Callback<GetAdvertisementResponse>() {
                 @Override
-                public void onResponse(@NotNull Call<GetOffersNowResponse> call, @NotNull Response<GetOffersNowResponse> response) {
+                public void onResponse(@NotNull Call<GetAdvertisementResponse> call, @NotNull Response<GetAdvertisementResponse> response) {
                     if (response.isSuccessful() && response.code() == 200) {
-                        mCallback.onSuccesGetOffersNowApi(response.body());
+                        mCallback.onSuccessGetAdvertisementApi(response.body());
                     }
                     CommonUtils.hideDialog();
                 }
 
                 @Override
-                public void onFailure(@NotNull Call<GetOffersNowResponse> call, @NotNull Throwable t) {
+                public void onFailure(@NotNull Call<GetAdvertisementResponse> call, @NotNull Throwable t) {
                     CommonUtils.hideDialog();
                     mCallback.onFailureMessage(t.getMessage());
                 }

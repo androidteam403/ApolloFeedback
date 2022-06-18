@@ -1,320 +1,344 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/app_bg">
 
-        <LinearLayout
-            android:id="@+id/layout"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="@dimen/dimen60dp"
-                android:layout_height="@dimen/dimen60dp"
-                android:layout_marginLeft="250dp"
-                android:layout_marginTop="@dimen/dimen30dp"
-                android:src="@drawable/apollo_circle_logo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="250dp"
-                android:layout_marginTop="@dimen/dimen10dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="payment sucessfull"
-                android:textAllCaps="true"
-                android:visibility="visible"
-                android:id="@+id/payment"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/dimen20sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="250dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="Nagaraju.C"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dimen20sp" />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen10dp"
-                    android:background="@drawable/black_curves_bg"
-                    android:paddingStart="@dimen/dimen7dp"
-                    android:paddingTop="@dimen/dimen2dp"
-                    android:paddingEnd="@dimen/dimen7dp"
-                    android:paddingBottom="@dimen/dimen2dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="member"
-                        android:textAllCaps="true"
-                        android:textColor="@color/color_white"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="@dimen/dimen10dp"
-                android:background="#91d039"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
+
                 <LinearLayout
+                    android:id="@+id/layout"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:background="@drawable/background_infeedback">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen60dp"
+                        android:layout_height="@dimen/dimen60dp"
+                        android:layout_marginLeft="250dp"
+                        android:layout_marginTop="@dimen/dimen30dp"
+                        android:src="@drawable/apollo_circle_logo" />
+
                     <TextView
+                        android:id="@+id/payment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="250dp"
                         android:layout_marginTop="@dimen/dimen10dp"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="payment sucessfull    ₹ 440.50  "
+                        android:text="payment sucessfull"
                         android:textAllCaps="true"
-                        android:visibility="gone"
-                        android:id="@+id/paymentsuccesful"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen20sp" />
+                        android:textSize="@dimen/dimen20sp"
+                        android:visibility="visible" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="250dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="₹ 440.50"
-                    android:id="@+id/price"
-                    android:visibility="visible"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dimen20sp" />
-            </LinearLayout>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="250dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Please rate our buying experience"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dimen18sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="250dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Nagaraju.C"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/dimen20sp" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginLeft="250dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen10dp"
+                            android:background="@drawable/black_curves_bg"
+                            android:paddingStart="@dimen/dimen7dp"
+                            android:paddingTop="@dimen/dimen2dp"
+                            android:paddingEnd="@dimen/dimen7dp"
+                            android:paddingBottom="@dimen/dimen2dp">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="member"
+                                android:textAllCaps="true"
+                                android:textColor="@color/color_white"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </LinearLayout>
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <ImageView
-        android:layout_width="@dimen/dimen60dp"
-        android:layout_height="60dp"
-        android:id="@+id/poor"
-        android:visibility="visible"
-        android:src="@drawable/poor"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/dimen10dp"
+                        android:background="#91d039"
+                        android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="@dimen/dimen60dp"
-        android:layout_height="60dp"
-        android:id="@+id/poor_tick"
-        android:visibility="gone"
-        android:src="@drawable/poortick"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:background="@drawable/background_infeedback">
 
+                            <TextView
+                                android:id="@+id/paymentsuccesful"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="250dp"
+                                android:layout_marginTop="@dimen/dimen10dp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="payment sucessfull    ₹ 440.50  "
+                                android:textAllCaps="true"
+                                android:textColor="@color/color_white"
+                                android:textSize="@dimen/dimen20sp"
+                                android:visibility="gone" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
-        android:text="POOR"
-        android:paddingStart="@dimen/dimen10dp"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-
-        android:textSize="12sp"
-        android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/dimen10dp" />
-</LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:id="@+id/fair"
-                        android:visibility="visible"
-                        android:src="@drawable/fair"/>
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:visibility="gone"
-                        android:id="@+id/fairtick"
-                        android:src="@drawable/fairtick"/>
+                            <TextView
+                                android:id="@+id/price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="250dp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="₹ 440.50"
+                                android:textColor="@color/color_white"
+                                android:textSize="@dimen/dimen20sp"
+                                android:visibility="visible" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="FAIR"
-                        android:paddingStart="@dimen/dimen10dp"
+                        android:layout_marginLeft="250dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Please rate our buying experience"
                         android:textColor="@color/white"
-                        android:textAlignment="center"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dimen18sp" />
 
-                        android:gravity="center_horizontal"
-                        android:paddingLeft="@dimen/dimen10dp" />
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:visibility="visible"
-                        android:id="@+id/average"
-                        android:src="@drawable/average"/>
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:visibility="gone"
-                        android:id="@+id/averagetick"
-                        android:src="@drawable/averagetick"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:layout_marginLeft="250dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/poor"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/poor"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/poor_tick"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/poortick"
+                                android:visibility="gone" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:paddingStart="@dimen/dimen10dp"
+                                android:paddingLeft="@dimen/dimen10dp"
+                                android:text="POOR"
+
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/fair"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/fair"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/fairtick"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/fairtick"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:paddingStart="@dimen/dimen10dp"
+                                android:paddingLeft="@dimen/dimen10dp"
+                                android:text="FAIR"
+                                android:textAlignment="center"
+
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/average"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/average"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/averagetick"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/averagetick"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="AVERAGE"
+
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/happy"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/happy"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/happytick"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/happytick"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:paddingLeft="@dimen/dimen10dp"
+                                android:text="HAPPY"
+                                android:textAlignment="center"
+
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/excellent"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/excellent"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/excellenttick"
+                                android:layout_width="@dimen/dimen60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/excellenttick"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+
+                                android:text="EXCELLENT"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/feedbackthanku"
+                        android:layout_width="330dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="AVERAGE"
-                        android:textSize="12sp"
-
+                        android:layout_marginLeft="240dp"
+                        android:layout_marginTop="@dimen/dimen20dp"
+                        android:background="@drawable/bluebackground"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Thank You for your Feedback"
                         android:textColor="@color/white"
-                        android:textAlignment="center"
-                        android:gravity="center_horizontal"/>
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:id="@+id/happy"
-                        android:visibility="visible"
-                        android:src="@drawable/happy"/>
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:id="@+id/happytick"
-                        android:visibility="gone"
-                        android:src="@drawable/happytick"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="HAPPY"
-                        android:textColor="@color/white"
-                        android:textAlignment="center"
-                        android:textSize="12sp"
-
-                        android:gravity="center_horizontal"
-                        android:paddingLeft="@dimen/dimen10dp" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:visibility="visible"
-                        android:id="@+id/excellent"
-                        android:src="@drawable/excellent"/>
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:visibility="gone"
-                        android:id="@+id/excellenttick"
-                        android:src="@drawable/excellenttick"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="EXCELLENT"
-
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:gravity="center_horizontal"/>
-
+                        android:textSize="17sp"
+                        android:visibility="visible" />
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="330dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="240dp"
-                android:id="@+id/feedbackthanku"
-                android:background="@drawable/bluebackground"
-                android:text="Thank You for your Feedback"
-                android:textColor="@color/white"
-                android:visibility="visible"
-                android:textSize="17sp"
-
-                android:layout_marginTop="@dimen/dimen20dp"
-                android:fontFamily="@font/poppins_bold" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="@dimen/dimen15dp"
-            android:layout_height="@dimen/dimen15dp"
-android:layout_marginLeft="240dp"
-            android:layout_marginTop="331dp"
-            android:src="@drawable/minus"/>
+                <ImageView
+                    android:layout_width="@dimen/dimen15dp"
+                    android:layout_height="@dimen/dimen15dp"
+                    android:layout_marginLeft="240dp"
+                    android:layout_marginTop="331dp"
+                    android:src="@drawable/minus" />
 
 
-        <ImageView
-            android:layout_width="@dimen/dimen15dp"
-            android:layout_height="@dimen/dimen15dp"
-            android:layout_marginTop="330dp"
-            android:layout_marginLeft="547dp"
-            android:src="@drawable/plus"/>
+                <ImageView
+                    android:layout_width="@dimen/dimen15dp"
+                    android:layout_height="@dimen/dimen15dp"
+                    android:layout_marginLeft="547dp"
+                    android:layout_marginTop="330dp"
+                    android:src="@drawable/plus" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="@dimen/dimen100dp"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="150dp"
-            android:src="@drawable/greentick"/>
-
-
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="@dimen/dimen100dp"
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginTop="150dp"
+                    android:src="@drawable/greentick" />
+            </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
 </layout>

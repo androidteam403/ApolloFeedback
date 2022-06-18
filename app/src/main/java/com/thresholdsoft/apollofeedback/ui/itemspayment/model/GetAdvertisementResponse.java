@@ -1,4 +1,4 @@
-package com.thresholdsoft.apollofeedback.itemspayment.model;
+package com.thresholdsoft.apollofeedback.ui.itemspayment.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
