@@ -7,6 +7,6 @@
     <string name="label_items_in_your_cart">items\nin your cart</string>
     <string name="label_rupee_symbol">\u20B9</string>
     <string name="label_continue_npayment">continue\npayment</string>
-    <string name="label_amont_nsaved">amont\nsaved</string>
+    <string name="label_amont_nsaved">amount\nsaved</string>
     <string name="label_final_npayment">final\npayment</string>
 </resources>

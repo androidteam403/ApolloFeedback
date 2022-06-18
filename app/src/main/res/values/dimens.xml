@@ -29,4 +29,8 @@
     <dimen name="dimen40dp">40dp</dimen>
     <dimen name="dimen170dp">170dp</dimen>
     <dimen name="dimen180dp">180dp</dimen>
+    <dimen name="dimen35dp">35dp</dimen>
+    <dimen name="dimen55dp">55dp</dimen>
+    <dimen name="dimen14sp">14sp</dimen>
+    <dimen name="dimen12sp">12sp</dimen>
 </resources>
