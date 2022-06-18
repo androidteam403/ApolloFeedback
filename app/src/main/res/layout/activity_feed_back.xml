@@ -21,6 +21,7 @@
                 android:src="@drawable/apollo_circle_logo" />
 
             <TextView
+                android:id="@+id/payment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="250dp"
@@ -28,10 +29,9 @@
                 android:fontFamily="@font/poppins_bold"
                 android:text="payment sucessfull"
                 android:textAllCaps="true"
-                android:visibility="visible"
-                android:id="@+id/payment"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/dimen20sp" />
+                android:textSize="@dimen/dimen20sp"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -76,12 +76,15 @@
                 android:layout_marginTop="@dimen/dimen10dp"
                 android:background="#91d039"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="@dimen/dimen5dp"
                     android:background="@drawable/background_infeedback">
+
                     <TextView
+                        android:id="@+id/paymentsuccesful"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="250dp"
@@ -89,23 +92,22 @@
                         android:fontFamily="@font/poppins_bold"
                         android:text="payment sucessfull    ₹ 440.50  "
                         android:textAllCaps="true"
-                        android:visibility="gone"
-                        android:id="@+id/paymentsuccesful"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen20sp" />
+                        android:textSize="@dimen/dimen20sp"
+                        android:visibility="gone" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="250dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="₹ 440.50"
-                    android:id="@+id/price"
-                    android:visibility="visible"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dimen20sp" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="250dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="₹ 440.50"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dimen20sp"
+                        android:visibility="visible" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -127,193 +129,208 @@
                 android:orientation="horizontal">
 
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <ImageView
-        android:layout_width="@dimen/dimen60dp"
-        android:layout_height="60dp"
-        android:id="@+id/poor"
-        android:visibility="visible"
-        android:src="@drawable/poor"/>
-
-    <ImageView
-        android:layout_width="@dimen/dimen60dp"
-        android:layout_height="60dp"
-        android:id="@+id/poor_tick"
-        android:visibility="gone"
-        android:src="@drawable/poortick"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
-        android:text="POOR"
-        android:paddingStart="@dimen/dimen10dp"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-
-        android:textSize="12sp"
-        android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/dimen10dp" />
-</LinearLayout>
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ImageView
+                        android:id="@+id/poor"
                         android:layout_width="@dimen/dimen60dp"
                         android:layout_height="60dp"
-                        android:id="@+id/fair"
-                        android:visibility="visible"
-                        android:src="@drawable/fair"/>
+                        android:src="@drawable/poor"
+                        android:visibility="visible" />
+
                     <ImageView
+                        android:id="@+id/poor_tick"
                         android:layout_width="@dimen/dimen60dp"
                         android:layout_height="60dp"
-                        android:visibility="gone"
-                        android:id="@+id/fairtick"
-                        android:src="@drawable/fairtick"/>
+                        android:src="@drawable/poortick"
+                        android:visibility="gone" />
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="FAIR"
+                        android:gravity="center_horizontal"
                         android:paddingStart="@dimen/dimen10dp"
-                        android:textColor="@color/white"
+                        android:paddingLeft="@dimen/dimen10dp"
+                        android:text="POOR"
+
                         android:textAlignment="center"
-                        android:textSize="12sp"
-
-                        android:gravity="center_horizontal"
-                        android:paddingLeft="@dimen/dimen10dp" />
-
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ImageView
+                        android:id="@+id/fair"
                         android:layout_width="@dimen/dimen60dp"
                         android:layout_height="60dp"
-                        android:visibility="visible"
+                        android:src="@drawable/fair"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/fairtick"
+                        android:layout_width="@dimen/dimen60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/fairtick"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center_horizontal"
+                        android:paddingStart="@dimen/dimen10dp"
+                        android:paddingLeft="@dimen/dimen10dp"
+                        android:text="FAIR"
+                        android:textAlignment="center"
+
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
                         android:id="@+id/average"
-                        android:src="@drawable/average"/>
-                    <ImageView
                         android:layout_width="@dimen/dimen60dp"
                         android:layout_height="60dp"
-                        android:visibility="gone"
+                        android:src="@drawable/average"
+                        android:visibility="visible" />
+
+                    <ImageView
                         android:id="@+id/averagetick"
-                        android:src="@drawable/averagetick"/>
+                        android:layout_width="@dimen/dimen60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/averagetick"
+                        android:visibility="gone" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="AVERAGE"
-                        android:textSize="12sp"
-
-                        android:textColor="@color/white"
-                        android:textAlignment="center"
-                        android:gravity="center_horizontal"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:id="@+id/happy"
-                        android:visibility="visible"
-                        android:src="@drawable/happy"/>
-                    <ImageView
-                        android:layout_width="@dimen/dimen60dp"
-                        android:layout_height="60dp"
-                        android:id="@+id/happytick"
-                        android:visibility="gone"
-                        android:src="@drawable/happytick"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="HAPPY"
-                        android:textColor="@color/white"
-                        android:textAlignment="center"
-                        android:textSize="12sp"
-
                         android:gravity="center_horizontal"
-                        android:paddingLeft="@dimen/dimen10dp" />
+                        android:text="AVERAGE"
+
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ImageView
+                        android:id="@+id/happy"
                         android:layout_width="@dimen/dimen60dp"
                         android:layout_height="60dp"
-                        android:visibility="visible"
-                        android:id="@+id/excellent"
-                        android:src="@drawable/excellent"/>
+                        android:src="@drawable/happy"
+                        android:visibility="visible" />
+
                     <ImageView
+                        android:id="@+id/happytick"
                         android:layout_width="@dimen/dimen60dp"
                         android:layout_height="60dp"
-                        android:visibility="gone"
-                        android:id="@+id/excellenttick"
-                        android:src="@drawable/excellenttick"/>
+                        android:src="@drawable/happytick"
+                        android:visibility="gone" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="EXCELLENT"
+                        android:gravity="center_horizontal"
+                        android:paddingLeft="@dimen/dimen10dp"
+                        android:text="HAPPY"
+                        android:textAlignment="center"
 
                         android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:gravity="center_horizontal"/>
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/excellent"
+                        android:layout_width="@dimen/dimen60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/excellent"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/excellenttick"
+                        android:layout_width="@dimen/dimen60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/excellenttick"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center_horizontal"
+
+                        android:text="EXCELLENT"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <TextView
+                android:id="@+id/feedbackthanku"
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="240dp"
-                android:id="@+id/feedbackthanku"
+                android:layout_marginTop="@dimen/dimen20dp"
                 android:background="@drawable/bluebackground"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Thank You for your Feedback"
                 android:textColor="@color/white"
-                android:visibility="visible"
-                android:textSize="17sp"
 
-                android:layout_marginTop="@dimen/dimen20dp"
-                android:fontFamily="@font/poppins_bold" />
+                android:textSize="17sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <ImageView
             android:layout_width="@dimen/dimen15dp"
             android:layout_height="@dimen/dimen15dp"
-android:layout_marginLeft="240dp"
+            android:layout_marginLeft="240dp"
             android:layout_marginTop="331dp"
-            android:src="@drawable/minus"/>
+            android:src="@drawable/minus" />
 
 
         <ImageView
             android:layout_width="@dimen/dimen15dp"
             android:layout_height="@dimen/dimen15dp"
-            android:layout_marginTop="330dp"
             android:layout_marginLeft="547dp"
-            android:src="@drawable/plus"/>
+            android:layout_marginTop="330dp"
+            android:src="@drawable/plus" />
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="@dimen/dimen100dp"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="150dp"
-            android:src="@drawable/greentick"/>
+            android:src="@drawable/greentick" />
 
 
     </RelativeLayout>
