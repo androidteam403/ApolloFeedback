@@ -4,7 +4,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/app_bg">
+        android:background="@drawable/backgroundfeedbck">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_bold"
+                                android:fontFamily="@font/poppins_regular"
                                 android:text="member"
 
                                 android:textAllCaps="true"
@@ -92,18 +92,7 @@
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:background="@drawable/background_infeedback">
 
-                            <TextView
-                                android:id="@+id/paymentsuccesful"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="250dp"
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="payment sucessfull    ₹ 440.50  "
-                                android:textAllCaps="true"
-                                android:textColor="@color/color_white"
-                                android:textSize="@dimen/dimen20sp"
-                                android:visibility="gone" />
+
 
                             <TextView
                                 android:id="@+id/price"
@@ -148,6 +137,7 @@
                                 android:layout_width="@dimen/dimen60dp"
                                 android:layout_height="60dp"
                                 android:src="@drawable/poor"
+
                                 android:visibility="visible" />
 
                             <ImageView
@@ -182,6 +172,7 @@
                                 android:layout_width="@dimen/dimen60dp"
                                 android:layout_height="60dp"
                                 android:src="@drawable/fair"
+
                                 android:visibility="visible" />
 
                             <ImageView
