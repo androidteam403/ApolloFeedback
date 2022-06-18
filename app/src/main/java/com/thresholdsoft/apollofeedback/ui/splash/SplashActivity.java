@@ -1,4 +1,4 @@
-package com.thresholdsoft.apollofeedback.splash;
+package com.thresholdsoft.apollofeedback.ui.splash;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivitySplashBinding;
-import com.thresholdsoft.apollofeedback.offersnow.OffersNowActivity;
+import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 
 public class SplashActivity extends BaseActivity {
     @Override
