@@ -3,6 +3,7 @@ package com.thresholdsoft.apollofeedback.itemspayment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -10,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivityItemsPaymentBinding;
+import com.thresholdsoft.apollofeedback.feedback.FeedBackActivity;
 
 public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentActivityCallback {
 
@@ -26,5 +28,13 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         itemsPaymentBinding = DataBindingUtil.setContentView(this, R.layout.activity_items_payment);
+
+        itemsPaymentBinding.continuePayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(ItemsPaymentActivity.this, FeedBackActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
