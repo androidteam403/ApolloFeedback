@@ -2,6 +2,8 @@ package com.thresholdsoft.apollofeedback.ui.itemspayment;
 
 import android.content.Context;
 
+import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemRequest;
+import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
@@ -48,4 +50,38 @@ public class ItemsPaymentActivityController {
             mCallback.onFailureMessage("Something went wrong.");
         }
     }
+
+    public void feedbakSystemApiCall() {
+        if (NetworkUtils.isNetworkConnected(mContext)) {
+            FeedbackSystemRequest feedbackSystemRequest = new FeedbackSystemRequest();
+            feedbackSystemRequest.setSiteId("16001");
+            feedbackSystemRequest.setTerminalId("003");
+            feedbackSystemRequest.setISFeedback(0);
+            feedbackSystemRequest.setFeedbackRate("0");
+            ApiInterface apiInterface = ApiClient.getApiService();
+            Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
+            call.enqueue(new Callback<FeedbackSystemResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<FeedbackSystemResponse> call, @NotNull Response<FeedbackSystemResponse> response) {
+                    if (response.isSuccessful() && response.code() == 200) {
+                        if (mCallback != null) {
+                            mCallback.onSuccessFeedbackSystemApiCall(response.body());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<FeedbackSystemResponse> call, @NotNull Throwable t) {
+                    if (mCallback != null) {
+                        mCallback.onFailureMessage(t.getMessage());
+                    }
+                }
+            });
+        } else {
+            if (mCallback != null) {
+                mCallback.onFailureMessage("Something went wrong.");
+            }
+        }
+    }
+
 }

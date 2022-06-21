@@ -4,15 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
+import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+
+import java.util.Objects;
 
 public class OffersNowActivity extends BaseActivity implements OffersNowActivityCallback {
     private ActivityOffersNowBinding offersNowBinding;
@@ -33,12 +38,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private void setUp() {
         offersNowBinding.setCallback(this);
         getController().getOffersNowApiCall();
+        getController().feedbakSystemApiCall();
     }
 
     @Override
     public void onClickSkip() {
         startActivity(ItemsPaymentActivity.getStartIntent(this));
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+        finish();
     }
 
     @Override
@@ -59,8 +66,21 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     @Override
-    public void onFailureMessage(String message) {
+    public void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse) {
+        if (feedbackSystemResponse != null) {
+            if (Objects.requireNonNull(feedbackSystemResponse).getIspaymentScreen()) {
+                startActivity(ItemsPaymentActivity.getStartIntent(this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
+            } else {
+                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 10000);
+            }
+        }
+    }
 
+    @Override
+    public void onFailureMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

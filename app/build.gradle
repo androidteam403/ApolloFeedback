@@ -22,7 +22,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"https://sample/\"")
+            buildConfigField("String", "BASE_URL", "\"http://online.apollopharmacy.org:51/FEEDBACK/\"")
         }
         release {
             minifyEnabled false

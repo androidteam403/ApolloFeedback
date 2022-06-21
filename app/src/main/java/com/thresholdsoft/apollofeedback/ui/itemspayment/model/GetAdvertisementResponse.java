@@ -16,11 +16,7 @@ public class GetAdvertisementResponse implements Serializable {
         return advertisement;
     }
 
-    public void setAdvertisement(List<Advertisement> advertisement) {
-        this.advertisement = advertisement;
-    }
-
-    public class Advertisement implements Serializable {
+    public static class Advertisement implements Serializable {
 
         @SerializedName("advertisement_image")
         @Expose
@@ -29,10 +25,5 @@ public class GetAdvertisementResponse implements Serializable {
         public String getAdvertisementImage() {
             return advertisementImage;
         }
-
-        public void setAdvertisementImage(String advertisementImage) {
-            this.advertisementImage = advertisementImage;
-        }
-
     }
 }

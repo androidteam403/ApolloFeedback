@@ -33,4 +33,12 @@
     <dimen name="dimen55dp">55dp</dimen>
     <dimen name="dimen14sp">14sp</dimen>
     <dimen name="dimen12sp">12sp</dimen>
+    <dimen name="dimen45dp">45dp</dimen>
+    <dimen name="dimen300dp">300dp</dimen>
+    <dimen name="dimen120dp">120dp</dimen>
+    <dimen name="dimen140dp">140dp</dimen>
+    <dimen name="dimen350dp">350dp</dimen>
+    <dimen name="dimen130dp">130dp</dimen>
+    <dimen name="dimen85dp">85dp</dimen>
+    <dimen name="dimen400dp">400dp</dimen>
 </resources>

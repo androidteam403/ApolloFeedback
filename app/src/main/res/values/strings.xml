@@ -9,4 +9,16 @@
     <string name="label_continue_npayment">continue\npayment</string>
     <string name="label_amont_nsaved">amount\nsaved</string>
     <string name="label_final_npayment">final\npayment</string>
+    <string name="label_poor">POOR</string>
+    <string name="label_payment_sucessfull">payment sucessfull</string>
+    <string name="label_member">member</string>
+    <string name="label_please_rate_our_buying_experience">Please rate our buying experience</string>
+    <string name="label_fair">FAIR</string>
+    <string name="label_average">AVERAGE</string>
+    <string name="label_happy">HAPPY</string>
+    <string name="label_excellent">EXCELLENT</string>
+    <string name="label_thank_you_for_your_feedback">Thank You for your Feedback</string>
+    <string name="price_format">%,.2f</string>
+
+
 </resources>

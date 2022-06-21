@@ -13,6 +13,7 @@
             android:layout_height="@dimen/dimen30dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:visibility="gone"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_close" />
 
@@ -27,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_extra_bold"
-                android:text="Scan to Pay ₹ 441.50"
+                android:text="@{`Scan to Pay ₹ `+ model.customerScreen.payment.amouttobeCollected}"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/dimen18sp" />
 

@@ -94,6 +94,7 @@
                 android:layout_marginTop="@dimen/dimen15dp"
                 android:layout_marginEnd="@dimen/dimen40dp"
                 android:layout_marginRight="@dimen/dimen40dp"
+                android:visibility="gone"
                 android:contentDescription="@string/app_name"
                 android:onClick="@{()-> callback.onClickSkip()}"
                 android:src="@drawable/ic_skip" />

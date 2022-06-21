@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -20,10 +21,15 @@ import com.bumptech.glide.Glide;
 import com.google.zxing.WriterException;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
+import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityItemsPaymentBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogQrcodeBinding;
 import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -49,22 +55,27 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
     private void setUp() {
         itemsPaymentBinding.setCallback(this);
         getController().getAdvertisementApiCall();
+        getController().feedbakSystemApiCall();
 
     }
 
+    private FeedbackSystemResponse feedbackSystemResponse;
+
     @Override
     public void onClickContinuePayment() {
-        Dialog qrCodeDialog = new Dialog(this, R.style.dialogcustomstyle);
-        DialogQrcodeBinding dialogQrcodeBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_qrcode, null, false);
-        qrCodeDialog.setContentView(dialogQrcodeBinding.getRoot());
-        qrCodeDialog.setCancelable(false);
-        dialogQrcodeBinding.closeIcon.setOnClickListener(view -> qrCodeDialog.dismiss());
-        qrCodeGeneration("upi://pay?pa=APOLLOPREPROD@ybl&pn=APOLLOPREPROD&am=4.00&mam=4.00&tr=160021&tn=Payment%20for%20160021&mc=5311&mode=04&purpose=00", dialogQrcodeBinding, this);
-        dialogQrcodeBinding.qrCodeImage.setOnClickListener(view -> {
-            startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this));
-            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-        });
-        qrCodeDialog.show();
+//        Dialog qrCodeDialog = new Dialog(this, R.style.dialogcustomstyle);
+//        DialogQrcodeBinding dialogQrcodeBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_qrcode, null, false);
+//        qrCodeDialog.setContentView(dialogQrcodeBinding.getRoot());
+//        qrCodeDialog.setCancelable(false);
+//        dialogQrcodeBinding.closeIcon.setOnClickListener(view -> qrCodeDialog.dismiss());
+//        qrCodeGeneration("upi://pay?pa=APOLLOPREPROD@ybl&pn=APOLLOPREPROD&am=4.00&mam=4.00&tr=160021&tn=Payment%20for%20160021&mc=5311&mode=04&purpose=00", dialogQrcodeBinding, this);
+//        dialogQrcodeBinding.qrCodeImage.setOnClickListener(view -> {
+//            qrCodeDialog.dismiss();
+//            startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse));
+//            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//            finish();
+//        });
+//        qrCodeDialog.show();
     }
 
     @Override
@@ -85,10 +96,60 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    boolean isDialogShow = false;
+
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+    public void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse) {
+        if (feedbackSystemResponse != null) {
+            DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+            formatter.applyPattern("#,###.##");
+            String amounttobeCollected = "";
+            String discountAmount = "";
+            String collectedAmount = "";
+
+            if (feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected().isEmpty())
+                amounttobeCollected = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected()));
+
+            if (feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue().isEmpty())
+                discountAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue()));
+
+            if (feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount().isEmpty())
+                collectedAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount()));
+
+            feedbackSystemResponse.getCustomerScreen().getPayment().setAmouttobeCollected(amounttobeCollected);
+            feedbackSystemResponse.getCustomerScreen().getPayment().setCollectedAmount(collectedAmount);
+            feedbackSystemResponse.getCustomerScreen().getPayment().setDiscountValue(discountAmount);
+            this.feedbackSystemResponse = feedbackSystemResponse;//remove this line after testing
+            if ((feedbackSystemResponse.getIspaymentScreen())) {
+                itemsPaymentBinding.setModel(feedbackSystemResponse);
+                if (feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode().isEmpty()) {
+                    if (!isDialogShow) {
+                        isDialogShow = true;
+                        Dialog qrCodeDialog = new Dialog(this, R.style.dialogcustomstyle);
+                        DialogQrcodeBinding dialogQrcodeBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_qrcode, null, false);
+                        dialogQrcodeBinding.setModel(feedbackSystemResponse);
+                        qrCodeDialog.setContentView(dialogQrcodeBinding.getRoot());
+                        qrCodeDialog.setCancelable(false);
+                        dialogQrcodeBinding.closeIcon.setOnClickListener(view -> qrCodeDialog.dismiss());
+                        qrCodeGeneration(feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode(), dialogQrcodeBinding, this);
+                        dialogQrcodeBinding.qrCodeImage.setOnClickListener(view -> {
+                            qrCodeDialog.dismiss();
+                            startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse));
+                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                            finish();
+                        });
+                        qrCodeDialog.show();
+                    }
+                }
+                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 10000);
+            } else if (feedbackSystemResponse.getIsfeedbackScreen()) {
+                startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
+            } else {
+                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 10000);
+            }
+        }
     }
 
     private ItemsPaymentActivityController getController() {
