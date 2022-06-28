@@ -11,15 +11,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen10dp">
+            android:layout_marginTop="@dimen/dimen30dp"
+            android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="@dimen/dimen20dp"
-                android:layout_height="@dimen/dimen20dp"
+                android:layout_width="@dimen/dimen50dp"
+                android:layout_height="@dimen/dimen50dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="@dimen/dimen15dp"
-                android:layout_marginRight="@dimen/dimen15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen50dp"
+                android:layout_marginRight="@dimen/dimen50dp"
                 android:contentDescription="@string/app_name"
                 android:onClick="@{()-> callback.onClickRefreshIcon()}"
                 android:src="@drawable/ic_refresh" />
@@ -32,8 +34,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="@dimen/dimen60dp"
-                    android:layout_height="@dimen/dimen60dp"
+                    android:layout_width="@dimen/dimen100dp"
+                    android:layout_height="@dimen/dimen100dp"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_apollo_circle_logo" />
 
@@ -46,15 +48,15 @@
                     android:text="@string/label_offers_now"
                     android:textAllCaps="true"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/dimen25sp" />
+                    android:textSize="@dimen/dimen40sp" />
             </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:gravity="center"
+            android:layout_centerVertical="true"
             android:orientation="vertical">
 
 

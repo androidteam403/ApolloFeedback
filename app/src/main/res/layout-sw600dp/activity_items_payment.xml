@@ -8,13 +8,11 @@
         android:background="@drawable/app_bg">
 
         <ImageView
-            android:layout_width="@dimen/dimen20dp"
-            android:layout_height="@dimen/dimen20dp"
+            android:layout_width="@dimen/dimen50dp"
+            android:layout_height="@dimen/dimen50dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/dimen15dp"
-            android:layout_marginEnd="@dimen/dimen15dp"
-            android:layout_marginRight="@dimen/dimen15dp"
+            android:layout_margin="@dimen/dimen30dp"
             android:contentDescription="@string/app_name"
             android:onClick="@{()-> callback.onClickRefreshIcon()}"
             android:src="@drawable/ic_refresh" />
@@ -51,7 +49,7 @@
                         android:text="@string/label_items_payment"
                         android:textAllCaps="true"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen18sp" />
+                        android:textSize="@dimen/dimen20sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -63,15 +61,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="@{model.customerofferScreen.customerName != null &amp;&amp; !model.customerofferScreen.customerName.isEmpty ? model.customerofferScreen.customerName : `---`}"
+                            android:text="@{model.customerofferScreen.customerName}"
                             android:textColor="@color/color_white"
-                            android:textSize="@dimen/dimen14sp" />
+                            android:textSize="@dimen/dimen16sp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen5dp"
-                            android:layout_marginLeft="@dimen/dimen5dp"
+                            android:layout_marginStart="@dimen/dimen10dp"
+                            android:layout_marginLeft="@dimen/dimen10dp"
+                            android:layout_marginTop="@dimen/dimen3dp"
                             android:background="@drawable/black_curves_bg"
                             android:paddingStart="@dimen/dimen7dp"
                             android:paddingTop="@dimen/dimen2dp"
@@ -86,9 +85,8 @@
                                 android:text="@{model.customerofferScreen.customerType}"
                                 android:textAllCaps="true"
                                 android:textColor="@color/color_white"
-                                android:textSize="@dimen/dimen12sp" />
+                                android:textSize="@dimen/dimen14sp" />
                         </LinearLayout>
-
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -97,9 +95,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen65dp"
-                android:layout_marginTop="@dimen/dimen5dp"
+                android:layout_marginTop="@dimen/dimen50dp"
                 android:layout_marginEnd="@dimen/dimen65dp"
-                android:weightSum="1">
+                android:weightSum="1"
+                tools:ignore="DisableBaselineAlignment">
 
                 <LinearLayout
                     android:layout_width="@dimen/dimen0dp"
@@ -177,8 +176,8 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/dimen20dp"
-                        android:layout_height="@dimen/dimen20dp"
+                        android:layout_width="@dimen/dimen70dp"
+                        android:layout_height="@dimen/dimen70dp"
                         android:layout_marginTop="@dimen/dimen3dp"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_cart" />
@@ -186,13 +185,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:layout_marginStart="@dimen/dimen10dp"
                         android:layout_marginLeft="@dimen/dimen5dp"
+                        android:layout_marginTop="@dimen/dimen5dp"
                         android:fontFamily="@font/poppins_extra_bold"
                         android:gravity="top"
                         android:text="@{String.valueOf(model.customerScreen.noofSkus)}"
                         android:textColor="@color/color_red"
-                        android:textSize="@dimen/dimen12sp" />
+                        android:textSize="@dimen/dimen20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -204,7 +204,7 @@
                         android:text="@string/label_items_in_your_cart"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen12sp" />
+                        android:textSize="@dimen/dimen25sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -225,9 +225,10 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/dimen20dp"
-                        android:layout_height="@dimen/dimen20dp"
+                        android:layout_width="@dimen/dimen70dp"
+                        android:layout_height="@dimen/dimen70dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dimen5dp"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_amount" />
 
@@ -237,28 +238,28 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/dimen5dp"
                         android:layout_marginLeft="@dimen/dimen5dp"
-                        android:layout_marginTop="@dimen/dimen5dp"
+                        android:layout_marginTop="@dimen/dimen10dp"
                         android:fontFamily="@font/poppins_extra_bold"
                         android:text="@string/label_amont_nsaved"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen12sp" />
+                        android:textSize="@dimen/dimen25sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen15dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_extra_bold"
                         android:text="@string/label_rupee_symbol"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen16sp" />
+                        android:textSize="@dimen/dimen30sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -268,7 +269,7 @@
                         android:fontFamily="@font/poppins_extra_bold"
                         android:text="@{model.customerScreen.payment.discountValue}"
                         android:textColor="@color/color_red"
-                        android:textSize="@dimen/dimen16sp" />
+                        android:textSize="@dimen/dimen30sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -289,9 +290,10 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/dimen20dp"
-                        android:layout_height="@dimen/dimen20dp"
+                        android:layout_width="@dimen/dimen70dp"
+                        android:layout_height="@dimen/dimen70dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dimen5dp"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_redeem_points" />
 
@@ -301,28 +303,28 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/dimen5dp"
                         android:layout_marginLeft="@dimen/dimen5dp"
-                        android:layout_marginTop="@dimen/dimen5dp"
+                        android:layout_marginTop="@dimen/dimen10dp"
                         android:fontFamily="@font/poppins_extra_bold"
                         android:text="@string/label_redeem_npoints"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen12sp" />
+                        android:textSize="@dimen/dimen25sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen15dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_extra_bold"
                         android:text="@string/label_rupee_symbol"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen16sp" />
+                        android:textSize="@dimen/dimen30sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -332,7 +334,7 @@
                         android:fontFamily="@font/poppins_extra_bold"
                         android:text="@{model.customerScreen.payment.giftAmount}"
                         android:textColor="@color/color_green"
-                        android:textSize="@dimen/dimen16sp" />
+                        android:textSize="@dimen/dimen30sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -349,12 +351,12 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen10dp"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/dimen30dp"
-                        android:layout_height="@dimen/dimen30dp"
+                        android:layout_width="@dimen/dimen70dp"
+                        android:layout_height="@dimen/dimen70dp"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_payment" />
 
@@ -367,14 +369,14 @@
                         android:text="@string/label_bill_nvalue"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen12sp" />
+                        android:textSize="@dimen/dimen25sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen15dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -383,7 +385,7 @@
                         android:fontFamily="@font/poppins_extra_bold"
                         android:text="@string/label_rupee_symbol"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen16sp" />
+                        android:textSize="@dimen/dimen30sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -393,7 +395,7 @@
                         android:fontFamily="@font/poppins_extra_bold"
                         android:text="@{model.customerScreen.payment.amouttobeCollected}"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen16sp" />
+                        android:textSize="@dimen/dimen30sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -407,23 +409,23 @@
                 android:gravity="center"
                 android:onClick="@{()-> callback.onClickContinuePayment()}"
                 android:orientation="vertical"
-                android:padding="@dimen/dimen5dp">
+                android:padding="@dimen/dimen10dp">
 
                 <ImageView
-                    android:layout_width="@dimen/dimen30dp"
-                    android:layout_height="@dimen/dimen30dp"
+                    android:layout_width="@dimen/dimen100dp"
+                    android:layout_height="@dimen/dimen100dp"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_qr_code" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen10dp"
                     android:fontFamily="@font/poppins_extra_bold"
                     android:text="@string/label_continue_npayment"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimen12sp" />
+                    android:textSize="@dimen/dimen25sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -442,5 +444,6 @@
         <variable
             name="view"
             type="android.view.View" />
+
     </data>
 </layout>
