@@ -19,6 +19,8 @@
     <string name="label_excellent">EXCELLENT</string>
     <string name="label_thank_you_for_your_feedback">Thank You for your Feedback</string>
     <string name="price_format">%,.2f</string>
+    <string name="label_redeem_npoints">redeem\npoints</string>
+    <string name="label_bill_nvalue">bill\nvalue</string>
 
 
 </resources>

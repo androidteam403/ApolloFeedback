@@ -48,6 +48,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
@@ -72,16 +73,17 @@
                             android:paddingStart="@dimen/dimen7dp"
                             android:paddingTop="@dimen/dimen2dp"
                             android:paddingEnd="@dimen/dimen7dp"
-                            android:paddingBottom="@dimen/dimen2dp">
+                            android:paddingBottom="@dimen/dimen2dp"
+                            android:visibility="@{model.customerofferScreen.customerType != null &amp;&amp; !model.customerofferScreen.customerType.isEmpty ? view.VISIBLE : view.GONE}">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="@string/label_member"
+                                android:text="@{model.customerofferScreen.customerType}"
                                 android:textAllCaps="true"
                                 android:textColor="@color/color_white"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -369,5 +371,9 @@
         <variable
             name="isFeedbackEnabled"
             type="Boolean" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
     </data>
 </layout>

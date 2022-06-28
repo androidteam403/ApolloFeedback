@@ -1,5 +1,8 @@
 package com.thresholdsoft.apollofeedback.utils;
-
+/*
+ * Created on : jun 17, 2022.
+ * Author : NAVEEN.M
+ */
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;

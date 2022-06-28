@@ -4,9 +4,10 @@ import android.content.Context;
 
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemRequest;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
-import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
+import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
 
@@ -27,7 +28,7 @@ public class ItemsPaymentActivityController {
 
     public void getAdvertisementApiCall() {
         if (NetworkUtils.isNetworkConnected(mContext)) {
-            CommonUtils.showDialog(mContext, "Please wait.");
+            CommonUtils.showDialog(mContext, "Please wait...");
 
             ApiInterface apiInterface = ApiClient.getApiService();
             Call<GetAdvertisementResponse> call = apiInterface.GET_ADVERTISEMENT_API_CALL();
@@ -54,8 +55,8 @@ public class ItemsPaymentActivityController {
     public void feedbakSystemApiCall() {
         if (NetworkUtils.isNetworkConnected(mContext)) {
             FeedbackSystemRequest feedbackSystemRequest = new FeedbackSystemRequest();
-            feedbackSystemRequest.setSiteId("16001");
-            feedbackSystemRequest.setTerminalId("003");
+            feedbackSystemRequest.setSiteId(AppConstants.SITE_ID);
+            feedbackSystemRequest.setTerminalId(AppConstants.TERMINAL_ID);
             feedbackSystemRequest.setISFeedback(0);
             feedbackSystemRequest.setFeedbackRate("0");
             ApiInterface apiInterface = ApiClient.getApiService();
@@ -63,6 +64,7 @@ public class ItemsPaymentActivityController {
             call.enqueue(new Callback<FeedbackSystemResponse>() {
                 @Override
                 public void onResponse(@NotNull Call<FeedbackSystemResponse> call, @NotNull Response<FeedbackSystemResponse> response) {
+                    CommonUtils.hideDialog();
                     if (response.isSuccessful() && response.code() == 200) {
                         if (mCallback != null) {
                             mCallback.onSuccessFeedbackSystemApiCall(response.body());
@@ -72,6 +74,7 @@ public class ItemsPaymentActivityController {
 
                 @Override
                 public void onFailure(@NotNull Call<FeedbackSystemResponse> call, @NotNull Throwable t) {
+                    CommonUtils.hideDialog();
                     if (mCallback != null) {
                         mCallback.onFailureMessage(t.getMessage());
                     }

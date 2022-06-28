@@ -6,6 +6,7 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemRequest;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
+import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
 
@@ -28,8 +29,8 @@ public class FeedBackActivityController {
         if (NetworkUtils.isNetworkConnected(mContext)) {
             CommonUtils.showDialog(mContext, "Please Wait...");
             FeedbackSystemRequest feedbackSystemRequest = new FeedbackSystemRequest();
-            feedbackSystemRequest.setSiteId("16001");
-            feedbackSystemRequest.setTerminalId("003");
+            feedbackSystemRequest.setSiteId(AppConstants.SITE_ID);
+            feedbackSystemRequest.setTerminalId(AppConstants.TERMINAL_ID);
             feedbackSystemRequest.setISFeedback(1);
             feedbackSystemRequest.setFeedbackRate(feedbackRate);
             ApiInterface apiInterface = ApiClient.getApiService();

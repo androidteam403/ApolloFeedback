@@ -6,4 +6,6 @@ package com.thresholdsoft.apollofeedback.utils;
  */
 public class AppConstants {
     public static final String FEEDBACK_SYSTEM_RESPONSE = "FEEDBACK_SYSTEM_RESPONSE";
+    public static final String SITE_ID = "15734";//16001
+    public static final String TERMINAL_ID = "002";//001
 }

@@ -11,4 +11,6 @@ public interface OffersNowActivityCallback {
     void onFailureMessage(String message);
 
     void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse);
+
+    void onClickRefreshIcon();
 }

@@ -26,6 +26,8 @@ import com.thresholdsoft.apollofeedback.databinding.ActivityItemsPaymentBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogQrcodeBinding;
 import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
+import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -102,10 +104,11 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
     public void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse) {
         if (feedbackSystemResponse != null) {
             DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-            formatter.applyPattern("#,###.##");
+            formatter.applyPattern("##,##0.00");
             String amounttobeCollected = "";
             String discountAmount = "";
             String collectedAmount = "";
+            String giftAmount = "";
 
             if (feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected().isEmpty())
                 amounttobeCollected = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected()));
@@ -116,11 +119,20 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
             if (feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount().isEmpty())
                 collectedAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount()));
 
+            if (feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount().isEmpty())
+                giftAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount()));
+
+
             feedbackSystemResponse.getCustomerScreen().getPayment().setAmouttobeCollected(amounttobeCollected);
             feedbackSystemResponse.getCustomerScreen().getPayment().setCollectedAmount(collectedAmount);
             feedbackSystemResponse.getCustomerScreen().getPayment().setDiscountValue(discountAmount);
+            feedbackSystemResponse.getCustomerScreen().getPayment().setGiftAmount(giftAmount);
             this.feedbackSystemResponse = feedbackSystemResponse;//remove this line after testing
-            if ((feedbackSystemResponse.getIspaymentScreen())) {
+            if (feedbackSystemResponse.getIscustomerScreen()) {
+                startActivity(OffersNowActivity.getStartIntent(ItemsPaymentActivity.this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
+            } else if ((feedbackSystemResponse.getIspaymentScreen())) {
                 itemsPaymentBinding.setModel(feedbackSystemResponse);
                 if (feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode().isEmpty()) {
                     if (!isDialogShow) {
@@ -141,15 +153,21 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
                         qrCodeDialog.show();
                     }
                 }
-                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 10000);
+                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
             } else if (feedbackSystemResponse.getIsfeedbackScreen()) {
                 startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 finish();
             } else {
-                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 10000);
+                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
             }
         }
+    }
+
+    @Override
+    public void onClickRefreshIcon() {
+        CommonUtils.showDialog(this, "Please Wait...");
+        getController().feedbakSystemApiCall();
     }
 
     private ItemsPaymentActivityController getController() {
@@ -157,28 +175,22 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
     }
 
     private void qrCodeGeneration(Object qrCodeData, DialogQrcodeBinding dialogQrcodeBinding, Context context) {
-
-// below line is for getting
+        // below line is for getting
         // the windowmanager service.
         WindowManager manager = (WindowManager) context.getSystemService(context.WINDOW_SERVICE);
-
         // initializing a variable for default display.
         Display display = manager.getDefaultDisplay();
-
         // creating a variable for point which
         // is to be displayed in QR Code.
         Point point = new Point();
         display.getSize(point);
-
         // getting width and
         // height of a point
         int width = point.x;
         int height = point.y;
-
         // generating dimension from width and height.
         int dimen = width < height ? width : height;
         dimen = dimen * 3 / 4;
-
         // setting this dimensions inside our qr code
         // encoder to generate our qr code.
         QRGEncoder qrgEncoder = new QRGEncoder((String) qrCodeData, null, QRGContents.Type.TEXT, dimen);
@@ -188,10 +200,10 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
             // the bitmap is set inside our image
             // view using .setimagebitmap method.
             if (qrCodeData != null) {
-//                generatePhonepeQrcodeBinding.qrlogo.setVisibility(View.VISIBLE);
+                //generatePhonepeQrcodeBinding.qrlogo.setVisibility(View.VISIBLE);
                 dialogQrcodeBinding.qrCodeImage.setImageBitmap(bitmap);
-//                generatePhonepeQrcodeBinding.loadingPanel.setVisibility(View.GONE);
-//                ActivityUtils.hideDialog();
+                //generatePhonepeQrcodeBinding.loadingPanel.setVisibility(View.GONE);
+                //ActivityUtils.hideDialog();
             }
         } catch (WriterException e) {
             // this method is called for

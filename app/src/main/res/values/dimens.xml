@@ -41,4 +41,5 @@
     <dimen name="dimen130dp">130dp</dimen>
     <dimen name="dimen85dp">85dp</dimen>
     <dimen name="dimen400dp">400dp</dimen>
+    <dimen name="dimen40sp">40sp</dimen>
 </resources>

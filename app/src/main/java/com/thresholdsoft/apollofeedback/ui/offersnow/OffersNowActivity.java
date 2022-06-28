@@ -16,6 +16,7 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
 import java.util.Objects;
 
@@ -73,9 +74,15 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 finish();
             } else {
-                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 10000);
+                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
             }
         }
+    }
+
+    @Override
+    public void onClickRefreshIcon() {
+        CommonUtils.showDialog(this, "Please Wait...");
+        getController().feedbakSystemApiCall();
     }
 
     @Override

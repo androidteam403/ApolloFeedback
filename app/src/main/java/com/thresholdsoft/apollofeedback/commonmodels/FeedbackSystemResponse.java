@@ -120,7 +120,7 @@ public class FeedbackSystemResponse implements Serializable {
         this.status = status;
     }
 
-    public class CustomerScreen implements Serializable{
+    public class CustomerScreen implements Serializable {
 
         @SerializedName("billNumber")
         @Expose
@@ -180,11 +180,14 @@ public class FeedbackSystemResponse implements Serializable {
 
     }
 
-    public class CustomerofferScreen implements Serializable{
+    public class CustomerofferScreen implements Serializable {
 
         @SerializedName("customerName")
         @Expose
         private String customerName;
+        @SerializedName("customerType")
+        @Expose
+        private String customerType;
         @SerializedName("imageUrl")
         @Expose
         private List<ImageUrl> imageUrl = null;
@@ -197,6 +200,14 @@ public class FeedbackSystemResponse implements Serializable {
             this.customerName = customerName;
         }
 
+        public String getCustomerType() {
+            return customerType;
+        }
+
+        public void setCustomerType(String customerType) {
+            this.customerType = customerType;
+        }
+
         public List<ImageUrl> getImageUrl() {
             return imageUrl;
         }
@@ -207,7 +218,7 @@ public class FeedbackSystemResponse implements Serializable {
 
     }
 
-    public class FeedbackScreen implements Serializable{
+    public class FeedbackScreen implements Serializable {
 
         @SerializedName("feedbackstatus")
         @Expose
@@ -376,17 +387,21 @@ public class FeedbackSystemResponse implements Serializable {
 
     }
 
-    public class Payment implements Serializable{
+    public class Payment implements Serializable {
 
         @SerializedName("amouttobeCollected")
         @Expose
-        private String amouttobeCollected= "0.0";;
+        private String amouttobeCollected = "0.0";
+        ;
         @SerializedName("collectedAmount")
         @Expose
         private String collectedAmount;
         @SerializedName("discountValue")
         @Expose
         private String discountValue = "0.0";
+        @SerializedName("giftAmount")
+        @Expose
+        private String giftAmount;
         @SerializedName("qrCode")
         @Expose
         private String qrCode;
@@ -416,6 +431,14 @@ public class FeedbackSystemResponse implements Serializable {
 
         public void setDiscountValue(String discountValue) {
             this.discountValue = discountValue;
+        }
+
+        public String getGiftAmount() {
+            return giftAmount;
+        }
+
+        public void setGiftAmount(String giftAmount) {
+            this.giftAmount = giftAmount;
         }
 
         public String getQrCode() {

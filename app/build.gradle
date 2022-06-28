@@ -9,7 +9,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.thresholdsoft.apollofeedback"
+        applicationId "com.thresholdsoft.apollofeedback002"//"com.thresholdsoft.apollofeedback"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -22,7 +22,8 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"http://online.apollopharmacy.org:51/FEEDBACK/\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.88.12:9880/\"")
+//            buildConfigField("String", "BASE_URL", "\"http://online.apollopharmacy.org:51/FEEDBACK/\"")
         }
         release {
             minifyEnabled false
