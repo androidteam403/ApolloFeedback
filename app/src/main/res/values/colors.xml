@@ -11,5 +11,6 @@
     <color name="app_color">#06a3bb</color>
     <color name="color_red">#ff1a1a</color>
     <color name="color_yellow">#ffb500</color>
+    <color name="color_green">#32CD32</color>
 
 </resources>
