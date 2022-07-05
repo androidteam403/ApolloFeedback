@@ -1,6 +1,7 @@
 package com.thresholdsoft.apollofeedback.ui.storesetup.dialog;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -20,14 +21,14 @@ public class GetStoresListAdapter extends RecyclerView.Adapter<GetStoresListAdap
     private Context context;
     private ArrayList<StoreListResponseModel.StoreListObj> storeArrayList;
     private ArrayList<StoreListResponseModel.StoreListObj> storeFilteredArrayList;
-    private GetStoresDialogMvpView storesDialogMvpView;
+    private GetStoresDialogCallback storesDialogMvpView;
     AdapterStoreListBinding doctorSearchItemBinding;
 
-    public GetStoresListAdapter(Context context, ArrayList<StoreListResponseModel.StoreListObj> storesArrList, GetStoresDialogMvpView getStoresDialogMvpView) {
+    public GetStoresListAdapter(Context context, ArrayList<StoreListResponseModel.StoreListObj> storesArrList, GetStoresDialogCallback getStoresDialogCallback) {
         this.context = context;
         this.storeArrayList = storesArrList;
         this.storeFilteredArrayList = storesArrList;
-        this.storesDialogMvpView = getStoresDialogMvpView;
+        this.storesDialogMvpView = getStoresDialogCallback;
 
     }
 
@@ -67,7 +68,7 @@ public class GetStoresListAdapter extends RecyclerView.Adapter<GetStoresListAdap
         return storeFilteredArrayList.size();
     }
 
-    public void onClickListener(GetStoresDialogMvpView mvpView) {
+    public void onClickListener(GetStoresDialogCallback mvpView) {
         this.storesDialogMvpView = mvpView;
     }
 
@@ -96,8 +97,18 @@ public class GetStoresListAdapter extends RecyclerView.Adapter<GetStoresListAdap
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                storeFilteredArrayList = (ArrayList<StoreListResponseModel.StoreListObj>) filterResults.values;
-                notifyDataSetChanged();
+                if (storeFilteredArrayList != null && !storeFilteredArrayList.isEmpty()) {
+                    storeFilteredArrayList = (ArrayList<StoreListResponseModel.StoreListObj>) filterResults.values;
+                    try {
+                        storesDialogMvpView.noOrderFound(storeFilteredArrayList.size());
+                        notifyDataSetChanged();
+                    } catch (Exception e) {
+                        Log.e("FullfilmentAdapter", e.getMessage());
+                    }
+                } else {
+                    storesDialogMvpView.noOrderFound(0);
+                    notifyDataSetChanged();
+                }
             }
         };
     }

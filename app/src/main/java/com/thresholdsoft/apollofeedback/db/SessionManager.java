@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivityMvpView;
-
 public class SessionManager  {
     SharedPreferences preferences;
 //    public static final StoreSetupActivityMvpView INSTANCE = ;
@@ -23,6 +21,10 @@ public class SessionManager  {
     private static final String PREF_KEY_SITE_ID = "PREF_KEY_SITE_ID";
 
     private static final String PREF_KEY_EPOS_URL = "PREF_KEY_EPOS_URL";
+
+    private static final String PREF_STORE_ADDRESS = "PREF_STORE_ADDRESS";
+
+    private static final String PREF_LABEL_ADDRESS = "PREF_LABEL_ADDRESS";
 
     public SessionManager(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -68,5 +70,19 @@ public class SessionManager  {
     }
 
 
+    public void setStoreAddress(String storeAddress) {
+        preferences.edit().putString(PREF_STORE_ADDRESS, storeAddress).apply();
+    }
 
+    public String getStoreAddress(){
+        return preferences.getString(PREF_STORE_ADDRESS, "");
+    }
+
+    public void setLabelAddress(String labelAddress) {
+        preferences.edit().putString(PREF_LABEL_ADDRESS, labelAddress).apply();
+    }
+
+    public String getLabelAddress(){
+        return preferences.getString(PREF_LABEL_ADDRESS, "");
+    }
 }

@@ -10,7 +10,7 @@
 
         <variable
             name="callback"
-            type="com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivityMvpView" />
+            type="com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivityCallback" />
 
         <variable
             name="storeinfo"
@@ -65,12 +65,15 @@
                     tools:ignore="RelativeOverlap,RtlCompat" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen30dp"
+                    android:layout_height="@dimen/dimen30dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_login_user"
-                    tools:ignore="RtlCompat" />
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/app_name"
+                    android:onClick="@{()-> callback.closeIcon()}"
+                    android:padding="@dimen/dimen2dp"
+                    android:src="@drawable/ic_close_view"
+                    app:tint="@color/white" />
             </RelativeLayout>
 
             <ScrollView
@@ -235,61 +238,61 @@
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="0.5"-->
-<!--                                android:orientation="vertical">-->
+                            <!--                            <LinearLayout-->
+                            <!--                                android:layout_width="0dp"-->
+                            <!--                                android:layout_height="wrap_content"-->
+                            <!--                                android:layout_weight="0.5"-->
+                            <!--                                android:orientation="vertical">-->
 
-<!--                                <TextView-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="match_parent"-->
-<!--                                    android:layout_marginEnd="@dimen/five5_sp"-->
-<!--                                    android:fontFamily="@font/roboto_regular"-->
-<!--                                    android:text="Lattitude"-->
-<!--                                    android:textColor="@color/customer_info_header"-->
-<!--                                    android:textSize="@dimen/ten_sp"-->
-<!--                                    tools:ignore="RtlCompat" />-->
+                            <!--                                <TextView-->
+                            <!--                                    android:layout_width="match_parent"-->
+                            <!--                                    android:layout_height="match_parent"-->
+                            <!--                                    android:layout_marginEnd="@dimen/five5_sp"-->
+                            <!--                                    android:fontFamily="@font/roboto_regular"-->
+                            <!--                                    android:text="Lattitude"-->
+                            <!--                                    android:textColor="@color/customer_info_header"-->
+                            <!--                                    android:textSize="@dimen/ten_sp"-->
+                            <!--                                    tools:ignore="RtlCompat" />-->
 
-<!--                                <TextView-->
-<!--                                    android:id="@+id/lattitude"-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="match_parent"-->
-<!--                                    android:layout_marginEnd="@dimen/five5_sp"-->
-<!--                                    android:fontFamily="@font/roboto_bold"-->
-<!--                                    android:textColor="@color/customer_info_header"-->
-<!--                                    android:textSize="@dimen/dimen16sp"-->
-<!--                                    tools:ignore="RtlCompat" />-->
+                            <!--                                <TextView-->
+                            <!--                                    android:id="@+id/lattitude"-->
+                            <!--                                    android:layout_width="match_parent"-->
+                            <!--                                    android:layout_height="match_parent"-->
+                            <!--                                    android:layout_marginEnd="@dimen/five5_sp"-->
+                            <!--                                    android:fontFamily="@font/roboto_bold"-->
+                            <!--                                    android:textColor="@color/customer_info_header"-->
+                            <!--                                    android:textSize="@dimen/dimen16sp"-->
+                            <!--                                    tools:ignore="RtlCompat" />-->
 
-<!--                            </LinearLayout>-->
+                            <!--                            </LinearLayout>-->
 
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="0.5"-->
-<!--                                android:orientation="vertical">-->
+                            <!--                            <LinearLayout-->
+                            <!--                                android:layout_width="0dp"-->
+                            <!--                                android:layout_height="wrap_content"-->
+                            <!--                                android:layout_weight="0.5"-->
+                            <!--                                android:orientation="vertical">-->
 
-<!--                                <TextView-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="match_parent"-->
-<!--                                    android:layout_marginEnd="@dimen/five5_sp"-->
-<!--                                    android:fontFamily="@font/roboto_regular"-->
-<!--                                    android:text="Longitude"-->
-<!--                                    android:textColor="@color/customer_info_header"-->
-<!--                                    android:textSize="@dimen/ten_sp"-->
-<!--                                    tools:ignore="RtlCompat" />-->
+                            <!--                                <TextView-->
+                            <!--                                    android:layout_width="match_parent"-->
+                            <!--                                    android:layout_height="match_parent"-->
+                            <!--                                    android:layout_marginEnd="@dimen/five5_sp"-->
+                            <!--                                    android:fontFamily="@font/roboto_regular"-->
+                            <!--                                    android:text="Longitude"-->
+                            <!--                                    android:textColor="@color/customer_info_header"-->
+                            <!--                                    android:textSize="@dimen/ten_sp"-->
+                            <!--                                    tools:ignore="RtlCompat" />-->
 
-<!--                                <TextView-->
-<!--                                    android:id="@+id/longitude"-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="match_parent"-->
-<!--                                    android:layout_marginEnd="@dimen/five5_sp"-->
-<!--                                    android:fontFamily="@font/roboto_bold"-->
-<!--                                    android:textColor="@color/customer_info_header"-->
-<!--                                    android:textSize="@dimen/dimen16sp"-->
-<!--                                    tools:ignore="RtlCompat" />-->
+                            <!--                                <TextView-->
+                            <!--                                    android:id="@+id/longitude"-->
+                            <!--                                    android:layout_width="match_parent"-->
+                            <!--                                    android:layout_height="match_parent"-->
+                            <!--                                    android:layout_marginEnd="@dimen/five5_sp"-->
+                            <!--                                    android:fontFamily="@font/roboto_bold"-->
+                            <!--                                    android:textColor="@color/customer_info_header"-->
+                            <!--                                    android:textSize="@dimen/dimen16sp"-->
+                            <!--                                    tools:ignore="RtlCompat" />-->
 
-<!--                            </LinearLayout>-->
+                            <!--                            </LinearLayout>-->
                         </LinearLayout>
 
 
@@ -434,7 +437,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:padding="@dimen/dimen10dp">
+                            android:padding="@dimen/dimen10dp"
+                            android:visibility="@{storeinfo == null ? View.GONE : View.VISIBLE}">
 
                             <RelativeLayout
                                 android:id="@+id/address_layout"
@@ -442,8 +446,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/store_bg_color"
                                 android:orientation="vertical"
-                                android:padding="@dimen/dimen10dp"
-                                android:visibility="visible">
+                                android:padding="@dimen/dimen10dp">
 
                                 <ImageView
                                     android:id="@+id/close_icon"
@@ -531,7 +534,7 @@
                                             android:textSize="@dimen/thirteen13sp" />
 
                                         <TextView
-                                            android:id="@+id/address"
+                                            android:id="@+id/storeAddress"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="0.7"
@@ -545,12 +548,14 @@
                             </RelativeLayout>
 
                             <RelativeLayout
+                                android:id="@+id/saveCancel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/address_layout"
                                 android:layout_marginTop="@dimen/dimen10dp"
                                 android:gravity="center"
-                                android:padding="@dimen/dimen5dp">
+                                android:padding="@dimen/dimen5dp"
+                                android:visibility="visible">
 
                                 <TextView
                                     android:id="@+id/cancel"
@@ -559,8 +564,8 @@
                                     android:background="@drawable/bg_cancel_btn"
                                     android:fontFamily="@font/roboto_bold"
                                     android:gravity="center"
-                                    android:text="Cancel"
                                     android:onClick="@{()-> callback.onCancelBtnClick()}"
+                                    android:text="Cancel"
                                     android:textColor="@color/white" />
 
                                 <TextView

@@ -16,11 +16,11 @@ import retrofit2.Response;
 public class StoreSteupController {
 
     Activity activity;
-    StoreSetupActivityMvpView storeSetupActivityMvpView;
+    StoreSetupActivityCallback storeSetupActivityCallback;
 
-    public StoreSteupController(StoreSetupActivityMvpView storeSetupActivityMvpView, StoreSetupActivity activity) {
+    public StoreSteupController(StoreSetupActivityCallback storeSetupActivityCallback, StoreSetupActivity activity) {
         this.activity = activity;
-        this.storeSetupActivityMvpView = storeSetupActivityMvpView;
+        this.storeSetupActivityCallback = storeSetupActivityCallback;
     }
 
 
@@ -34,7 +34,7 @@ public class StoreSteupController {
             public void onResponse(Call<StoreListResponseModel> call, Response<StoreListResponseModel> response) {
                 CommonUtils.hideDialog();
                 if (response.body() != null) {
-                    storeSetupActivityMvpView.setStoresList(response.body());
+                    storeSetupActivityCallback.setStoresList(response.body());
                 }
             }
 
@@ -49,14 +49,14 @@ public class StoreSteupController {
         CommonUtils.showDialog(activity, "Loading…");
         ApiInterface api = ApiClient.getApiService2();
         DeviceRegistrationRequest deviceRegistrationRequest = new DeviceRegistrationRequest();
-        deviceRegistrationRequest.setDevicedate(storeSetupActivityMvpView.getRegisteredDate());
-        deviceRegistrationRequest.setDevicetype(storeSetupActivityMvpView.getDeviceType());
+        deviceRegistrationRequest.setDevicedate(storeSetupActivityCallback.getRegisteredDate());
+        deviceRegistrationRequest.setDevicetype(storeSetupActivityCallback.getDeviceType());
         deviceRegistrationRequest.setFcmkey("test");
         deviceRegistrationRequest.setLatitude("test");
         deviceRegistrationRequest.setLogitude("test");
-        deviceRegistrationRequest.setMacid(storeSetupActivityMvpView.getDeviceId());
-        deviceRegistrationRequest.setStoreid(storeSetupActivityMvpView.getStoreId());
-        deviceRegistrationRequest.setTerminalid(storeSetupActivityMvpView.getTerminalId());
+        deviceRegistrationRequest.setMacid(storeSetupActivityCallback.getDeviceId());
+        deviceRegistrationRequest.setStoreid(storeSetupActivityCallback.getStoreId());
+        deviceRegistrationRequest.setTerminalid(storeSetupActivityCallback.getTerminalId());
         deviceRegistrationRequest.setUserid("admin");
 
         Call<DeviceRegistrationResponse> call = api.deviceRegistration(deviceRegistrationRequest);
@@ -65,7 +65,7 @@ public class StoreSteupController {
             public void onResponse(Call<DeviceRegistrationResponse> call, Response<DeviceRegistrationResponse> response) {
                 CommonUtils.hideDialog();
                 if (response.body() != null) {
-                    storeSetupActivityMvpView.getDeviceRegistrationDetails(response.body());
+                    storeSetupActivityCallback.getDeviceRegistrationDetails(response.body());
                 }
             }
 

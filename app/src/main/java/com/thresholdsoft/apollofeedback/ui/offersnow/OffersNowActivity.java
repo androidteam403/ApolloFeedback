@@ -112,7 +112,8 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        finishAffinity();
+        System.exit(0);
     }
 
     private OffersNowActivityController getController() {

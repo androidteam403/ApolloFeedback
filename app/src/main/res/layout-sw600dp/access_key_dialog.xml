@@ -57,7 +57,6 @@
                 android:background="@drawable/phone_edittext_bg"
                 android:imeOptions="flagNoExtractUi"
                 android:importantForAutofill="no"
-                android:text="AP@11@2021"
                 android:inputType="text"
                 tools:ignore="LabelFor" />
         </LinearLayout>
