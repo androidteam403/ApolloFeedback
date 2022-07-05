@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen40dp"
-                android:layout_marginTop="@dimen/dimen10dp"
+                android:layout_marginTop="@dimen/dimen20dp"
                 android:layout_marginEnd="@dimen/dimen40dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -113,12 +113,22 @@
                 android:layout_marginTop="@dimen/dimen15dp"
                 android:layout_marginEnd="@dimen/dimen40dp"
                 android:layout_marginRight="@dimen/dimen40dp"
+                android:id="@+id/skipButton"
                 android:contentDescription="@string/app_name"
                 android:onClick="@{()-> callback.onClickSkip()}"
                 android:src="@drawable/ic_skip"
                 android:visibility="gone" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="@dimen/dimen30dp"
+            android:layout_height="@dimen/dimen30dp"
+            android:layout_margin="@dimen/dimen10dp"
+            android:contentDescription="@string/app_name"
+            android:onClick="@{()-> callback.onClickSettingIcon()}"
+            android:src="@drawable/ic_setting" />
     </RelativeLayout>
 
     <data>

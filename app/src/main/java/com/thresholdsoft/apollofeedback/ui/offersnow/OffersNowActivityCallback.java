@@ -13,4 +13,6 @@ public interface OffersNowActivityCallback {
     void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse);
 
     void onClickRefreshIcon();
+
+    void onClickSettingIcon();
 }

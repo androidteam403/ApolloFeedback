@@ -115,12 +115,21 @@
                 android:layout_marginTop="@dimen/dimen15dp"
                 android:layout_marginEnd="@dimen/dimen40dp"
                 android:layout_marginRight="@dimen/dimen40dp"
+                android:id="@+id/skipButton"
                 android:contentDescription="@string/app_name"
                 android:onClick="@{()-> callback.onClickSkip()}"
                 android:src="@drawable/ic_skip"
                 android:visibility="gone" />
 
         </LinearLayout>
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="@dimen/dimen70dp"
+            android:layout_height="@dimen/dimen70dp"
+            android:layout_margin="@dimen/dimen20dp"
+            android:onClick="@{()-> callback.onClickSettingIcon()}"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_setting" />
     </RelativeLayout>
 
     <data>

@@ -3,12 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thresholdsoft.apollofeedback">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <application
         android:allowBackup="true"
@@ -18,6 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_apollo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <activity android:name=".ui.storesetup.StoreSetupActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="landscape"
@@ -39,8 +47,7 @@
         <activity
             android:name=".ui.feedback.FeedBackActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
     </application>
 
 </manifest>

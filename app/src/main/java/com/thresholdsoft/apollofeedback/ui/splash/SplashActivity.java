@@ -1,5 +1,6 @@
 package com.thresholdsoft.apollofeedback.ui.splash;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -12,6 +13,7 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivitySplashBinding;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
+import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
 
 public class SplashActivity extends BaseActivity {
     @Override
@@ -20,10 +22,16 @@ public class SplashActivity extends BaseActivity {
         ActivitySplashBinding splashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         Animation animZoomOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_in);
         splashBinding.appLogo.setAnimation(animZoomOut);
+
+
         new Handler().postDelayed(() -> {
-            startActivity(OffersNowActivity.getStartIntent(SplashActivity.this));
-            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-            finish();
+            if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
+                startActivity(StoreSetupActivity.getStartIntent(SplashActivity.this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            } else {
+                startActivity(OffersNowActivity.getStartIntent(SplashActivity.this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            }
         }, 1500);
     }
 }

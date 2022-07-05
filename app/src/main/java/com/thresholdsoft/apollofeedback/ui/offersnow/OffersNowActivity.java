@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
@@ -14,7 +15,10 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
+import com.thresholdsoft.apollofeedback.ui.splash.SplashActivity;
+import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
+import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
@@ -63,6 +67,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowFour);
                 }
             }
+            offersNowBinding.skipButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -83,6 +88,20 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     public void onClickRefreshIcon() {
         CommonUtils.showDialog(this, "Please Wait...");
         getController().feedbakSystemApiCall();
+    }
+
+    @Override
+    public void onClickSettingIcon() {
+        AccessKeyDialog accesskeyDialog = new AccessKeyDialog(OffersNowActivity.this);
+        accesskeyDialog.onClickSubmit(v1 -> {
+            accesskeyDialog.listener();
+            if (accesskeyDialog.validate()) {
+                startActivity(StoreSetupActivity.getStartIntent(OffersNowActivity.this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                accesskeyDialog.dismiss();
+            }
+        });
+        accesskeyDialog.show();
     }
 
     @Override

@@ -2,6 +2,9 @@ package com.thresholdsoft.apollofeedback.network;
 
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemRequest;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
+import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationRequest;
+import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
+import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreListResponseModel;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 
@@ -23,5 +26,11 @@ public interface ApiInterface {
 
     @GET("http://dev.thresholdsoft.com/apollo_feedback_assets/advertisements.json")
     Call<GetAdvertisementResponse> GET_ADVERTISEMENT_API_CALL();
+
+    @GET("http://lms.apollopharmacy.org:8033/APK/apollompos/Self/STORELIST")
+    Call<StoreListResponseModel> GET_STORES_LIST();
+
+    @POST("http://lms.apollopharmacy.org:8033/APK/apollompos/Self/Registration")
+    Call<DeviceRegistrationResponse> deviceRegistration(@Body DeviceRegistrationRequest deviceRegistrationRequest);
 
 }
