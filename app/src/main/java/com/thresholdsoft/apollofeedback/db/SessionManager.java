@@ -17,11 +17,8 @@ public class SessionManager  {
 
     //Preff keys
     private static final String PREF_KEY_LOGIN_TOKEN = "PREF_KEY_LOGIN_TOKEN";
-
     private static final String PREF_KEY_TERMINAL_ID = "PREF_KEY_TERMINAL_ID";
-
     private static final String PREF_KEY_SITE_ID = "PREF_KEY_SITE_ID";
-
     private static final String PREF_KEY_EPOS_URL = "PREF_KEY_EPOS_URL";
 
     public SessionManager(Context context) {
