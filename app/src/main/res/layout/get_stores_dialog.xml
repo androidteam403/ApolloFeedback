@@ -7,7 +7,7 @@
 
         <variable
             name="callback"
-            type="com.thresholdsoft.apollofeedback.ui.storesetup.dialog.GetStoresDialogMvpView" />
+            type="com.thresholdsoft.apollofeedback.ui.storesetup.dialog.GetStoresDialogCallback" />
     </data>
 
     <LinearLayout
@@ -95,6 +95,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen5dp"
                 android:layout_marginEnd="@dimen/dimen5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Stores Found"
+                android:textColor="@color/red"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:id="@+id/noStoresFound"
+                android:textSize="@dimen/dimen12sp"
+                android:fontFamily="@font/roboto_bold"/>
         </LinearLayout>
 
     </LinearLayout>

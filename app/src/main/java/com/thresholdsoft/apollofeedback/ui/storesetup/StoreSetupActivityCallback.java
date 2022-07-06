@@ -3,7 +3,7 @@ package com.thresholdsoft.apollofeedback.ui.storesetup;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreListResponseModel;
 
-public interface StoreSetupActivityMvpView {
+public interface StoreSetupActivityCallback {
     void onSelectStoreSearch();
 
     void setStoresList(StoreListResponseModel storesList);
@@ -41,4 +41,6 @@ public interface StoreSetupActivityMvpView {
     String getEposURL();
 
     void getDeviceRegistrationDetails(DeviceRegistrationResponse body);
+
+    void closeIcon();
 }

@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,16 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.databinding.GetStoresDialogBinding;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreListResponseModel;
-import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivityMvpView;
+import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivityCallback;
 
 import java.util.ArrayList;
 
-public class GetStoresDialog implements GetStoresDialogMvpView {
+public class GetStoresDialog implements GetStoresDialogCallback {
     GetStoresDialogBinding getStoresDialogBinding;
     private Dialog dialog;
     private Context context;
     private ArrayList<StoreListResponseModel.StoreListObj> storesArrList = new ArrayList<>();
-    private StoreSetupActivityMvpView storeSetupMvpView;
+    private StoreSetupActivityCallback storeSetupMvpView;
 
     public GetStoresDialog(Context context) {
         dialog = new Dialog(context);
@@ -70,7 +71,7 @@ public class GetStoresDialog implements GetStoresDialogMvpView {
     }
 
 
-    public void setStoreDetailsMvpView(StoreSetupActivityMvpView detailsMvpView) {
+    public void setStoreDetailsMvpView(StoreSetupActivityCallback detailsMvpView) {
         this.storeSetupMvpView = detailsMvpView;
     }
 
@@ -85,6 +86,15 @@ public class GetStoresDialog implements GetStoresDialogMvpView {
         storeSetupMvpView.onSelectStore(item);
         dialog.dismiss();
         storeSetupMvpView.dialogCloseListiner();
+    }
+
+    @Override
+    public void noOrderFound(int count) {
+        if (count > 0) {
+            getStoresDialogBinding.noStoresFound.setVisibility(View.GONE);
+        } else {
+            getStoresDialogBinding.noStoresFound.setVisibility(View.VISIBLE);
+        }
     }
 
     public void show() {

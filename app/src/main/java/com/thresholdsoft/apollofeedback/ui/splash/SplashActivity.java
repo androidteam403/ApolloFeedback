@@ -13,6 +13,7 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivitySplashBinding;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
+import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
 
 public class SplashActivity extends BaseActivity {
@@ -26,8 +27,16 @@ public class SplashActivity extends BaseActivity {
 
         new Handler().postDelayed(() -> {
             if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
-                startActivity(StoreSetupActivity.getStartIntent(SplashActivity.this));
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                AccessKeyDialog accesskeyDialog = new AccessKeyDialog(SplashActivity.this);
+                accesskeyDialog.onClickSubmit(v1 -> {
+                    accesskeyDialog.listener();
+                    if (accesskeyDialog.validate()) {
+                        startActivity(StoreSetupActivity.getStartIntent(SplashActivity.this));
+                        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                        accesskeyDialog.dismiss();
+                    }
+                });
+                accesskeyDialog.show();
             } else {
                 startActivity(OffersNowActivity.getStartIntent(SplashActivity.this));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);

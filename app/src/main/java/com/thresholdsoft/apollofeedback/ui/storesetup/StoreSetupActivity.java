@@ -1,31 +1,20 @@
 package com.thresholdsoft.apollofeedback.ui.storesetup;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivityStoreSetupBinding;
-import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
-import com.thresholdsoft.apollofeedback.ui.splash.SplashActivity;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreListResponseModel;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreSetupModel;
 import com.thresholdsoft.apollofeedback.ui.storesetup.dialog.GetStoresDialog;
@@ -35,10 +24,9 @@ import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-public class StoreSetupActivity extends BaseActivity implements StoreSetupActivityMvpView {
+public class StoreSetupActivity extends BaseActivity implements StoreSetupActivityCallback {
 
     ActivityStoreSetupBinding activityStoreSetupBinding;
 
@@ -56,7 +44,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     private StoreListResponseModel.StoreListObj selectedStoreId = null;
     private StoreListResponseModel.StoreListObj selectedStoreContactNum = null;
     StoreSetupModel storeSetupModel;
-    StoreSetupActivityMvpView storeSetupActivityMvpView;
+    StoreSetupActivityCallback storeSetupActivityCallback;
     String eposUrl = "http://online.apollopharmacy.org:51/EPOS/";
 
     public static Intent getStartIntent(Context context) {
@@ -108,6 +96,19 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
             activityStoreSetupBinding.baseUrl.setText(eposUrl);
 
 
+        }
+
+        if (getDataManager().getTerminalId() != null && getDataManager().getEposUrl() != null) {
+            activityStoreSetupBinding.terminalIdText.setText(getDataManager().getTerminalId());
+//            activityStoreSetupBinding.baseUrl.setText(getDataManager().getEposUrl());
+        }
+
+        if (getDataManager().getSiteId() != null && !getDataManager().getSiteId().isEmpty()) {
+            StoreListResponseModel.StoreListObj item = new StoreListResponseModel.StoreListObj();
+            item.setStoreId(getDataManager().getSiteId());
+            item.setStoreName(getDataManager().getStoreAddress());
+            item.setAddress(getDataManager().getLabelAddress());
+            activityStoreSetupBinding.setStoreinfo(item);
         }
 
 
@@ -301,11 +302,18 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
             getDataManager().setSiteId(activityStoreSetupBinding.storeId.getText().toString());
             getDataManager().setTerminalId(activityStoreSetupBinding.terminalIdText.getText().toString());
             getDataManager().setEposUrl(activityStoreSetupBinding.baseUrl.getText().toString());
+            getDataManager().setStoreAddress(activityStoreSetupBinding.storeName.getText().toString());
+            getDataManager().setLabelAddress(activityStoreSetupBinding.storeAddress.getText().toString());
             Toast.makeText(this, "" + deviceRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
             startActivity(OffersNowActivity.getStartIntent(StoreSetupActivity.this));
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
         }
+    }
+
+    @Override
+    public void closeIcon() {
+        onBackPressed();
     }
 
     public void selectButton() {
@@ -323,4 +331,10 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+        System.exit(0);
+    }
 }
