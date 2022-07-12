@@ -11,6 +11,9 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
 
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/app_bg</item>
+
         <item name="android:screenOrientation">landscape</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

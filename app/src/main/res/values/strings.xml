@@ -21,6 +21,7 @@
     <string name="price_format">%,.2f</string>
     <string name="label_redeem_npoints">redeem\npoints</string>
     <string name="label_bill_nvalue">bill\nvalue</string>
+    <string name="label_dc_code">DC Code</string>
 
 
 </resources>

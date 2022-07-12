@@ -1,6 +1,7 @@
 package com.thresholdsoft.apollofeedback.ui.offersnow;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemRequest;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
@@ -30,7 +31,7 @@ public class OffersNowActivityController {
         if (NetworkUtils.isNetworkConnected(mContext)) {
             CommonUtils.showDialog(mContext, "Please wait...");
 
-            ApiInterface apiInterface = ApiClient.getApiService();
+            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
             Call<GetOffersNowResponse> call = apiInterface.GET_OFFERS_NOW_API_CALL();
             call.enqueue(new Callback<GetOffersNowResponse>() {
                 @Override
@@ -59,13 +60,14 @@ public class OffersNowActivityController {
             feedbackSystemRequest.setTerminalId(new SessionManager(mContext).getTerminalId());
             feedbackSystemRequest.setISFeedback(0);
             feedbackSystemRequest.setFeedbackRate("0");
-            ApiInterface apiInterface = ApiClient.getApiService();
+            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
             Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
             call.enqueue(new Callback<FeedbackSystemResponse>() {
                 @Override
                 public void onResponse(Call<FeedbackSystemResponse> call, Response<FeedbackSystemResponse> response) {
                     CommonUtils.hideDialog();
                     if (response.isSuccessful() && response.code() == 200) {
+//                        Toast.makeText(mContext, "IsPamentScreen=================="+response.body().getIspaymentScreen(), Toast.LENGTH_SHORT).show();
                         if (mCallback != null) {
                             mCallback.onSuccessFeedbackSystemApiCall(response.body());
                         }

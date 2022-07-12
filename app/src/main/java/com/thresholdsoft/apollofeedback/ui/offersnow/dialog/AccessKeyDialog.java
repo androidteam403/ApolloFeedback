@@ -15,6 +15,8 @@ import androidx.databinding.DataBindingUtil;
 
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.databinding.AccessKeyDialogBinding;
+import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivityCallback;
+import com.thresholdsoft.apollofeedback.ui.splash.SplashActivityCallback;
 
 public class AccessKeyDialog {
 
@@ -22,7 +24,16 @@ public class AccessKeyDialog {
     private Dialog dialog;
     private AccessKeyDialogBinding accesskeyBinding;
     private Context context;
+    private SplashActivityCallback splashActivityCallback;
+    private OffersNowActivityCallback offersNowActivityCallback;
 
+    public void setSplashCallback(SplashActivityCallback splashActivityCallback) {
+        this.splashActivityCallback = splashActivityCallback;
+    }
+
+    public void setOffersNowCallback(OffersNowActivityCallback offersNowActivityCallback) {
+        this.offersNowActivityCallback = offersNowActivityCallback;
+    }
 
     public AccessKeyDialog(Context context) {
         this.context = context;
@@ -32,7 +43,14 @@ public class AccessKeyDialog {
         if (dialog.getWindow() != null)
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
-
+        accesskeyBinding.closeIcon.setOnClickListener(view -> {
+            if (dialog != null) {
+                dialog.dismiss();
+                if (offersNowActivityCallback != null) {
+                    offersNowActivityCallback.onAccessDialogDismiss();
+                }
+            }
+        });
         accesskeyBinding.accesskeyTextinput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -81,7 +99,7 @@ public class AccessKeyDialog {
     public void listener() {
         if (validate()) {
 //            SessionManager.INSTANCE.setAccessKey(accesskeyBinding.accesskeyTextinput.getText().toString().trim());
-            Toast.makeText(context, "You Submitted", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "You Submitted", Toast.LENGTH_SHORT).show();
         }
     }
 

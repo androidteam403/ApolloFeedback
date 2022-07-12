@@ -1,12 +1,12 @@
 package com.thresholdsoft.apollofeedback.ui.storesetup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -14,11 +14,10 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivityStoreSetupBinding;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
-import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
+import com.thresholdsoft.apollofeedback.ui.model.UserAddress;
+import com.thresholdsoft.apollofeedback.ui.storesetup.dialog.GetStoresDialog;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreListResponseModel;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreSetupModel;
-import com.thresholdsoft.apollofeedback.ui.storesetup.dialog.GetStoresDialog;
-import com.thresholdsoft.apollofeedback.ui.model.UserAddress;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
 import java.text.SimpleDateFormat;
@@ -108,6 +107,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
             item.setStoreId(getDataManager().getSiteId());
             item.setStoreName(getDataManager().getStoreAddress());
             item.setAddress(getDataManager().getLabelAddress());
+            this.selectedStoreId = item;
             activityStoreSetupBinding.setStoreinfo(item);
         }
 
@@ -157,14 +157,19 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     private boolean isValidate() {
         String url = activityStoreSetupBinding.baseUrl.getText().toString().trim();
         String terminalId = activityStoreSetupBinding.terminalIdText.getText().toString().trim();
-        if (url.isEmpty()) {
-            activityStoreSetupBinding.baseUrl.setError("Please Enter Epos Url");
-            activityStoreSetupBinding.baseUrl.requestFocus();
-            return false;
-        }
+        String dcCode = activityStoreSetupBinding.dcCode.getText().toString().trim();
+
         if (terminalId.isEmpty()) {
             activityStoreSetupBinding.terminalIdText.setError("Please Enter Terminal Id");
             activityStoreSetupBinding.terminalIdText.requestFocus();
+            return false;
+        } else if (url.isEmpty()) {
+            activityStoreSetupBinding.baseUrl.setError("Please Enter Epos Url");
+            activityStoreSetupBinding.baseUrl.requestFocus();
+            return false;
+        } else if (dcCode.isEmpty()) {
+            activityStoreSetupBinding.dcCode.setError("Please Enter DC Code");
+            activityStoreSetupBinding.dcCode.requestFocus();
             return false;
         }
         return true;
@@ -298,15 +303,19 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 
     @Override
     public void getDeviceRegistrationDetails(DeviceRegistrationResponse deviceRegistrationResponse) {
-        if (deviceRegistrationResponse != null && deviceRegistrationResponse.getStatus().equals(true)) {
+        if (deviceRegistrationResponse != null && deviceRegistrationResponse.getStatus()) {
             getDataManager().setSiteId(activityStoreSetupBinding.storeId.getText().toString());
             getDataManager().setTerminalId(activityStoreSetupBinding.terminalIdText.getText().toString());
             getDataManager().setEposUrl(activityStoreSetupBinding.baseUrl.getText().toString());
             getDataManager().setStoreAddress(activityStoreSetupBinding.storeName.getText().toString());
             getDataManager().setLabelAddress(activityStoreSetupBinding.storeAddress.getText().toString());
-            Toast.makeText(this, "" + deviceRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
-            startActivity(OffersNowActivity.getStartIntent(StoreSetupActivity.this));
-            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            getDataManager().setDcCode(activityStoreSetupBinding.dcCode.getText().toString());
+//            Toast.makeText(this, "" + deviceRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
+//            startActivity(OffersNowActivity.getStartIntent(StoreSetupActivity.this));
+//            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            Intent intent = new Intent();
+            setResult(Activity.RESULT_OK, intent);
+            finish();
 
         }
     }
@@ -333,8 +342,15 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finishAffinity();
-        System.exit(0);
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+
+//        if (getDataManager().getTerminalId().isEmpty() || getDataManager().getSiteId().isEmpty()) {
+//            finishAffinity();
+//            System.exit(0);
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 }

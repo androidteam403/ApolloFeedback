@@ -33,7 +33,7 @@ public class FeedBackActivityController {
             feedbackSystemRequest.setTerminalId(new SessionManager(mContext).getTerminalId());
             feedbackSystemRequest.setISFeedback(1);
             feedbackSystemRequest.setFeedbackRate(feedbackRate);
-            ApiInterface apiInterface = ApiClient.getApiService();
+            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
             Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
             call.enqueue(new Callback<FeedbackSystemResponse>() {
                 @Override

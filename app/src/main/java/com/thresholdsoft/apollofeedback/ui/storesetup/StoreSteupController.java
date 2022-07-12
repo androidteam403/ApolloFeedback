@@ -2,6 +2,7 @@ package com.thresholdsoft.apollofeedback.ui.storesetup;
 
 import android.app.Activity;
 
+import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationRequest;
@@ -27,8 +28,8 @@ public class StoreSteupController {
     public void getStoreList() {
 
         CommonUtils.showDialog(activity, "Loading…");
-        ApiInterface api = ApiClient.getApiService2();
-        Call<StoreListResponseModel> call = api.GET_STORES_LIST();
+        ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(activity).getEposUrl());
+        Call<StoreListResponseModel> call = apiInterface.GET_STORES_LIST();
         call.enqueue(new Callback<StoreListResponseModel>() {
             @Override
             public void onResponse(Call<StoreListResponseModel> call, Response<StoreListResponseModel> response) {
@@ -47,7 +48,7 @@ public class StoreSteupController {
 
     public void getDeviceRegistrationDetails(String date, String deviceType, String macId, double latitude, double longitude, String storeId, String terminalId, String admin) {
         CommonUtils.showDialog(activity, "Loading…");
-        ApiInterface api = ApiClient.getApiService2();
+        ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(activity).getEposUrl());
         DeviceRegistrationRequest deviceRegistrationRequest = new DeviceRegistrationRequest();
         deviceRegistrationRequest.setDevicedate(storeSetupActivityCallback.getRegisteredDate());
         deviceRegistrationRequest.setDevicetype(storeSetupActivityCallback.getDeviceType());
@@ -59,12 +60,12 @@ public class StoreSteupController {
         deviceRegistrationRequest.setTerminalid(storeSetupActivityCallback.getTerminalId());
         deviceRegistrationRequest.setUserid("admin");
 
-        Call<DeviceRegistrationResponse> call = api.deviceRegistration(deviceRegistrationRequest);
+        Call<DeviceRegistrationResponse> call = apiInterface.deviceRegistration(deviceRegistrationRequest);
         call.enqueue(new Callback<DeviceRegistrationResponse>() {
             @Override
             public void onResponse(Call<DeviceRegistrationResponse> call, Response<DeviceRegistrationResponse> response) {
                 CommonUtils.hideDialog();
-                if (response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     storeSetupActivityCallback.getDeviceRegistrationDetails(response.body());
                 }
             }

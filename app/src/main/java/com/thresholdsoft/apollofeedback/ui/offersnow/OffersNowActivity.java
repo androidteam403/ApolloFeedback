@@ -1,13 +1,14 @@
 package com.thresholdsoft.apollofeedback.ui.offersnow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
@@ -15,11 +16,11 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
-import com.thresholdsoft.apollofeedback.ui.splash.SplashActivity;
-import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
+import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
 import java.util.Objects;
@@ -42,6 +43,10 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     private void setUp() {
         offersNowBinding.setCallback(this);
+        if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
+            onClickSettingIcon();
+        }
+
         getController().getOffersNowApiCall();
         getController().feedbakSystemApiCall();
     }
@@ -67,7 +72,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowFour);
                 }
             }
-            offersNowBinding.skipButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -93,15 +97,23 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     @Override
     public void onClickSettingIcon() {
         AccessKeyDialog accesskeyDialog = new AccessKeyDialog(OffersNowActivity.this);
+        accesskeyDialog.setOffersNowCallback(this);
         accesskeyDialog.onClickSubmit(v1 -> {
             accesskeyDialog.listener();
             if (accesskeyDialog.validate()) {
-                startActivity(StoreSetupActivity.getStartIntent(OffersNowActivity.this));
+                startActivityForResult(StoreSetupActivity.getStartIntent(OffersNowActivity.this), AppConstants.STORE_SETUP_ACTIVITY_CODE);
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 accesskeyDialog.dismiss();
             }
         });
         accesskeyDialog.show();
+    }
+
+    @Override
+    public void onAccessDialogDismiss() {
+        if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
+            finish();
+        }
     }
 
     @Override
@@ -114,6 +126,20 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         super.onBackPressed();
         finishAffinity();
         System.exit(0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == AppConstants.STORE_SETUP_ACTIVITY_CODE) {
+                if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
+                    finish();
+                }else {
+                    getController().feedbakSystemApiCall();
+                }
+            }
+        }
     }
 
     private OffersNowActivityController getController() {

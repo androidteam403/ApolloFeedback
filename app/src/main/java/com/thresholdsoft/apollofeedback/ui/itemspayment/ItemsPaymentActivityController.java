@@ -30,7 +30,7 @@ public class ItemsPaymentActivityController {
         if (NetworkUtils.isNetworkConnected(mContext)) {
             CommonUtils.showDialog(mContext, "Please wait...");
 
-            ApiInterface apiInterface = ApiClient.getApiService();
+            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
             Call<GetAdvertisementResponse> call = apiInterface.GET_ADVERTISEMENT_API_CALL();
             call.enqueue(new Callback<GetAdvertisementResponse>() {
                 @Override
@@ -59,7 +59,7 @@ public class ItemsPaymentActivityController {
             feedbackSystemRequest.setTerminalId(new SessionManager(mContext).getTerminalId());
             feedbackSystemRequest.setISFeedback(0);
             feedbackSystemRequest.setFeedbackRate("0");
-            ApiInterface apiInterface = ApiClient.getApiService();
+            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
             Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
             call.enqueue(new Callback<FeedbackSystemResponse>() {
                 @Override

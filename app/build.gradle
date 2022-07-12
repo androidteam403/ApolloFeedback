@@ -9,7 +9,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.thresholdsoft.apollofeedback002"//"com.thresholdsoft.apollofeedback"
+        applicationId "com.thresholdsoft.apollofeedback"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

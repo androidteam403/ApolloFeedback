@@ -19,11 +19,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
 
-    public static ApiInterface getApiService() {
-        return getRetrofitInstance().create(ApiInterface.class);
+    public static ApiInterface getApiService(String baseUrl) {
+        return getRetrofitInstance(baseUrl).create(ApiInterface.class);
     }
 
-    private static Retrofit getRetrofitInstance() {
+    private static Retrofit getRetrofitInstance(String baseUrl) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .writeTimeout(1, TimeUnit.MINUTES)
@@ -34,13 +34,13 @@ public class ApiClient {
                 .setLenient()
                 .create();
         return new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
     }
 
-    public static ApiInterface getApiService2() {
-        return getRetrofitInstance().create(ApiInterface.class);
+    public static ApiInterface getApiService2(String baseUrl) {
+        return getRetrofitInstance(baseUrl).create(ApiInterface.class);
     }
 }

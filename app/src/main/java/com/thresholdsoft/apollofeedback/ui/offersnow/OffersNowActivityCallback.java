@@ -15,4 +15,6 @@ public interface OffersNowActivityCallback {
     void onClickRefreshIcon();
 
     void onClickSettingIcon();
+
+    void onAccessDialogDismiss();
 }
