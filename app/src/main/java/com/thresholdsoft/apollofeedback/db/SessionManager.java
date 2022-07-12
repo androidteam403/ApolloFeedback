@@ -22,6 +22,7 @@ public class SessionManager {
     private static final String PREF_LABEL_ADDRESS = "PREF_LABEL_ADDRESS";
     private static final String PREF_KEY_DC_CODE = "PREF_KEY_DC_CODE";
 
+
     public SessionManager(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 

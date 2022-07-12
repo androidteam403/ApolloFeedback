@@ -99,6 +99,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 
         if (getDataManager().getTerminalId() != null && getDataManager().getEposUrl() != null) {
             activityStoreSetupBinding.terminalIdText.setText(getDataManager().getTerminalId());
+            activityStoreSetupBinding.dcCode.setText(getDataManager().getDcCode());
 //            activityStoreSetupBinding.baseUrl.setText(getDataManager().getEposUrl());
         }
 
