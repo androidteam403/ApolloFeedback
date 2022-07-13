@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -49,6 +50,13 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
             onClickSettingIcon();
         }
+
+        offersNowBinding.skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent
+            }
+        });
 
 //        getController().getOffersNowApiCall();
         getController().feedbakSystemApiCall();
