@@ -52,13 +52,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             onClickSettingIcon();
         }
 
-        offersNowBinding.skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(OffersNowActivity.this, NewActivity.class);
-                startActivity(intent);
-            }
-        });
 
 //        getController().getOffersNowApiCall();
         getController().feedbakSystemApiCall();

@@ -82,15 +82,15 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
 
     @Override
     public void onSuccessGetAdvertisementApi(GetAdvertisementResponse getAdvertisementResponse) {
-        if (getAdvertisementResponse != null && getAdvertisementResponse.getAdvertisement() != null && getAdvertisementResponse.getAdvertisement().size() > 0) {
-            for (GetAdvertisementResponse.Advertisement advertisement : getAdvertisementResponse.getAdvertisement()) {
-                if (getAdvertisementResponse.getAdvertisement().indexOf(advertisement) == 0) {
-                    Glide.with(this).load(Uri.parse(advertisement.getAdvertisementImage())).into(itemsPaymentBinding.advertisementOne);
-                } else if (getAdvertisementResponse.getAdvertisement().indexOf(advertisement) == 1) {
-                    Glide.with(this).load(Uri.parse(advertisement.getAdvertisementImage())).into(itemsPaymentBinding.advertisementTwo);
-                }
-            }
-        }
+//        if (getAdvertisementResponse != null && getAdvertisementResponse.getAdvertisement() != null && getAdvertisementResponse.getAdvertisement().size() > 0) {
+//            for (GetAdvertisementResponse.Advertisement advertisement : getAdvertisementResponse.getAdvertisement()) {
+//                if (getAdvertisementResponse.getAdvertisement().indexOf(advertisement) == 0) {
+//                    Glide.with(this).load(Uri.parse(advertisement.getAdvertisementImage())).into(itemsPaymentBinding.advertisementOne);
+//                } else if (getAdvertisementResponse.getAdvertisement().indexOf(advertisement) == 1) {
+//                    Glide.with(this).load(Uri.parse(advertisement.getAdvertisementImage())).into(itemsPaymentBinding.advertisementTwo);
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -109,24 +109,25 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
             String discountAmount = "";
             String collectedAmount = "";
             String giftAmount = "";
+            if (feedbackSystemResponse.getCustomerScreen()!=null) {
+                if (feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected().isEmpty())
+                    amounttobeCollected = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected()));
 
-            if (feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected().isEmpty())
-                amounttobeCollected = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected()));
+                if (feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue().isEmpty())
+                    discountAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue()));
 
-            if (feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue().isEmpty())
-                discountAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getDiscountValue()));
+                if (feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount().isEmpty())
+                    collectedAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount()));
 
-            if (feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount().isEmpty())
-                collectedAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getCollectedAmount()));
-
-            if (feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount().isEmpty())
-                giftAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount()));
+                if (feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount().isEmpty())
+                    giftAmount = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getGiftAmount()));
 
 
-            feedbackSystemResponse.getCustomerScreen().getPayment().setAmouttobeCollected(amounttobeCollected);
-            feedbackSystemResponse.getCustomerScreen().getPayment().setCollectedAmount(collectedAmount);
-            feedbackSystemResponse.getCustomerScreen().getPayment().setDiscountValue(discountAmount);
-            feedbackSystemResponse.getCustomerScreen().getPayment().setGiftAmount(giftAmount);
+                feedbackSystemResponse.getCustomerScreen().getPayment().setAmouttobeCollected(amounttobeCollected);
+                feedbackSystemResponse.getCustomerScreen().getPayment().setCollectedAmount(collectedAmount);
+                feedbackSystemResponse.getCustomerScreen().getPayment().setDiscountValue(discountAmount);
+                feedbackSystemResponse.getCustomerScreen().getPayment().setGiftAmount(giftAmount);
+            }
             this.feedbackSystemResponse = feedbackSystemResponse;//remove this line after testing
             if (feedbackSystemResponse.getIscustomerScreen()) {
                 startActivity(OffersNowActivity.getStartIntent(ItemsPaymentActivity.this));
