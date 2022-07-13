@@ -18,6 +18,7 @@ import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.NewActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
@@ -50,6 +51,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
             onClickSettingIcon();
         }
+
+        offersNowBinding.skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(OffersNowActivity.this, NewActivity.class);
+                startActivity(intent);
+            }
+        });
 
 //        getController().getOffersNowApiCall();
         getController().feedbakSystemApiCall();

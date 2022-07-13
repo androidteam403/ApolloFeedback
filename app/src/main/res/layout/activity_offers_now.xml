@@ -115,9 +115,10 @@
                 android:layout_marginRight="@dimen/dimen40dp"
                 android:id="@+id/skipButton"
                 android:contentDescription="@string/app_name"
-                android:onClick="@{()-> callback.onClickSkip()}"
                 android:src="@drawable/ic_skip"
-                android:visibility="gone" />
+                android:visibility="visible" />
+<!--                android:onClick="@{()-> callback.onClickSkip()}"-->
+
 
         </LinearLayout>
 
