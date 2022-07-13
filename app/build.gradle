@@ -60,6 +60,13 @@ dependencies {
     //QR code generation
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 
+
+
+
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+
+
     //Modules
     implementation project(path: ':cusotmloader')
 

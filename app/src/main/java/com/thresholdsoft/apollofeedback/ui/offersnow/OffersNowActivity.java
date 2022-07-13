@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.NewActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
@@ -49,6 +51,15 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
         getController().getOffersNowApiCall();
         getController().feedbakSystemApiCall();
+        offersNowBinding.skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(OffersNowActivity.this, NewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
