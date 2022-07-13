@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -148,38 +149,32 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 }
             }
         }
-//        if (!isStoreid) {
-//            for (DcOffersNowResponse.Data.ListData.Row rows : dcOffersNowResponse.getData().getListData().getRows()) {
-//                for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary posMedia : rows.getPosMediaLibrary()) {
-//                    for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary.File filePath : posMedia.getFile()) {
-//                        imagesList.add(filePath.getFullPath());
-//                    }
-//
-//                }
-//            }
         if (imagesList != null && imagesList.size() > 0) {
+            offersNowBinding.offersNowOne.setVisibility(View.GONE);
+            offersNowBinding.offersNowTwo.setVisibility(View.GONE);
+            offersNowBinding.offersNowThree.setVisibility(View.GONE);
+            offersNowBinding.offersNowFour.setVisibility(View.GONE);
             for (int i = 0; i < imagesList.size(); i++) {
                 if (i == 0) {
                     Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowOne);
+                    offersNowBinding.offersNowOne.setVisibility(View.VISIBLE);
                 } else if (i == 1) {
                     Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowTwo);
+                    offersNowBinding.offersNowTwo.setVisibility(View.VISIBLE);
                 } else if (i == 2) {
                     Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowThree);
+                    offersNowBinding.offersNowThree.setVisibility(View.VISIBLE);
                 } else if (i == 3) {
                     Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowFour);
+                    offersNowBinding.offersNowFour.setVisibility(View.VISIBLE);
                 }
             }
-
-
-//            }
         } else {
-
-            offersNowBinding.offersNowOne.setImageBitmap(null);
-            offersNowBinding.offersNowTwo.setImageBitmap(null);
-            offersNowBinding.offersNowThree.setImageBitmap(null);
-            offersNowBinding.offersNowFour.setImageBitmap(null);
+            offersNowBinding.offersNowOne.setVisibility(View.GONE);
+            offersNowBinding.offersNowTwo.setVisibility(View.GONE);
+            offersNowBinding.offersNowThree.setVisibility(View.GONE);
+            offersNowBinding.offersNowFour.setVisibility(View.GONE);
         }
-
     }
 
     @Override
