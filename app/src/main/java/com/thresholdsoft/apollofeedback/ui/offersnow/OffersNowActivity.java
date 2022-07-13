@@ -124,24 +124,22 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
 
-    private List<String> imagesList = new ArrayList<String>();
     DcOffersNowResponse dcOffersNowResponse;
 
     @Override
     public void onSuccesDcOffersNowApi(DcOffersNowResponse dcOffersNowResponse) {
         this.dcOffersNowResponse = dcOffersNowResponse;
-        boolean isStoreid = false;
+        List<String> imagesList = new ArrayList<String>();
         for (DcOffersNowResponse.Data.ListData.Row rows : dcOffersNowResponse.getData().getListData().getRows()) {
             String excepSites = rows.getExceptionSites();
             String k[] = excepSites.split(",");
+            boolean isStoreid = false;
             for (int i = 0; i < k.length; i++) {
                 if (getDataManager().getSiteId().equals(k[i])) {
                     isStoreid = true;
                 }
             }
-        }
-        if (!isStoreid) {
-            for (DcOffersNowResponse.Data.ListData.Row rows : dcOffersNowResponse.getData().getListData().getRows()) {
+            if (!isStoreid) {
                 for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary posMedia : rows.getPosMediaLibrary()) {
                     for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary.File filePath : posMedia.getFile()) {
                         imagesList.add(filePath.getFullPath());
@@ -149,21 +147,37 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
                 }
             }
-            if (imagesList != null && imagesList.size() > 0) {
-                for (int i = 0; i < imagesList.size(); i++) {
-                    if (i == 0) {
-                        Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowOne);
-                    } else if (i == 1) {
-                        Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowTwo);
-                    } else if (i == 2) {
-                        Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowThree);
-                    } else if (i == 3) {
-                        Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowFour);
-                    }
+        }
+//        if (!isStoreid) {
+//            for (DcOffersNowResponse.Data.ListData.Row rows : dcOffersNowResponse.getData().getListData().getRows()) {
+//                for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary posMedia : rows.getPosMediaLibrary()) {
+//                    for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary.File filePath : posMedia.getFile()) {
+//                        imagesList.add(filePath.getFullPath());
+//                    }
+//
+//                }
+//            }
+        if (imagesList != null && imagesList.size() > 0) {
+            for (int i = 0; i < imagesList.size(); i++) {
+                if (i == 0) {
+                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowOne);
+                } else if (i == 1) {
+                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowTwo);
+                } else if (i == 2) {
+                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowThree);
+                } else if (i == 3) {
+                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowFour);
                 }
-
-
             }
+
+
+//            }
+        } else {
+
+            offersNowBinding.offersNowOne.setImageBitmap(null);
+            offersNowBinding.offersNowTwo.setImageBitmap(null);
+            offersNowBinding.offersNowThree.setImageBitmap(null);
+            offersNowBinding.offersNowFour.setImageBitmap(null);
         }
 
     }
