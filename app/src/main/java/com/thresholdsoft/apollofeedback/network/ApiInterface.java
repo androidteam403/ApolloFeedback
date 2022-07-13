@@ -4,6 +4,8 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemRequest;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationRequest;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowRequest;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreListResponseModel;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
@@ -32,5 +34,8 @@ public interface ApiInterface {
 
     @POST("http://lms.apollopharmacy.org:8033/APK/apollompos/Self/Registration")
     Call<DeviceRegistrationResponse> deviceRegistration(@Body DeviceRegistrationRequest deviceRegistrationRequest);
+
+    @POST("https://dev-apis.zeroco.de/zc-v3.1-user-svc/2.0/ads/api/pos_offer/list/get-pos-offers-by-dc")
+    Call<DcOffersNowResponse> GET_DCOFFERSNOW_API(@Body DcOffersNowRequest dcOffersNowRequest);
 
 }

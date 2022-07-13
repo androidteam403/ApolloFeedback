@@ -8,6 +8,10 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
+import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationRequest;
+import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowRequest;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
@@ -88,4 +92,34 @@ public class OffersNowActivityController {
             }
         }
     }
+
+    public void getDcOffersNowApi(String dcCode) {
+        CommonUtils.showDialog(mContext, "Loading…");
+        ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
+        DcOffersNowRequest dcOffersNowRequest = new DcOffersNowRequest();
+        dcOffersNowRequest.setDcCode(dcCode);
+
+        Call<DcOffersNowResponse> call = apiInterface.GET_DCOFFERSNOW_API(dcOffersNowRequest);
+        call.enqueue(new Callback<DcOffersNowResponse>() {
+            @Override
+            public void onResponse(Call<DcOffersNowResponse> call, Response<DcOffersNowResponse> response) {
+                if (response.isSuccessful() && response.body() !=null && response.body().getSuccess()) {
+                    CommonUtils.hideDialog();
+                    mCallback.onSuccesDcOffersNowApi(response.body());
+                }else{
+                    mCallback.onFailureDcOffersNowApi();
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<DcOffersNowResponse> call, Throwable t) {
+            CommonUtils.hideDialog();
+            mCallback.onFailureMessage(t.getMessage());
+            }
+        });
+    }
+
 }
+

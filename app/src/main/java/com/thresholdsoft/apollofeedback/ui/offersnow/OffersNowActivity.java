@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,13 +17,15 @@ import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
-import com.thresholdsoft.apollofeedback.ui.itemspayment.NewActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class OffersNowActivity extends BaseActivity implements OffersNowActivityCallback {
@@ -49,17 +50,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             onClickSettingIcon();
         }
 
-        getController().getOffersNowApiCall();
+//        getController().getOffersNowApiCall();
         getController().feedbakSystemApiCall();
-        offersNowBinding.skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(OffersNowActivity.this, NewActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
+        getController().getDcOffersNowApi(getDataManager().getDcCode());
     }
 
     @Override
@@ -69,21 +62,24 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         finish();
     }
 
+    GetOffersNowResponse getOffersNowResponse;
+
     @Override
     public void onSuccesGetOffersNowApi(GetOffersNowResponse getOffersNowResponse) {
-        if (getOffersNowResponse != null && getOffersNowResponse.getOffersNow() != null && getOffersNowResponse.getOffersNow().size() > 0) {
-            for (GetOffersNowResponse.OffersNow offersNow : getOffersNowResponse.getOffersNow()) {
-                if (getOffersNowResponse.getOffersNow().indexOf(offersNow) == 0) {
-                    Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowOne);
-                } else if (getOffersNowResponse.getOffersNow().indexOf(offersNow) == 1) {
-                    Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowTwo);
-                } else if (getOffersNowResponse.getOffersNow().indexOf(offersNow) == 2) {
-                    Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowThree);
-                } else if (getOffersNowResponse.getOffersNow().indexOf(offersNow) == 3) {
-                    Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowFour);
-                }
-            }
-        }
+        this.getOffersNowResponse = getOffersNowResponse;
+//        if (getOffersNowResponse != null && getOffersNowResponse.getOffersNow() != null && getOffersNowResponse.getOffersNow().size() > 0) {
+//            for (GetOffersNowResponse.OffersNow offersNow : getOffersNowResponse.getOffersNow()) {
+//                if (getOffersNowResponse.getOffersNow().indexOf(offersNow) == 0) {
+//                    Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowOne);
+//                } else if (getOffersNowResponse.getOffersNow().indexOf(offersNow) == 1) {
+//                    Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowTwo);
+//                } else if (getOffersNowResponse.getOffersNow().indexOf(offersNow) == 2) {
+//                    Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowThree);
+//                } else if (getOffersNowResponse.getOffersNow().indexOf(offersNow) == 3) {
+//                    Glide.with(this).load(Uri.parse(offersNow.getImage())).into(offersNowBinding.offersNowFour);
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -127,6 +123,70 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
     }
 
+
+    DcOffersNowResponse dcOffersNowResponse;
+
+    @Override
+    public void onSuccesDcOffersNowApi(DcOffersNowResponse dcOffersNowResponse) {
+        this.dcOffersNowResponse = dcOffersNowResponse;
+        List<String> imagesList = new ArrayList<String>();
+        for (DcOffersNowResponse.Data.ListData.Row rows : dcOffersNowResponse.getData().getListData().getRows()) {
+            String excepSites = rows.getExceptionSites();
+            String k[] = excepSites.split(",");
+            boolean isStoreid = false;
+            for (int i = 0; i < k.length; i++) {
+                if (getDataManager().getSiteId().equals(k[i])) {
+                    isStoreid = true;
+                }
+            }
+            if (!isStoreid) {
+                for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary posMedia : rows.getPosMediaLibrary()) {
+                    for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary.File filePath : posMedia.getFile()) {
+                        imagesList.add(filePath.getFullPath());
+                    }
+
+                }
+            }
+        }
+//        if (!isStoreid) {
+//            for (DcOffersNowResponse.Data.ListData.Row rows : dcOffersNowResponse.getData().getListData().getRows()) {
+//                for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary posMedia : rows.getPosMediaLibrary()) {
+//                    for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary.File filePath : posMedia.getFile()) {
+//                        imagesList.add(filePath.getFullPath());
+//                    }
+//
+//                }
+//            }
+        if (imagesList != null && imagesList.size() > 0) {
+            for (int i = 0; i < imagesList.size(); i++) {
+                if (i == 0) {
+                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowOne);
+                } else if (i == 1) {
+                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowTwo);
+                } else if (i == 2) {
+                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowThree);
+                } else if (i == 3) {
+                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowFour);
+                }
+            }
+
+
+//            }
+        } else {
+
+            offersNowBinding.offersNowOne.setImageBitmap(null);
+            offersNowBinding.offersNowTwo.setImageBitmap(null);
+            offersNowBinding.offersNowThree.setImageBitmap(null);
+            offersNowBinding.offersNowFour.setImageBitmap(null);
+        }
+
+    }
+
+    @Override
+    public void onFailureDcOffersNowApi() {
+
+    }
+
     @Override
     public void onFailureMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -146,8 +206,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             if (requestCode == AppConstants.STORE_SETUP_ACTIVITY_CODE) {
                 if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
                     finish();
-                }else {
+                } else {
                     getController().feedbakSystemApiCall();
+                    getController().getDcOffersNowApi(getDataManager().getDcCode());
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.thresholdsoft.apollofeedback.ui.offersnow;
 
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 
 public interface OffersNowActivityCallback {
@@ -17,4 +18,8 @@ public interface OffersNowActivityCallback {
     void onClickSettingIcon();
 
     void onAccessDialogDismiss();
+
+    void onSuccesDcOffersNowApi(DcOffersNowResponse body);
+
+    void onFailureDcOffersNowApi();
 }
