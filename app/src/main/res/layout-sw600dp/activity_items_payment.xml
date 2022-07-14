@@ -93,380 +93,384 @@
             </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen60dp"
-            android:layout_marginTop="@dimen/dimen120dp"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="230dp"
-                android:layout_height="175dp"
-                android:layout_marginStart="@dimen/dimen10dp"
-                app:cardBackgroundColor="#fec18b"
-                app:cardElevation="@dimen/dimen10dp"
-                app:cardMaxElevation="@dimen/dimen10dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_marginStart="@dimen/dimen25dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:src="@drawable/pharma" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen12sp"
-                    android:layout_marginTop="@dimen/dimen65dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="AP LIFE HAND \nSANITIZER 200ML"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen14sp"
-
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginTop="@dimen/dimen120dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="- Recommended"
-                    android:textColor="@color/black"
-                    android:textSize="9sp"
-
-                    />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="230dp"
-                android:layout_height="175dp"
-                android:layout_marginLeft="232dp"
-                app:cardBackgroundColor="#fff79a"
-                app:cardElevation="@dimen/dimen10dp"
-                app:cardMaxElevation="10dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_marginStart="@dimen/dimen25dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:src="@drawable/fcmg" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen12sp"
-                    android:layout_marginTop="@dimen/dimen65dp"
-                    android:fontFamily="@font/poppins_bold"
-
-                    android:text="AP PREGNANCY \nTEST CARD"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen14sp"
-
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginTop="@dimen/dimen120dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="- Refill"
-                    android:textColor="@color/black"
-                    android:textSize="9sp"
-
-                    />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="230dp"
-                android:layout_height="175dp"
-                android:layout_marginLeft="455dp"
-                android:elevation="@dimen/dimen10dp"
-                app:cardBackgroundColor="#c4df9c"
-                app:cardElevation="@dimen/dimen10dp"
-                app:cardMaxElevation="10dp"
-
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_marginStart="@dimen/dimen25dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:src="@drawable/pharma" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen12sp"
-                    android:layout_marginTop="@dimen/dimen65dp"
-                    android:fontFamily="@font/poppins_bold"
-
-                    android:text="NAN0070 \n400G"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen14sp"
-
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginTop="@dimen/dimen120dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="- Recommended"
-                    android:textColor="@color/black"
-                    android:textSize="9sp" />
-
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="230dp"
-                android:layout_height="175dp"
-                android:layout_marginLeft="675dp"
-                android:elevation="@dimen/dimen10dp"
-                app:cardBackgroundColor="#afbae7"
-                app:cardElevation="@dimen/dimen10dp"
-                app:cardMaxElevation="10dp"
-
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_marginStart="@dimen/dimen25dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:src="@drawable/fcmg" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen12sp"
-                    android:layout_marginTop="@dimen/dimen65dp"
-                    android:fontFamily="@font/poppins_bold"
-
-                    android:text="JUSDEE \n400IU DROPS"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen14sp"
-
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginTop="@dimen/dimen120dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="- Refill"
-                    android:textColor="@color/black"
-                    android:textSize="9sp" />
-            </androidx.cardview.widget.CardView>
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen60dp"
-            android:layout_marginTop="273dp"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="230dp"
-                android:layout_height="175dp"
-                android:layout_marginStart="@dimen/dimen10dp"
-                android:elevation="@dimen/dimen10dp"
-                app:cardBackgroundColor="#afbae7"
-                app:cardElevation="@dimen/dimen10dp"
-                app:cardMaxElevation="10dp"
-
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_marginStart="@dimen/dimen25dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:src="@drawable/pharma" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen12sp"
-                    android:layout_marginTop="@dimen/dimen65dp"
-                    android:fontFamily="@font/poppins_bold"
-
-                    android:text="AP LIFE HAND \nSANITIZER 200ML"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen14sp"
-
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginTop="@dimen/dimen120dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="- Recommended"
-                    android:textColor="@color/black"
-                    android:textSize="9sp"
-
-                    />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="230dp"
-                android:layout_height="175dp"
-                android:layout_marginLeft="232dp"
-                android:elevation="@dimen/dimen10dp"
-                app:cardBackgroundColor="#c4df9c"
-                app:cardElevation="@dimen/dimen10dp"
-                app:cardMaxElevation="10dp"
-
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_marginStart="@dimen/dimen25dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:src="@drawable/fcmg" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen12sp"
-                    android:layout_marginTop="@dimen/dimen65dp"                    android:fontFamily="@font/poppins_bold"
-
-                    android:text="AP PREGNANCY \nTEST CARD"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen14sp"
-
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginTop="@dimen/dimen120dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="- Refill"
-                    android:textColor="@color/black"
-                    android:textSize="9sp"
-
-                    />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="230dp"
-                android:layout_height="175dp"
-                android:layout_marginLeft="455dp"
-                android:elevation="@dimen/dimen10dp"
-                app:cardBackgroundColor="#fec18b"
-                app:cardElevation="@dimen/dimen10dp"
-                app:cardMaxElevation="10dp"
-
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_marginStart="@dimen/dimen25dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:src="@drawable/pharma" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen12sp"
-                    android:layout_marginTop="@dimen/dimen65dp"                    android:fontFamily="@font/poppins_bold"
-
-                    android:text="NAN0070 \n400G"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen14sp"
-
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginTop="@dimen/dimen120dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="- Recommended"
-                    android:textColor="@color/black"
-                    android:textSize="9sp" />
-
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="230dp"
-                android:layout_height="175dp"
-                android:layout_marginLeft="675dp"
-                android:elevation="@dimen/dimen10dp"
-                app:cardBackgroundColor="#fff79a"
-                app:cardElevation="@dimen/dimen10dp"
-                app:cardMaxElevation="10dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_marginStart="@dimen/dimen25dp"
-                    android:layout_marginTop="@dimen/dimen5dp"
-                    android:src="@drawable/fcmg" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen12sp"
-                    android:layout_marginTop="@dimen/dimen65dp"                    android:fontFamily="@font/poppins_bold"
-
-                    android:text="JUSDEE \n400IU DROPS"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen14sp"
-
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginTop="@dimen/dimen120dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="- Refill"
-                    android:textColor="@color/black"
-                    android:textSize="9sp"
-
-                    />
-            </androidx.cardview.widget.CardView>
-
-
-        </RelativeLayout>
+            android:layout_marginTop="@dimen/dimen100dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen75dp"
+                android:layout_marginEnd="@dimen/dimen75dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen250dp"
+                    android:layout_weight=".25"
+                    android:elevation="@dimen/dimen5dp"
+                    app:cardBackgroundColor="#fec18b"
+                    app:cardElevation="@dimen/dimen5dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:padding="@dimen/dimen5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen100dp"
+                            android:layout_height="@dimen/dimen100dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/pharma" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="AP LIFE HAND \nSANITIZER 200ML"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="- Recommended"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen250dp"
+                    android:layout_weight=".25"
+                    android:elevation="@dimen/dimen5dp"
+                    app:cardBackgroundColor="#fff79a"
+                    app:cardElevation="@dimen/dimen5dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:padding="@dimen/dimen5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen100dp"
+                            android:layout_height="@dimen/dimen100dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/fcmg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="AP PREGNANCY \nTEST CARD"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="- Refill"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen250dp"
+                    android:layout_weight=".25"
+                    android:elevation="@dimen/dimen5dp"
+                    app:cardBackgroundColor="#c4df9c"
+                    app:cardElevation="@dimen/dimen5dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:padding="@dimen/dimen5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen100dp"
+                            android:layout_height="@dimen/dimen100dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/pharma" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="NAN0070 \n400G"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="- Recommended"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen250dp"
+                    android:layout_weight=".25"
+                    android:elevation="@dimen/dimen5dp"
+                    app:cardBackgroundColor="#afbae7"
+                    app:cardElevation="@dimen/dimen5dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:padding="@dimen/dimen5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen100dp"
+                            android:layout_height="@dimen/dimen100dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/fcmg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="JUSDEE \n400IU DROPS"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="- Refill"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen75dp"
+                android:layout_marginEnd="@dimen/dimen75dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen250dp"
+                    android:layout_weight=".25"
+                    android:elevation="@dimen/dimen5dp"
+                    app:cardBackgroundColor="#afbae7"
+                    app:cardElevation="@dimen/dimen5dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:padding="@dimen/dimen5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen100dp"
+                            android:layout_height="@dimen/dimen100dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/pharma" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="AP LIFE HAND \nSANITIZER 200ML"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="- Recommended"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen250dp"
+                    android:layout_weight=".25"
+                    android:elevation="@dimen/dimen5dp"
+                    app:cardBackgroundColor="#c4df9c"
+                    app:cardElevation="@dimen/dimen5dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:padding="@dimen/dimen5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen100dp"
+                            android:layout_height="@dimen/dimen100dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/fcmg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="AP PREGNANCY \nTEST CARD"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="- Refill"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen250dp"
+                    android:layout_weight=".25"
+                    android:elevation="@dimen/dimen5dp"
+                    app:cardBackgroundColor="#fec18b"
+                    app:cardElevation="@dimen/dimen5dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:padding="@dimen/dimen5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen100dp"
+                            android:layout_height="@dimen/dimen100dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/pharma" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="NAN0070 \n400G"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="- Recommended"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen22sp" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen250dp"
+                    android:layout_weight=".25"
+                    android:elevation="@dimen/dimen5dp"
+                    app:cardBackgroundColor="#fff79a"
+                    app:cardElevation="@dimen/dimen5dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:padding="@dimen/dimen5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen100dp"
+                            android:layout_height="@dimen/dimen100dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/fcmg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="JUSDEE \n400IU DROPS"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="- Refill"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen20sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
         <!--            <LinearLayout-->
