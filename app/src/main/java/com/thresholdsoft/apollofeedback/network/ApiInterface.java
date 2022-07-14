@@ -2,6 +2,8 @@ package com.thresholdsoft.apollofeedback.network;
 
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemRequest;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellRequest;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationRequest;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowRequest;
@@ -37,5 +39,8 @@ public interface ApiInterface {
 
     @POST("https://dev-apis.zeroco.de/zc-v3.1-user-svc/2.0/ads/api/pos_offer/list/get-pos-offers-by-dc")
     Call<DcOffersNowResponse> GET_DCOFFERSNOW_API(@Body DcOffersNowRequest dcOffersNowRequest);
+
+    @POST("http://online.apollopharmacy.org:51/EPOS/SalesTransactionService.svc/GetUpSellingProduct")
+    Call<CrossShellResponse> Get_CROSSSHELL_API(@Body CrossShellRequest crossShellRequest);
 
 }

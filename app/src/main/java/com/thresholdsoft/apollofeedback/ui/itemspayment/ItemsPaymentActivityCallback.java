@@ -1,6 +1,7 @@
 package com.thresholdsoft.apollofeedback.ui.itemspayment;
 
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 
 public interface ItemsPaymentActivityCallback {
@@ -13,4 +14,6 @@ public interface ItemsPaymentActivityCallback {
     void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse);
 
     void onClickRefreshIcon();
+
+    void onSucessCrossShell(CrossShellResponse crossShellResponse);
 }

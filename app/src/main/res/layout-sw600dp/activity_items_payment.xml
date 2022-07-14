@@ -134,8 +134,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
+                            android:id="@+id/firstname"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="AP LIFE HAND \nSANITIZER 200ML"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
@@ -144,7 +145,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Recommended"
+                            android:text=""
+                            android:id="@+id/firstreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -179,7 +181,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="AP PREGNANCY \nTEST CARD"
+                            android:text=""
+                            android:id="@+id/secondname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
@@ -188,7 +191,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Refill"
+                            android:text=""
+                            android:id="@+id/secondreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -222,7 +226,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="NAN0070 \n400G"
+                            android:text=""
+                            android:id="@+id/thirdname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
@@ -231,7 +236,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Recommended"
+                            android:text=""
+                            android:id="@+id/thirdreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -267,7 +273,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="JUSDEE \n400IU DROPS"
+                            android:text=""
+                            android:id="@+id/fourthname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
@@ -276,7 +283,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Refill"
+                            android:text=""
+                            android:id="@+id/fourthreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -321,7 +329,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="AP LIFE HAND \nSANITIZER 200ML"
+                            android:text=""
+                            android:id="@+id/fifthname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
@@ -330,7 +339,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Recommended"
+                            android:text=""
+                            android:id="@+id/fifthreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -365,7 +375,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="AP PREGNANCY \nTEST CARD"
+                            android:text=""
+                            android:id="@+id/sixthname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
@@ -374,7 +385,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Refill"
+                            android:text=""
+                            android:id="@+id/sixthreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -408,7 +420,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="NAN0070 \n400G"
+                            android:text=""
+                            android:id="@+id/seventhname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
@@ -417,7 +430,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Recommended"
+                            android:text=""
+                            android:id="@+id/seventhreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -452,7 +466,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="JUSDEE \n400IU DROPS"
+                            android:text=""
+                            android:id="@+id/eigthname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen20sp" />
 
@@ -461,7 +476,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Refill"
+                            android:text=""
+                            android:id="@+id/eigthreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen20sp" />
                     </LinearLayout>

@@ -25,6 +25,7 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityItemsPaymentBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogQrcodeBinding;
 import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
@@ -58,6 +59,7 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
         itemsPaymentBinding.setCallback(this);
         getController().getAdvertisementApiCall();
         getController().feedbakSystemApiCall();
+        getController().crossshellApiCall();
 
     }
 
@@ -109,7 +111,7 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
             String discountAmount = "";
             String collectedAmount = "";
             String giftAmount = "";
-            if (feedbackSystemResponse.getCustomerScreen()!=null) {
+            if (feedbackSystemResponse.getCustomerScreen() != null) {
                 if (feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected().isEmpty())
                     amounttobeCollected = formatter.format(Double.valueOf(feedbackSystemResponse.getCustomerScreen().getPayment().getAmouttobeCollected()));
 
@@ -169,6 +171,34 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
     public void onClickRefreshIcon() {
         CommonUtils.showDialog(this, "Please Wait...");
         getController().feedbakSystemApiCall();
+    }
+
+    @Override
+    public void onSucessCrossShell(CrossShellResponse crossShellResponse) {
+
+        if (crossShellResponse != null && crossShellResponse.getCrossselling() != null) {
+            itemsPaymentBinding.firstname.setText(crossShellResponse.getCrossselling().get(0).getItemname());
+            itemsPaymentBinding.firstreason.setText("- "+crossShellResponse.getCrossselling().get(0).getReason());
+            itemsPaymentBinding.secondname.setText(crossShellResponse.getCrossselling().get(1).getItemname());
+            itemsPaymentBinding.secondreason.setText("- "+crossShellResponse.getCrossselling().get(1).getReason());
+        }
+        if (crossShellResponse != null && crossShellResponse.getUpselling() != null) {
+            itemsPaymentBinding.thirdname.setText(crossShellResponse.getUpselling().get(0).getItemname());
+            itemsPaymentBinding.thirdreason.setText("- "+crossShellResponse.getUpselling().get(0).getReason());
+            itemsPaymentBinding.fourthname.setText(crossShellResponse.getUpselling().get(1).getItemname());
+            itemsPaymentBinding.fourthreason.setText("- "+crossShellResponse.getUpselling().get(1).getReason());
+            itemsPaymentBinding.fifthname.setText(crossShellResponse.getUpselling().get(2).getItemname());
+            itemsPaymentBinding.fifthreason.setText("- "+crossShellResponse.getUpselling().get(2).getReason());
+            itemsPaymentBinding.sixthname.setText(crossShellResponse.getUpselling().get(3).getItemname());
+            itemsPaymentBinding.sixthreason.setText("- "+crossShellResponse.getUpselling().get(3).getReason());
+            itemsPaymentBinding.seventhname.setText(crossShellResponse.getUpselling().get(4).getItemname());
+            itemsPaymentBinding.seventhreason.setText("- "+crossShellResponse.getUpselling().get(4).getReason());
+
+            itemsPaymentBinding.eigthname.setText(crossShellResponse.getUpselling().get(5).getItemname());
+            itemsPaymentBinding.eigthreason.setText("- "+crossShellResponse.getUpselling().get(5).getReason());
+
+
+        }
     }
 
     private ItemsPaymentActivityController getController() {

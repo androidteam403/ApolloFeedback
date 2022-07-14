@@ -111,7 +111,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_height="115dp"
                     android:layout_weight=".25"
                     android:elevation="@dimen/dimen5dp"
                     app:cardBackgroundColor="#fec18b"
@@ -129,33 +129,38 @@
                             android:layout_width="@dimen/dimen40dp"
                             android:layout_height="@dimen/dimen40dp"
                             android:layout_marginTop="@dimen/dimen5dp"
+
                             android:contentDescription="@string/app_name"
                             android:src="@drawable/pharma" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dimen80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
+                            android:id="@+id/firstname"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="AP LIFE HAND \nSANITIZER 200ML"
+                            android:text=""
+                            android:singleLine="false"
+                            android:maxLines="2"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Recommended"
+                            android:text=""
+                            android:id="@+id/firstreason"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_height="115dp"
                     android:layout_weight=".25"
                     android:elevation="@dimen/dimen5dp"
                     app:cardBackgroundColor="#fff79a"
@@ -177,28 +182,32 @@
                             android:src="@drawable/fcmg" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dimen80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="AP PREGNANCY \nTEST CARD"
+                            android:text=""
+                            android:singleLine="false"
+                            android:maxLines="2"
+                            android:id="@+id/secondname"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Refill"
+                            android:text=""
+                            android:id="@+id/secondreason"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_height="115dp"
                     android:layout_weight=".25"
                     android:elevation="@dimen/dimen5dp"
                     app:cardBackgroundColor="#c4df9c"
@@ -220,22 +229,26 @@
                             android:src="@drawable/pharma" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dimen80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="NAN0070 \n400G"
+                            android:text=""
+                            android:singleLine="false"
+                            android:maxLines="2"
+                            android:id="@+id/thirdname"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Recommended"
+                            android:text=""
+                            android:id="@+id/thirdreason"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -243,7 +256,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_height="115dp"
                     android:layout_weight=".25"
                     android:elevation="@dimen/dimen5dp"
                     app:cardBackgroundColor="#afbae7"
@@ -265,22 +278,26 @@
                             android:src="@drawable/fcmg" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dimen80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="JUSDEE \n400IU DROPS"
+                            android:text=""
+                            android:singleLine="false"
+                            android:maxLines="2"
+                            android:id="@+id/fourthname"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Refill"
+                            android:text=""
+                            android:id="@+id/fourthreason"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -297,7 +314,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_height="115dp"
                     android:layout_weight=".25"
                     android:elevation="@dimen/dimen5dp"
                     app:cardBackgroundColor="#afbae7"
@@ -319,29 +336,33 @@
                             android:src="@drawable/pharma" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dimen80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="AP LIFE HAND \nSANITIZER 200ML"
+                            android:text=""
+                            android:singleLine="false"
+                            android:maxLines="2"
+                            android:id="@+id/fifthname"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Recommended"
+                            android:text=""
+                            android:id="@+id/fifthreason"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_height="115dp"
                     android:layout_weight=".25"
                     android:elevation="@dimen/dimen5dp"
                     app:cardBackgroundColor="#c4df9c"
@@ -363,28 +384,32 @@
                             android:src="@drawable/fcmg" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dimen80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="AP PREGNANCY \nTEST CARD"
+                            android:text=""
+                            android:singleLine="false"
+                            android:maxLines="2"
+                            android:id="@+id/sixthname"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Refill"
+                            android:text=""
+                            android:id="@+id/sixthreason"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_height="115dp"
                     android:layout_weight=".25"
                     android:elevation="@dimen/dimen5dp"
                     app:cardBackgroundColor="#fec18b"
@@ -406,22 +431,26 @@
                             android:src="@drawable/pharma" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dimen80dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="NAN0070 \n400G"
+                            android:text=""
+                            android:singleLine="false"
+                            android:maxLines="2"
+                            android:id="@+id/seventhname"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Recommended"
+                            android:text=""
+                            android:id="@+id/seventhreason"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -429,7 +458,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_height="115dp"
                     android:layout_weight=".25"
                     android:elevation="@dimen/dimen5dp"
                     app:cardBackgroundColor="#fff79a"
@@ -451,22 +480,26 @@
                             android:src="@drawable/fcmg" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dimen80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="JUSDEE \n400IU DROPS"
+                            android:text=""
+                            android:singleLine="false"
+                            android:maxLines="2"
+                            android:id="@+id/eigthname"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="- Refill"
+                            android:text=""
+                            android:id="@+id/eigthreason"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/dimen10sp" />
+                            android:textSize="9sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

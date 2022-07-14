@@ -7,6 +7,9 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellRequest;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
+
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
@@ -34,7 +37,7 @@ public class ItemsPaymentActivityController {
             Call<GetAdvertisementResponse> call = apiInterface.GET_ADVERTISEMENT_API_CALL();
             call.enqueue(new Callback<GetAdvertisementResponse>() {
                 @Override
-                public void onResponse( Call<GetAdvertisementResponse> call,  Response<GetAdvertisementResponse> response) {
+                public void onResponse(Call<GetAdvertisementResponse> call, Response<GetAdvertisementResponse> response) {
                     if (response.isSuccessful() && response.code() == 200) {
                         mCallback.onSuccessGetAdvertisementApi(response.body());
                     }
@@ -42,7 +45,7 @@ public class ItemsPaymentActivityController {
                 }
 
                 @Override
-                public void onFailure( Call<GetAdvertisementResponse> call,  Throwable t) {
+                public void onFailure(Call<GetAdvertisementResponse> call, Throwable t) {
                     CommonUtils.hideDialog();
                     mCallback.onFailureMessage(t.getMessage());
                 }
@@ -51,6 +54,38 @@ public class ItemsPaymentActivityController {
             mCallback.onFailureMessage("Something went wrong.");
         }
     }
+
+
+    public void crossshellApiCall() {
+            CrossShellRequest crossShellRequest = new CrossShellRequest();
+            crossShellRequest.setStoreId("16001");
+            crossShellRequest.setMobileno("9958704005");
+            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
+            Call<CrossShellResponse> call = apiInterface.Get_CROSSSHELL_API(crossShellRequest);
+            call.enqueue(new Callback<CrossShellResponse>() {
+                @Override
+                public void onResponse(Call<CrossShellResponse> call, Response<CrossShellResponse> response) {
+                    if (response.isSuccessful() && response.code() == 200) {
+
+                        if (mCallback!=null){
+                            mCallback.onSucessCrossShell(response.body());
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CrossShellResponse> call, Throwable t) {
+                    if (mCallback != null) {
+                        mCallback.onFailureMessage(t.getMessage());
+                    }
+                }
+            });
+
+
+        }
+
+
 
     public void feedbakSystemApiCall() {
         if (NetworkUtils.isNetworkConnected(mContext)) {
@@ -63,7 +98,7 @@ public class ItemsPaymentActivityController {
             Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
             call.enqueue(new Callback<FeedbackSystemResponse>() {
                 @Override
-                public void onResponse( Call<FeedbackSystemResponse> call,  Response<FeedbackSystemResponse> response) {
+                public void onResponse(Call<FeedbackSystemResponse> call, Response<FeedbackSystemResponse> response) {
                     CommonUtils.hideDialog();
                     if (response.isSuccessful() && response.code() == 200) {
                         if (mCallback != null) {
@@ -73,7 +108,7 @@ public class ItemsPaymentActivityController {
                 }
 
                 @Override
-                public void onFailure( Call<FeedbackSystemResponse> call,  Throwable t) {
+                public void onFailure(Call<FeedbackSystemResponse> call, Throwable t) {
                     CommonUtils.hideDialog();
                     if (mCallback != null) {
                         mCallback.onFailureMessage(t.getMessage());
