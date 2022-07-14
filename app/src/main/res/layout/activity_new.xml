@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen55dp"
+                    android:layout_height="@dimen/dimen55dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_apollo_circle_logo" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginLeft="@dimen/dimen10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/label_items_payment"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dimen18sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="Nagaraju.C"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/dimen14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen60dp"
+            android:layout_marginTop="@dimen/dimen60dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen150dp"
+                android:layout_height="@dimen/dimen120dp"
+                android:layout_marginStart="@dimen/dimen10dp"
+                app:cardBackgroundColor="#fec18b"
+                app:cardElevation="@dimen/dimen10dp"
+                app:cardMaxElevation="@dimen/dimen10dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_marginStart="@dimen/dimen20dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:src="@drawable/pharma" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen35dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="AP LIFE HAND \nSANITIZER 200ML"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen70dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="- Recommended"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen7dp"
+
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen150dp"
+                android:layout_height="@dimen/dimen120dp"
+                android:layout_marginLeft="146dp"
+                app:cardBackgroundColor="#fff79a"
+                app:cardElevation="@dimen/dimen10dp"
+                app:cardMaxElevation="10dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_marginStart="@dimen/dimen20dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:src="@drawable/fcmg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen35dp"
+                    android:fontFamily="@font/poppins_bold"
+
+                    android:text="AP PREGNANCY \nTEST CARD"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen70dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="- Refill"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen7dp"
+
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen150dp"
+                android:layout_height="@dimen/dimen120dp"
+                android:layout_marginLeft="282dp"
+                app:cardBackgroundColor="#c4df9c"
+                app:cardElevation="@dimen/dimen10dp"
+                app:cardMaxElevation="10dp"                android:elevation="@dimen/dimen10dp"
+
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:src="@drawable/pharma" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen35dp"
+                    android:fontFamily="@font/poppins_bold"
+
+                    android:text="NAN0070 \n400G"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen70dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="- Recommended"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen7dp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen150dp"
+                android:layout_height="@dimen/dimen120dp"
+                android:layout_marginLeft="418dp"
+                app:cardBackgroundColor="#afbae7"
+                app:cardElevation="@dimen/dimen10dp"
+                app:cardMaxElevation="10dp"
+                android:elevation="@dimen/dimen10dp"
+
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_marginStart="@dimen/dimen15dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:src="@drawable/fcmg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen35dp"
+                    android:fontFamily="@font/poppins_bold"
+
+                    android:text="JUSDEE \n400IU DROPS"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen70dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="- Refill"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen7dp" />
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen60dp"
+            android:layout_marginTop="154dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen150dp"
+                android:layout_height="@dimen/dimen120dp"
+                android:layout_marginStart="@dimen/dimen10dp"
+                app:cardBackgroundColor="#afbae7"
+                app:cardElevation="@dimen/dimen10dp"
+                app:cardMaxElevation="10dp"
+                android:elevation="@dimen/dimen10dp"
+
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_marginStart="@dimen/dimen20dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:src="@drawable/pharma" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen35dp"
+                    android:fontFamily="@font/poppins_bold"
+
+                    android:text="AP LIFE HAND \nSANITIZER 200ML"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen70dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="- Recommended"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen7dp"
+
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen150dp"
+                android:layout_height="@dimen/dimen120dp"
+                android:layout_marginLeft="146dp"
+                app:cardBackgroundColor="#c4df9c"
+                app:cardElevation="@dimen/dimen10dp"
+                app:cardMaxElevation="10dp"
+                android:elevation="@dimen/dimen10dp"
+
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_marginStart="@dimen/dimen20dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:src="@drawable/fcmg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen35dp"
+                    android:fontFamily="@font/poppins_bold"
+
+                    android:text="AP PREGNANCY \nTEST CARD"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/dimen70dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="- Refill"
+                    android:textSize="@dimen/dimen7dp"
+
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen150dp"
+                android:layout_height="@dimen/dimen120dp"
+                android:layout_marginLeft="282dp"
+                app:cardBackgroundColor="#fec18b"
+                app:cardElevation="@dimen/dimen10dp"
+                app:cardMaxElevation="10dp"
+                android:elevation="@dimen/dimen10dp"
+
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:src="@drawable/pharma" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen35dp"
+                    android:fontFamily="@font/poppins_bold"
+
+                    android:text="NAN0070 \n400G"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen70dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="- Recommended"
+                    android:textSize="@dimen/dimen7dp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/dimen150dp"
+                android:layout_height="@dimen/dimen120dp"
+                android:layout_marginLeft="418dp"
+                app:cardBackgroundColor="#fff79a"
+                android:elevation="@dimen/dimen10dp"
+                app:cardElevation="@dimen/dimen10dp"
+                app:cardMaxElevation="10dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_marginStart="@dimen/dimen15dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:src="@drawable/fcmg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen35dp"
+                    android:fontFamily="@font/poppins_bold"
+
+                    android:text="JUSDEE \n400IU DROPS"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen70dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="- Refill"
+                    android:textSize="@dimen/dimen7dp"
+                    android:textColor="@color/black"
+
+                    />
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="@dimen/dimen0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".2"
+                android:background="@color/color_white"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen20dp"
+                        android:layout_height="@dimen/dimen20dp"
+                        android:layout_marginTop="@dimen/dimen3dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_cart" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:layout_marginLeft="@dimen/dimen5dp"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:gravity="top"
+                        android:text="10"
+                        android:textColor="@color/color_red"
+                        android:textSize="@dimen/dimen12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:layout_marginLeft="@dimen/dimen5dp"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:gravity="top"
+                        android:text="@string/label_items_in_your_cart"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dimen0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen5dp"
+                android:layout_marginLeft="@dimen/dimen5dp"
+                android:layout_weight=".2"
+                android:background="@drawable/top_right_curve_bg"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen20dp"
+                        android:layout_height="@dimen/dimen20dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_amount" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:layout_marginLeft="@dimen/dimen5dp"
+                        android:layout_marginTop="@dimen/dimen5dp"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@string/label_amont_nsaved"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@string/label_rupee_symbol"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen3dp"
+                        android:layout_marginLeft="@dimen/dimen3dp"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="183.50"
+                        android:textColor="@color/color_red"
+                        android:textSize="@dimen/dimen16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dimen0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen5dp"
+                android:layout_marginLeft="@dimen/dimen5dp"
+                android:layout_weight=".2"
+                android:background="@drawable/top_right_curve_bg"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen20dp"
+                        android:layout_height="@dimen/dimen20dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_redeem_points" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:layout_marginLeft="@dimen/dimen5dp"
+                        android:layout_marginTop="@dimen/dimen5dp"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@string/label_redeem_npoints"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@string/label_rupee_symbol"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen3dp"
+                        android:layout_marginLeft="@dimen/dimen3dp"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="100"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dimen0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen5dp"
+                android:layout_marginLeft="@dimen/dimen5dp"
+                android:layout_weight=".2"
+                android:background="@drawable/top_right_curve_bg"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen30dp"
+                        android:layout_height="@dimen/dimen30dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_payment" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:layout_marginLeft="@dimen/dimen5dp"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@string/label_bill_nvalue"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@string/label_rupee_symbol"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen3dp"
+                        android:layout_marginLeft="@dimen/dimen3dp"
+                        android:fontFamily="@font/poppins_extra_bold"
+                        android:text="441.50"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dimen0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen5dp"
+                android:layout_marginLeft="@dimen/dimen5dp"
+                android:layout_weight=".2"
+                android:background="@color/color_yellow"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen5dp">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen30dp"
+                    android:layout_height="@dimen/dimen30dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_qr_code" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:fontFamily="@font/poppins_extra_bold"
+                    android:text="@string/label_continue_npayment"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</layout>
