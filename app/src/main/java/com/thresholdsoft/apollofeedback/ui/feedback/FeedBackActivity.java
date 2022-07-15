@@ -57,7 +57,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
             activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
 
-            getController().feedbakSystemApiCall("1",1);
+            getController().feedbakSystemApiCall("1", 1);
         });
 
 
@@ -115,7 +115,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
             activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
 
-            getController().feedbakSystemApiCall("3",1);
+            getController().feedbakSystemApiCall("3", 1);
         });
 //        activityFeedBackBinding.averagetick.setOnClickListener(v -> {
 //            activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -181,14 +181,11 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //            activityFeedBackBinding.feedbackthanku.setVisibility(View.GONE);
 //
 //        });
+        getController().feedbakSystemApiCall("0", 0);
 
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        },120000);
+        new Handler().postDelayed(() -> {
+            getController().feedbakSystemApiCall("5", 1);
+        }, 120000);
     }
 
 
@@ -205,9 +202,24 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                     startActivity(OffersNowActivity.getStartIntent(FeedBackActivity.this));
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                     finish();
-                }, 5000);
+                }, 3000);
             } else {
                 Toast.makeText(this, feedbackSystemResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onSuccessFeedbackSystemApiContinousCall(FeedbackSystemResponse feedbackSystemResponse, int isFeedback) {
+        if (isFeedback == 0) {
+            if (feedbackSystemResponse != null) {
+                if (!feedbackSystemResponse.getIsfeedbackScreen()) {
+                    getController().feedbakSystemApiCall("5", 1);
+                } else {
+                    new Handler().postDelayed(() -> {
+                        getController().feedbakSystemApiCall("0", 0);
+                    }, 10000);
+                }
             }
         }
     }

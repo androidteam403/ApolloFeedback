@@ -7,4 +7,6 @@ public interface FeedBackActivityCallBack {
     void onFailureMessage(String message);
 
     void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse);
+
+    void onSuccessFeedbackSystemApiContinousCall(FeedbackSystemResponse feedbackSystemResponse, int isFeedback);
 }

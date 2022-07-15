@@ -7,10 +7,8 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
-import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,17 +35,23 @@ public class FeedBackActivityController {
             Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
             call.enqueue(new Callback<FeedbackSystemResponse>() {
                 @Override
-                public void onResponse( Call<FeedbackSystemResponse> call,  Response<FeedbackSystemResponse> response) {
+                public void onResponse(Call<FeedbackSystemResponse> call, Response<FeedbackSystemResponse> response) {
                     if (response.isSuccessful() && response.code() == 200) {
-                        if (mCallback != null) {
-                            mCallback.onSuccessFeedbackSystemApiCall(response.body());
+                        if (isFeedback == 0) {
+                            if (mCallback != null) {
+                                mCallback.onSuccessFeedbackSystemApiContinousCall(response.body(), isFeedback);
+                            }
+                        } else {
+                            if (mCallback != null) {
+                                mCallback.onSuccessFeedbackSystemApiCall(response.body());
+                            }
                         }
                     }
                     CommonUtils.hideDialog();
                 }
 
                 @Override
-                public void onFailure( Call<FeedbackSystemResponse> call,  Throwable t) {
+                public void onFailure(Call<FeedbackSystemResponse> call, Throwable t) {
                     if (mCallback != null) {
                         mCallback.onFailureMessage(t.getMessage());
                     }
