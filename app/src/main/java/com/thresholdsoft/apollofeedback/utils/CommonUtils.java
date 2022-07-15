@@ -2,6 +2,7 @@ package com.thresholdsoft.apollofeedback.utils;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.provider.Settings;
 
 import com.thresholdsoft.apollofeedback.R;
 
@@ -41,6 +42,11 @@ public class CommonUtils {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+
+    public static String getDeviceId(Context context) {
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     public static boolean isLoadingShowing() {
