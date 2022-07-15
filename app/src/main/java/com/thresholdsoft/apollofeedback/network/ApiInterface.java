@@ -37,10 +37,10 @@ public interface ApiInterface {
     @POST("http://lms.apollopharmacy.org:8033/APK/apollompos/Self/Registration")
     Call<DeviceRegistrationResponse> deviceRegistration(@Body DeviceRegistrationRequest deviceRegistrationRequest);
 
-    @POST("https://dev-apis.zeroco.de/zc-v3.1-user-svc/2.0/ads/api/pos_offer/list/get-pos-offers-by-dc")
+    @POST("https://signage.apollopharmacy.app/zc-v3.1-user-svc/2.0/ads/api/pos_offer/list/get-pos-offers-by-dc")
     Call<DcOffersNowResponse> GET_DCOFFERSNOW_API(@Body DcOffersNowRequest dcOffersNowRequest);
 
-    @POST("http://online.apollopharmacy.org:51/EPOS/SalesTransactionService.svc/GetUpSellingProduct")
+    @POST("http://online.apollopharmacy.org:51/EPOS/SalesTransactionService.svc/GetUpSellingProduct")//
     Call<CrossShellResponse> Get_CROSSSHELL_API(@Body CrossShellRequest crossShellRequest);
 
 }

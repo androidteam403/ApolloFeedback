@@ -63,7 +63,7 @@ public class SessionManager {
     }
 
     public String getEposUrl() {
-        return preferences.getString(PREF_KEY_EPOS_URL, "http://online.apollopharmacy.org:51/EPOS/");
+        return preferences.getString(PREF_KEY_EPOS_URL, "http://online.apollopharmacy.org:51/FEEDBACK/");
     }
 
 

@@ -53,6 +53,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.6.1'
 
+    //OkHttpProfiler
+    implementation 'com.localebro:okhttpprofiler:1.0.8'
+
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
@@ -60,12 +63,8 @@ dependencies {
     //QR code generation
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 
-
-
-
+    //card view
     implementation 'androidx.cardview:cardview:1.0.0'
-
-
 
     //Modules
     implementation project(path: ':cusotmloader')

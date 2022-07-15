@@ -6,8 +6,8 @@ package com.thresholdsoft.apollofeedback.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor;
 import com.thresholdsoft.apollofeedback.BuildConfig;
-
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +24,11 @@ public class ApiClient {
     }
 
     private static Retrofit getRetrofitInstance(String baseUrl) {
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(new OkHttpProfilerInterceptor());
+        }
+        OkHttpClient client = builder
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .writeTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)

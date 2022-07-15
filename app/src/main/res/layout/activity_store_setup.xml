@@ -392,7 +392,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/roboto_regular"
-                                    android:text="http://192.168.43.63:9880/"
+                                    android:text="http://online.apollopharmacy.org:51/FEEDBACK/"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/twelve12_sp" />
                             </LinearLayout>

@@ -114,12 +114,11 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/dimen15dp"
                 android:layout_marginEnd="@dimen/dimen40dp"
-                android:layout_marginRight="@dimen/dimen40dp"
                 android:id="@+id/skipButton"
                 android:contentDescription="@string/app_name"
                 android:onClick="@{()-> callback.onClickSkip()}"
                 android:src="@drawable/ic_skip"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
 
         </LinearLayout>

@@ -57,7 +57,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
             activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
 
-            getController().feedbakSystemApiCall("1");
+            getController().feedbakSystemApiCall("1",1);
         });
 
 
@@ -87,7 +87,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
             activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
 
-            getController().feedbakSystemApiCall("2");
+            getController().feedbakSystemApiCall("2", 1);
         });
 //        activityFeedBackBinding.fairtick.setOnClickListener(v -> {
 //            activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -115,7 +115,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
             activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
 
-            getController().feedbakSystemApiCall("3");
+            getController().feedbakSystemApiCall("3",1);
         });
 //        activityFeedBackBinding.averagetick.setOnClickListener(v -> {
 //            activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -144,7 +144,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
             activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
 
-            getController().feedbakSystemApiCall("4");
+            getController().feedbakSystemApiCall("4", 1);
         });
 
 //        activityFeedBackBinding.happytick.setOnClickListener(v -> {
@@ -173,7 +173,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
             activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
 
-            getController().feedbakSystemApiCall("5");
+            getController().feedbakSystemApiCall("5", 1);
         });
 //        activityFeedBackBinding.excellenttick.setOnClickListener(v -> {
 //            activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
@@ -182,6 +182,13 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //
 //        });
 
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        },120000);
     }
 
 

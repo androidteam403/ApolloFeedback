@@ -18,7 +18,6 @@ import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
-import com.thresholdsoft.apollofeedback.ui.itemspayment.NewActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
@@ -38,6 +37,8 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         return intent;
     }
+
+    private String mobileNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     @Override
     public void onClickSkip() {
-        startActivity(ItemsPaymentActivity.getStartIntent(this));
+        startActivity(ItemsPaymentActivity.getStartIntent(this, mobileNumber));
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
         finish();
     }
@@ -88,8 +89,11 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     @Override
     public void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse) {
         if (feedbackSystemResponse != null) {
+            if (feedbackSystemResponse.getCustomerScreen() != null && feedbackSystemResponse.getCustomerScreen().getBillNumber() != null) {
+                this.mobileNumber = feedbackSystemResponse.getCustomerScreen().getBillNumber();
+            }
             if (Objects.requireNonNull(feedbackSystemResponse).getIspaymentScreen()) {
-                startActivity(ItemsPaymentActivity.getStartIntent(this));
+                startActivity(ItemsPaymentActivity.getStartIntent(this, mobileNumber));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 finish();
             } else {
@@ -145,37 +149,37 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             if (!isStoreid) {
                 for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary posMedia : rows.getPosMediaLibrary()) {
                     for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary.File filePath : posMedia.getFile()) {
-                        imagesList.add(filePath.getFullPath());
+                        imagesList.add(filePath.getPath());
                     }
 
                 }
             }
         }
         if (imagesList != null && imagesList.size() > 0) {
-            offersNowBinding.offersNowOne.setVisibility(View.GONE);
-            offersNowBinding.offersNowTwo.setVisibility(View.GONE);
-            offersNowBinding.offersNowThree.setVisibility(View.GONE);
-            offersNowBinding.offersNowFour.setVisibility(View.GONE);
+            offersNowBinding.offersNowOne.setVisibility(View.INVISIBLE);
+            offersNowBinding.offersNowTwo.setVisibility(View.INVISIBLE);
+            offersNowBinding.offersNowThree.setVisibility(View.INVISIBLE);
+            offersNowBinding.offersNowFour.setVisibility(View.INVISIBLE);
             for (int i = 0; i < imagesList.size(); i++) {
                 if (i == 0) {
-                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowOne);
+                    Glide.with(this).load(Uri.parse(AppConstants.DC_CODE_IMAGE_BASEURL + imagesList.get(i))).into(offersNowBinding.offersNowOne);
                     offersNowBinding.offersNowOne.setVisibility(View.VISIBLE);
                 } else if (i == 1) {
-                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowTwo);
+                    Glide.with(this).load(Uri.parse(AppConstants.DC_CODE_IMAGE_BASEURL + imagesList.get(i))).into(offersNowBinding.offersNowTwo);
                     offersNowBinding.offersNowTwo.setVisibility(View.VISIBLE);
                 } else if (i == 2) {
-                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowThree);
+                    Glide.with(this).load(Uri.parse(AppConstants.DC_CODE_IMAGE_BASEURL + imagesList.get(i))).into(offersNowBinding.offersNowThree);
                     offersNowBinding.offersNowThree.setVisibility(View.VISIBLE);
                 } else if (i == 3) {
-                    Glide.with(this).load(Uri.parse(imagesList.get(i))).into(offersNowBinding.offersNowFour);
+                    Glide.with(this).load(Uri.parse(AppConstants.DC_CODE_IMAGE_BASEURL + imagesList.get(i))).into(offersNowBinding.offersNowFour);
                     offersNowBinding.offersNowFour.setVisibility(View.VISIBLE);
                 }
             }
         } else {
-            offersNowBinding.offersNowOne.setVisibility(View.GONE);
-            offersNowBinding.offersNowTwo.setVisibility(View.GONE);
-            offersNowBinding.offersNowThree.setVisibility(View.GONE);
-            offersNowBinding.offersNowFour.setVisibility(View.GONE);
+            offersNowBinding.offersNowOne.setVisibility(View.INVISIBLE);
+            offersNowBinding.offersNowTwo.setVisibility(View.INVISIBLE);
+            offersNowBinding.offersNowThree.setVisibility(View.INVISIBLE);
+            offersNowBinding.offersNowFour.setVisibility(View.INVISIBLE);
         }
     }
 

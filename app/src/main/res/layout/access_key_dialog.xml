@@ -60,7 +60,6 @@
                     android:layout_marginTop="@dimen/five5_sp"
                     android:background="@drawable/phone_edittext_bg"
                     android:imeOptions="flagNoExtractUi"
-                    android:text="AP@11@2021"
                     android:importantForAutofill="no"
                     android:inputType="text"
                     tools:ignore="LabelFor" />

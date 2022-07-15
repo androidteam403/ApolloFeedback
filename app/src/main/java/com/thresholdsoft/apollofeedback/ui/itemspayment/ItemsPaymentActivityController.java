@@ -9,12 +9,9 @@ import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellRequest;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
-
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
-import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,35 +53,38 @@ public class ItemsPaymentActivityController {
     }
 
 
-    public void crossshellApiCall() {
-            CrossShellRequest crossShellRequest = new CrossShellRequest();
-            crossShellRequest.setStoreId("16001");
-            crossShellRequest.setMobileno("9958704005");
-            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
-            Call<CrossShellResponse> call = apiInterface.Get_CROSSSHELL_API(crossShellRequest);
-            call.enqueue(new Callback<CrossShellResponse>() {
-                @Override
-                public void onResponse(Call<CrossShellResponse> call, Response<CrossShellResponse> response) {
-                    if (response.isSuccessful() && response.code() == 200) {
-
-                        if (mCallback!=null){
+    public void crossshellApiCall(String mobileNumber) {
+        CrossShellRequest crossShellRequest = new CrossShellRequest();
+        crossShellRequest.setStoreId(new SessionManager(mContext).getSiteId());
+        crossShellRequest.setMobileno(mobileNumber);
+        ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
+        Call<CrossShellResponse> call = apiInterface.Get_CROSSSHELL_API(crossShellRequest);
+        call.enqueue(new Callback<CrossShellResponse>() {
+            @Override
+            public void onResponse(Call<CrossShellResponse> call, Response<CrossShellResponse> response) {
+                if (response.isSuccessful() && response.code() == 200) {
+                    if (response.body() != null && response.body().getRequestStatus() == 0) {
+                        if (mCallback != null) {
                             mCallback.onSucessCrossShell(response.body());
                         }
-
+                    } else if (response.body() != null && response.body().getRequestStatus() == 1) {
+                        if (mCallback != null) {
+                            mCallback.onFailureMessage(response.body().getReturnMessage());
+                        }
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<CrossShellResponse> call, Throwable t) {
-                    if (mCallback != null) {
-                        mCallback.onFailureMessage(t.getMessage());
-                    }
+            @Override
+            public void onFailure(Call<CrossShellResponse> call, Throwable t) {
+                if (mCallback != null) {
+                    mCallback.onFailureMessage(t.getMessage());
                 }
-            });
+            }
+        });
 
 
-        }
-
+    }
 
 
     public void feedbakSystemApiCall() {

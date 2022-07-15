@@ -44,7 +44,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     private StoreListResponseModel.StoreListObj selectedStoreContactNum = null;
     StoreSetupModel storeSetupModel;
     StoreSetupActivityCallback storeSetupActivityCallback;
-    String eposUrl = "http://online.apollopharmacy.org:51/EPOS/";
+    String eposUrl = "http://online.apollopharmacy.org:51/FEEDBACK/";
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, StoreSetupActivity.class);

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
-import com.bumptech.glide.Glide;
 import com.google.zxing.WriterException;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
@@ -27,11 +25,14 @@ import com.thresholdsoft.apollofeedback.databinding.DialogQrcodeBinding;
 import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.model.UpsellCrosssellModel;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -40,10 +41,11 @@ import androidmads.library.qrgenearator.QRGEncoder;
 public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentActivityCallback {
 
     private ActivityItemsPaymentBinding itemsPaymentBinding;
+    private static final String MOBILE_NUMBER = "MOBILE_NUMBER";
 
-
-    public static Intent getStartIntent(Context mContext) {
+    public static Intent getStartIntent(Context mContext, String mobileNumber) {
         Intent intent = new Intent(mContext, ItemsPaymentActivity.class);
+        intent.putExtra(MOBILE_NUMBER, mobileNumber);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         return intent;
     }
@@ -57,9 +59,13 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
 
     private void setUp() {
         itemsPaymentBinding.setCallback(this);
-        getController().getAdvertisementApiCall();
+//        getController().getAdvertisementApiCall();
+        String mobileNumber = null;
+        if (getIntent() != null) {
+            mobileNumber = (String) getIntent().getStringExtra(MOBILE_NUMBER);
+        }
         getController().feedbakSystemApiCall();
-        getController().crossshellApiCall();
+        getController().crossshellApiCall(mobileNumber);
 
     }
 
@@ -175,29 +181,62 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
 
     @Override
     public void onSucessCrossShell(CrossShellResponse crossShellResponse) {
-
-        if (crossShellResponse != null && crossShellResponse.getCrossselling() != null) {
-            itemsPaymentBinding.firstname.setText(crossShellResponse.getCrossselling().get(0).getItemname());
-            itemsPaymentBinding.firstreason.setText("- "+crossShellResponse.getCrossselling().get(0).getReason());
-            itemsPaymentBinding.secondname.setText(crossShellResponse.getCrossselling().get(1).getItemname());
-            itemsPaymentBinding.secondreason.setText("- "+crossShellResponse.getCrossselling().get(1).getReason());
+        List<UpsellCrosssellModel> upsellCrosssellModelList = new ArrayList<>();
+        if (crossShellResponse != null && crossShellResponse.getUpselling() != null && crossShellResponse.getUpselling().size() > 0) {
+            for (CrossShellResponse.Upselling upselling : crossShellResponse.getUpselling()) {
+                UpsellCrosssellModel upsellCrosssellModel = new UpsellCrosssellModel();
+                upsellCrosssellModel.setId(upselling.getId());
+                upsellCrosssellModel.setItemid(upselling.getItemid());
+                upsellCrosssellModel.setItemname(upselling.getItemname());
+                upsellCrosssellModel.setReason(upselling.getReason());
+                upsellCrosssellModel.setStockqty(upselling.getStockqty());
+                upsellCrosssellModelList.add(upsellCrosssellModel);
+            }
         }
-        if (crossShellResponse != null && crossShellResponse.getUpselling() != null) {
-            itemsPaymentBinding.thirdname.setText(crossShellResponse.getUpselling().get(0).getItemname());
-            itemsPaymentBinding.thirdreason.setText("- "+crossShellResponse.getUpselling().get(0).getReason());
-            itemsPaymentBinding.fourthname.setText(crossShellResponse.getUpselling().get(1).getItemname());
-            itemsPaymentBinding.fourthreason.setText("- "+crossShellResponse.getUpselling().get(1).getReason());
-            itemsPaymentBinding.fifthname.setText(crossShellResponse.getUpselling().get(2).getItemname());
-            itemsPaymentBinding.fifthreason.setText("- "+crossShellResponse.getUpselling().get(2).getReason());
-            itemsPaymentBinding.sixthname.setText(crossShellResponse.getUpselling().get(3).getItemname());
-            itemsPaymentBinding.sixthreason.setText("- "+crossShellResponse.getUpselling().get(3).getReason());
-            itemsPaymentBinding.seventhname.setText(crossShellResponse.getUpselling().get(4).getItemname());
-            itemsPaymentBinding.seventhreason.setText("- "+crossShellResponse.getUpselling().get(4).getReason());
+        if (crossShellResponse != null && crossShellResponse.getCrossselling() != null && crossShellResponse.getCrossselling().size() > 0) {
+            for (CrossShellResponse.Crossselling crossselling : crossShellResponse.getCrossselling()) {
+                UpsellCrosssellModel upsellCrosssellModel = new UpsellCrosssellModel();
+                upsellCrosssellModel.setId(crossselling.getId());
+                upsellCrosssellModel.setItemid(crossselling.getItemid());
+                upsellCrosssellModel.setItemname(crossselling.getItemname());
+                upsellCrosssellModel.setReason(crossselling.getReason());
+                upsellCrosssellModel.setStockqty(crossselling.getStockqty());
+                upsellCrosssellModelList.add(upsellCrosssellModel);
+            }
+        }
 
-            itemsPaymentBinding.eigthname.setText(crossShellResponse.getUpselling().get(5).getItemname());
-            itemsPaymentBinding.eigthreason.setText("- "+crossShellResponse.getUpselling().get(5).getReason());
+        if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 0) {
+            itemsPaymentBinding.firstname.setText(upsellCrosssellModelList.get(0).getItemname());
+            itemsPaymentBinding.firstreason.setText("- " + upsellCrosssellModelList.get(0).getReason());
+        }
+        if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 1) {
+            itemsPaymentBinding.secondname.setText(upsellCrosssellModelList.get(1).getItemname());
+            itemsPaymentBinding.secondreason.setText("- " + upsellCrosssellModelList.get(1).getReason());
+        }
 
-
+        if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 2) {
+            itemsPaymentBinding.thirdname.setText(upsellCrosssellModelList.get(2).getItemname());
+            itemsPaymentBinding.thirdreason.setText("- " + upsellCrosssellModelList.get(2).getReason());
+        }
+        if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 3) {
+            itemsPaymentBinding.fourthname.setText(upsellCrosssellModelList.get(3).getItemname());
+            itemsPaymentBinding.fourthreason.setText("- " + upsellCrosssellModelList.get(3).getReason());
+        }
+        if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 4) {
+            itemsPaymentBinding.fifthname.setText(upsellCrosssellModelList.get(4).getItemname());
+            itemsPaymentBinding.fifthreason.setText("- " + upsellCrosssellModelList.get(4).getReason());
+        }
+        if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 5) {
+            itemsPaymentBinding.sixthname.setText(upsellCrosssellModelList.get(5).getItemname());
+            itemsPaymentBinding.sixthreason.setText("- " + upsellCrosssellModelList.get(5).getReason());
+        }
+        if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 6) {
+            itemsPaymentBinding.seventhname.setText(upsellCrosssellModelList.get(6).getItemname());
+            itemsPaymentBinding.seventhreason.setText("- " + upsellCrosssellModelList.get(6).getReason());
+        }
+        if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 7) {
+            itemsPaymentBinding.eigthname.setText(upsellCrosssellModelList.get(7).getItemname());
+            itemsPaymentBinding.eigthreason.setText("- " + upsellCrosssellModelList.get(7).getReason());
         }
     }
 

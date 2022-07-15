@@ -25,13 +25,13 @@ public class FeedBackActivityController {
         this.mCallback = mCallback;
     }
 
-    public void feedbakSystemApiCall(String feedbackRate) {
+    public void feedbakSystemApiCall(String feedbackRate, int isFeedback) {
         if (NetworkUtils.isNetworkConnected(mContext)) {
             CommonUtils.showDialog(mContext, "Please Wait...");
             FeedbackSystemRequest feedbackSystemRequest = new FeedbackSystemRequest();
             feedbackSystemRequest.setSiteId(new SessionManager(mContext).getSiteId());
             feedbackSystemRequest.setTerminalId(new SessionManager(mContext).getTerminalId());
-            feedbackSystemRequest.setISFeedback(1);
+            feedbackSystemRequest.setISFeedback(isFeedback);
             feedbackSystemRequest.setFeedbackRate(feedbackRate);
             ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
             Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
