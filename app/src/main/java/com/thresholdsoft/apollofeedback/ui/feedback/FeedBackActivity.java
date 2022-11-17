@@ -184,7 +184,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         getController().feedbakSystemApiCall("0", 0);
 
         new Handler().postDelayed(() -> {
-            getController().feedbakSystemApiCall("5", 1);
+            getController().feedbakSystemApiCall("0", 1);
         }, 120000);
     }
 
@@ -214,7 +214,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         if (isFeedback == 0) {
             if (feedbackSystemResponse != null) {
                 if (!feedbackSystemResponse.getIsfeedbackScreen()) {
-                    getController().feedbakSystemApiCall("5", 1);
+                    getController().feedbakSystemApiCall("0", 1);
                 } else {
                     new Handler().postDelayed(() -> {
                         getController().feedbakSystemApiCall("0", 0);

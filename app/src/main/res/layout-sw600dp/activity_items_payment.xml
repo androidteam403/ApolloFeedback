@@ -23,87 +23,136 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen15dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen55dp"
-                    android:layout_height="@dimen/dimen55dp"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_apollo_circle_logo" />
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginLeft="@dimen/dimen10dp"
-                    android:orientation="vertical">
+                    android:layout_margin="@dimen/dimen15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/label_items_payment"
-                        android:textAllCaps="true"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen20sp" />
+                    <ImageView
+                        android:layout_width="@dimen/dimen55dp"
+                        android:layout_height="@dimen/dimen55dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_apollo_circle_logo" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="@dimen/dimen10dp"
+                        android:layout_marginLeft="@dimen/dimen10dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="@{model.customerofferScreen.customerName}"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/label_items_payment"
+                            android:textAllCaps="true"
                             android:textColor="@color/color_white"
-                            android:textSize="@dimen/dimen16sp" />
+                            android:textSize="@dimen/dimen20sp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen10dp"
-                            android:layout_marginLeft="@dimen/dimen10dp"
-                            android:layout_marginTop="@dimen/dimen3dp"
-                            android:background="@drawable/black_curves_bg"
-                            android:paddingStart="@dimen/dimen7dp"
-                            android:paddingTop="@dimen/dimen2dp"
-                            android:paddingEnd="@dimen/dimen7dp"
-                            android:paddingBottom="@dimen/dimen2dp"
-                            android:visibility="@{model.customerofferScreen.customerType != null &amp;&amp; !model.customerofferScreen.customerType.isEmpty ? view.VISIBLE : view.GONE}">
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="@{model.customerofferScreen.customerType}"
-                                android:textAllCaps="true"
+                                android:text="@{model.customerofferScreen.customerName}"
                                 android:textColor="@color/color_white"
-                                android:textSize="@dimen/dimen14sp" />
+                                android:textSize="@dimen/dimen16sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen10dp"
+                                android:layout_marginLeft="@dimen/dimen10dp"
+                                android:layout_marginTop="@dimen/dimen3dp"
+                                android:background="@drawable/black_curves_bg"
+                                android:paddingStart="@dimen/dimen7dp"
+                                android:paddingTop="@dimen/dimen2dp"
+                                android:paddingEnd="@dimen/dimen7dp"
+                                android:paddingBottom="@dimen/dimen2dp"
+                                android:visibility="@{model.customerofferScreen.customerType != null &amp;&amp; !model.customerofferScreen.customerType.isEmpty ? view.VISIBLE : view.GONE}">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:text="@{model.customerofferScreen.customerType}"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="@dimen/dimen14sp" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
-            </LinearLayout>
+
+                <TextView
+                    android:id="@+id/frequently_bought_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/label_frequently_bought"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen40dp" />
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen75dp"
             android:layout_marginTop="@dimen/dimen100dp"
+            android:layout_marginEnd="@dimen/dimen75dp"
             android:orientation="vertical">
+            <!--            <RelativeLayout-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="@drawable/black_curves_bg"-->
+            <!--                android:paddingStart="@dimen/dimen10dp"-->
+            <!--                android:paddingTop="@dimen/dimen5dp"-->
+            <!--                android:gravity="center_vertical"-->
+            <!--                android:paddingEnd="@dimen/dimen10dp"-->
+            <!--                android:paddingBottom="@dimen/dimen5dp">-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:fontFamily="@font/roboto_bold"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:text="@string/label_frequently_bought"-->
+            <!--                    android:textColor="@color/color_white"-->
+            <!--                    android:textSize="@dimen/dimen30sp" />-->
+            <!--            </RelativeLayout>-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/frequently_bought_text"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/dimen5dp"-->
+            <!--                android:layout_marginTop="@dimen/dimen5dp"-->
+            <!--                android:fontFamily="@font/roboto_bold"-->
+            <!--                android:text="@string/label_frequently_bought"-->
+            <!--                android:textColor="@color/white"-->
+            <!--                android:textSize="@dimen/dimen30sp" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen75dp"
-                android:layout_marginEnd="@dimen/dimen75dp"
+                android:layout_marginTop="@dimen/dimen5dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -121,8 +170,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen5dp"
-                        android:padding="@dimen/dimen5dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen5dp">
 
                         <ImageView
                             android:layout_width="@dimen/dimen100dp"
@@ -131,22 +180,22 @@
                             android:src="@drawable/pharma" />
 
                         <TextView
+                            android:id="@+id/firstname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
-                            android:id="@+id/firstname"
                             android:fontFamily="@font/poppins_bold"
                             android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
                         <TextView
+                            android:id="@+id/firstreason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
                             android:text=""
-                            android:id="@+id/firstreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -167,8 +216,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen5dp"
-                        android:padding="@dimen/dimen5dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen5dp">
 
                         <ImageView
                             android:layout_width="@dimen/dimen100dp"
@@ -177,22 +226,22 @@
                             android:src="@drawable/fcmg" />
 
                         <TextView
+                            android:id="@+id/secondname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text=""
-                            android:id="@+id/secondname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
                         <TextView
+                            android:id="@+id/secondreason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
                             android:text=""
-                            android:id="@+id/secondreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -212,8 +261,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen5dp"
-                        android:padding="@dimen/dimen5dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen5dp">
 
                         <ImageView
                             android:layout_width="@dimen/dimen100dp"
@@ -222,22 +271,22 @@
                             android:src="@drawable/pharma" />
 
                         <TextView
+                            android:id="@+id/thirdname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text=""
-                            android:id="@+id/thirdname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
                         <TextView
+                            android:id="@+id/thirdreason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
                             android:text=""
-                            android:id="@+id/thirdreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -259,8 +308,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen5dp"
-                        android:padding="@dimen/dimen5dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen5dp">
 
                         <ImageView
                             android:layout_width="@dimen/dimen100dp"
@@ -269,22 +318,22 @@
                             android:src="@drawable/fcmg" />
 
                         <TextView
+                            android:id="@+id/fourthname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text=""
-                            android:id="@+id/fourthname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
                         <TextView
+                            android:id="@+id/fourthreason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
                             android:text=""
-                            android:id="@+id/fourthreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -296,8 +345,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen75dp"
-                android:layout_marginEnd="@dimen/dimen75dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -315,8 +362,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen5dp"
-                        android:padding="@dimen/dimen5dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen5dp">
 
                         <ImageView
                             android:layout_width="@dimen/dimen100dp"
@@ -325,22 +372,22 @@
                             android:src="@drawable/pharma" />
 
                         <TextView
+                            android:id="@+id/fifthname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text=""
-                            android:id="@+id/fifthname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
                         <TextView
+                            android:id="@+id/fifthreason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
                             android:text=""
-                            android:id="@+id/fifthreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -361,8 +408,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen5dp"
-                        android:padding="@dimen/dimen5dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen5dp">
 
                         <ImageView
                             android:layout_width="@dimen/dimen100dp"
@@ -371,22 +418,22 @@
                             android:src="@drawable/fcmg" />
 
                         <TextView
+                            android:id="@+id/sixthname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text=""
-                            android:id="@+id/sixthname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
                         <TextView
+                            android:id="@+id/sixthreason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
                             android:text=""
-                            android:id="@+id/sixthreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -406,8 +453,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen5dp"
-                        android:padding="@dimen/dimen5dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen5dp">
 
                         <ImageView
                             android:layout_width="@dimen/dimen100dp"
@@ -416,22 +463,22 @@
                             android:src="@drawable/pharma" />
 
                         <TextView
+                            android:id="@+id/seventhname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text=""
-                            android:id="@+id/seventhname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
 
                         <TextView
+                            android:id="@+id/seventhreason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
                             android:text=""
-                            android:id="@+id/seventhreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen22sp" />
                     </LinearLayout>
@@ -452,8 +499,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen5dp"
-                        android:padding="@dimen/dimen5dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen5dp">
 
                         <ImageView
                             android:layout_width="@dimen/dimen100dp"
@@ -462,22 +509,22 @@
                             android:src="@drawable/fcmg" />
 
                         <TextView
+                            android:id="@+id/eigthname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_bold"
                             android:text=""
-                            android:id="@+id/eigthname"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen20sp" />
 
                         <TextView
+                            android:id="@+id/eigthreason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen5dp"
                             android:fontFamily="@font/poppins_regular"
                             android:text=""
-                            android:id="@+id/eigthreason"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen20sp" />
                     </LinearLayout>
@@ -843,6 +890,10 @@
         <variable
             name="view"
             type="android.view.View" />
+
+        <variable
+            name="upsellcrosssellcount"
+            type="String" />
 
     </data>
 </layout>

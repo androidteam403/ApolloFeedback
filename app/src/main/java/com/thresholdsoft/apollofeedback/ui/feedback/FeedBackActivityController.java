@@ -25,7 +25,8 @@ public class FeedBackActivityController {
 
     public void feedbakSystemApiCall(String feedbackRate, int isFeedback) {
         if (NetworkUtils.isNetworkConnected(mContext)) {
-            CommonUtils.showDialog(mContext, "Please Wait...");
+            if (isFeedback == 1)
+                CommonUtils.showDialog(mContext, "Please Wait...");
             FeedbackSystemRequest feedbackSystemRequest = new FeedbackSystemRequest();
             feedbackSystemRequest.setSiteId(new SessionManager(mContext).getSiteId());
             feedbackSystemRequest.setTerminalId(new SessionManager(mContext).getTerminalId());
