@@ -12,4 +12,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public SessionManager getDataManager() {
         return new SessionManager(this);
     }
+
+
+
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BF000000"
+        android:padding="@dimen/dimen15dp">
+
+        <ImageView
+            android:id="@+id/close_icon"
+            android:layout_width="@dimen/dimen30dp"
+            android:layout_height="@dimen/dimen30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_close"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_extra_bold"
+                android:text="@{`Scan to Pay ₹ `+model.customerScreen.payment.amouttobeCollected}"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/dimen18sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen5dp"
+                android:background="@drawable/white_curve_bg"
+                android:padding="@dimen/dimen20dp">
+
+                <ImageView
+                    android:id="@+id/qr_code_image"
+                    android:layout_width="@dimen/dimen200dp"
+                    android:layout_height="@dimen/dimen200dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse" />
+    </data>
+</layout>
