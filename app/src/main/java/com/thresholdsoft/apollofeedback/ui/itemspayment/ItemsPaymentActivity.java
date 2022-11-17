@@ -42,6 +42,8 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
 
     private ActivityItemsPaymentBinding itemsPaymentBinding;
     private static final String MOBILE_NUMBER = "MOBILE_NUMBER";
+    private boolean isUpsellCrosssellValid;
+    private String mobileNumber = null;
 
     public static Intent getStartIntent(Context mContext, String mobileNumber) {
         Intent intent = new Intent(mContext, ItemsPaymentActivity.class);
@@ -59,13 +61,16 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
 
     private void setUp() {
         itemsPaymentBinding.setCallback(this);
-//        getController().getAdvertisementApiCall();
-        String mobileNumber = null;
+        itemsPaymentBinding.setUpsellcrosssellcount("0");
+        getController().getAdvertisementApiCall();
         if (getIntent() != null) {
             mobileNumber = (String) getIntent().getStringExtra(MOBILE_NUMBER);
         }
         getController().feedbakSystemApiCall();
-        getController().crossshellApiCall(mobileNumber);
+        if (mobileNumber != null && !mobileNumber.isEmpty()) {
+            this.isUpsellCrosssellValid = true;
+            getController().crossshellApiCall(mobileNumber);
+        }
 
     }
 
@@ -111,6 +116,14 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
     @Override
     public void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse) {
         if (feedbackSystemResponse != null) {
+
+            if (feedbackSystemResponse.getCustomerScreen() != null && feedbackSystemResponse.getCustomerScreen().getBillNumber() != null && !feedbackSystemResponse.getCustomerScreen().getBillNumber().isEmpty()) {
+                if (!isUpsellCrosssellValid) {
+                    this.isUpsellCrosssellValid = true;
+                    this.mobileNumber = feedbackSystemResponse.getCustomerScreen().getBillNumber();
+                    getController().crossshellApiCall(mobileNumber);
+                }
+            }
             DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
             formatter.applyPattern("##,##0.00");
             String amounttobeCollected = "";
@@ -204,7 +217,7 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
                 upsellCrosssellModelList.add(upsellCrosssellModel);
             }
         }
-
+        itemsPaymentBinding.setUpsellcrosssellcount(String.valueOf(upsellCrosssellModelList.size()));
         if (upsellCrosssellModelList != null && upsellCrosssellModelList.size() > 0) {
             itemsPaymentBinding.firstname.setText(upsellCrosssellModelList.get(0).getItemname());
             itemsPaymentBinding.firstreason.setText("- " + upsellCrosssellModelList.get(0).getReason());

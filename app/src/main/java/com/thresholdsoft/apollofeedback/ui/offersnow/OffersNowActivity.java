@@ -50,7 +50,10 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private void setUp() {
         offersNowBinding.setCallback(this);
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
+            offersNowBinding.setIsConfigurationAvailable(true);
             onClickSettingIcon();
+        } else {
+            offersNowBinding.setIsConfigurationAvailable(false);
         }
 
 
@@ -208,6 +211,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
                     finish();
                 } else {
+                    offersNowBinding.setIsConfigurationAvailable(false);
                     getController().feedbakSystemApiCall();
                     getController().getDcOffersNowApi(getDataManager().getDcCode());
                 }
