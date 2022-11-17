@@ -6,18 +6,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/app_bg"
-        android:gravity="center"
-        tools:context=".offersnow.OffersNowActivity">
+        tools:context=".ui.offersnow.OffersNowActivity">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/dimen10dp">
+
+            <ImageView
+                android:layout_width="@dimen/dimen20dp"
+                android:layout_height="@dimen/dimen20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dimen15dp"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onClickRefreshIcon()}"
+                android:src="@drawable/ic_refresh" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -31,102 +39,109 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginLeft="@dimen/dimen10dp"
-                    android:text="@string/label_offers_now"
                     android:fontFamily="@font/poppins_bold"
+                    android:text="@string/label_offers_now"
                     android:textAllCaps="true"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dimen25sp" />
             </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen10dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="@dimen/dimen40dp"
+                android:layout_marginTop="@dimen/dimen20dp"
+                android:layout_marginEnd="@dimen/dimen40dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <ImageView
-                    android:layout_width="@dimen/dimen150dp"
-                    android:layout_height="@dimen/dimen220dp"
+                    android:id="@+id/offers_now_one"
+                    android:layout_width="@dimen/dimen0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight=".25"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/mothers_days" />
+                    android:scaleType="fitXY" />
 
                 <ImageView
-                    android:layout_width="@dimen/dimen150dp"
-                    android:layout_height="@dimen/dimen220dp"
-                    android:layout_marginStart="@dimen/dimen3dp"
-                    android:layout_marginLeft="@dimen/dimen3dp"
+                    android:id="@+id/offers_now_two"
+                    android:layout_width="@dimen/dimen0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight=".25"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/upto_fiftypercent" />
+                    android:scaleType="fitXY" />
 
                 <ImageView
-                    android:layout_width="@dimen/dimen150dp"
-                    android:layout_height="@dimen/dimen220dp"
-                    android:layout_marginStart="@dimen/dimen3dp"
-                    android:layout_marginLeft="@dimen/dimen3dp"
+                    android:id="@+id/offers_now_three"
+                    android:layout_width="@dimen/dimen0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight=".25"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/one_touch_program_saving" />
+                    android:scaleType="fitXY" />
 
                 <ImageView
-                    android:layout_width="@dimen/dimen150dp"
-                    android:layout_height="@dimen/dimen220dp"
-                    android:layout_marginStart="@dimen/dimen3dp"
-                    android:layout_marginLeft="@dimen/dimen3dp"
+                    android:id="@+id/offers_now_four"
+                    android:layout_width="@dimen/dimen0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight=".25"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/live_healthier_with_ayurvedha" />
+                    android:scaleType="fitXY" />
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
+            <ImageView
+                android:id="@+id/skipButton"
+                android:layout_width="@dimen/dimen70dp"
+                android:layout_height="@dimen/dimen35dp"
+                android:layout_gravity="end"
                 android:layout_marginTop="@dimen/dimen15dp"
-                android:layout_marginEnd="@dimen/dimen30dp"
-                android:layout_marginRight="@dimen/dimen30dp"
-                android:gravity="end">
+                android:layout_marginEnd="@dimen/dimen40dp"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onClickSkip()}"
+                android:src="@drawable/ic_skip"
+                android:visibility="gone" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/black_curves_bg"
-                    android:gravity="center"
-                    android:onClick="@{()-> callback.onClickSkip()}"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/dimen7dp"
-                    android:paddingTop="@dimen/dimen2dp"
-                    android:paddingEnd="@dimen/dimen7dp"
-                    android:paddingBottom="@dimen/dimen2dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_skip"
-                        android:textAllCaps="true"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen18sp" />
-
-                    <ImageView
-                        android:layout_width="@dimen/dimen10dp"
-                        android:layout_height="@dimen/dimen10dp"
-                        android:layout_marginStart="@dimen/dimen5dp"
-                        android:layout_marginLeft="@dimen/dimen5dp"
-                        android:contentDescription="@string/app_name"
-                        android:rotation="270"
-                        android:src="@drawable/ic_white_triangle" />
-                </LinearLayout>
-            </RelativeLayout>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="@dimen/dimen25dp"
+            android:layout_height="@dimen/dimen25dp"
+            android:layout_margin="@dimen/dimen10dp"
+            android:contentDescription="@string/app_name"
+            android:onClick="@{()-> callback.onClickSettingIcon()}"
+            android:src="@drawable/ic_setting"
+            android:visibility="@{isConfigurationAvailable ? view.VISIBLE : view.GONE}" />
     </RelativeLayout>
 
     <data>
 
         <variable
             name="callback"
-            type="com.thresholdsoft.apollofeedback.offersnow.OffersNowActivityCallback" />
+            type="com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivityCallback" />
+
+        <variable
+            name="mContext"
+            type="android.content.Context" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
     </data>
 </layout>

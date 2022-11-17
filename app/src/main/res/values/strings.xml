@@ -7,4 +7,23 @@
     <string name="label_items_in_your_cart">items\nin your cart</string>
     <string name="label_rupee_symbol">\u20B9</string>
     <string name="label_continue_npayment">continue\npayment</string>
+    <string name="label_amont_nsaved">amount\nsaved</string>
+    <string name="label_final_npayment">final\npayment</string>
+    <string name="label_poor">POOR</string>
+    <string name="label_payment_sucessfull">payment sucessfull</string>
+    <string name="label_member">member</string>
+    <string name="label_please_rate_our_buying_experience">Please rate our buying experience</string>
+    <string name="label_fair">FAIR</string>
+    <string name="label_average">AVERAGE</string>
+    <string name="label_happy">HAPPY</string>
+    <string name="label_excellent">EXCELLENT</string>
+    <string name="label_thank_you_for_your_feedback">Thank You for your Feedback</string>
+    <string name="price_format">%,.2f</string>
+    <string name="label_redeem_npoints">redeem\npoints</string>
+    <string name="label_bill_nvalue">bill\nvalue</string>
+    <string name="label_dc_code">DC Code</string>
+<!--    <string name="label_frequently_bought">Frequently Bought (%1$s)</string>-->
+    <string name="label_frequently_bought">Frequently Bought</string>
+
+
 </resources>
