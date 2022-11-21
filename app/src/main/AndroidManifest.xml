@@ -19,8 +19,11 @@
         android:roundIcon="@mipmap/ic_launcher_apollo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <activity android:name=".ui.whyscanprescription.WhyScanPrescriptionActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 
-
+        </activity>
         <activity
             android:name=".ui.storesetup.StoreSetupActivity"
             android:screenOrientation="landscape"
@@ -35,7 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.itemspayment.NewActivity"
             android:screenOrientation="landscape"

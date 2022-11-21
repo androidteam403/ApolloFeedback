@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.whyscanprescription.WhyScanPrescriptionActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/why_scan"/>
+
+
+    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/dimen2dp"
+            android:layout_marginBottom="36dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dimen100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_for_continue">
+
+                <TextView
+                  android:layout_marginRight="@dimen/dimen15dp"
+                    android:layout_marginLeft="@dimen/dimen15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SCAN PRESCRIPTION"
+                    android:textSize="@dimen/dimen12sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_bold"
+                    android:padding="@dimen/dimen7dp"
+                    />
+
+
+        </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
