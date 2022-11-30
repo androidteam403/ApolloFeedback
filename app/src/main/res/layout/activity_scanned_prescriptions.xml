@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen10dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen70dp"
+                    android:layout_height="@dimen/dimen70dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/apollo_circle_logo" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/label_your_scanned_prescriptions"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dimen35sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/label_insert_your_prescriptions"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dimen25sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/prescription_list_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen20dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen90dp"
+                    android:layout_height="@dimen/dimen90dp"
+                    android:background="@drawable/bg_redsolid_whitestroke_rounded"
+                    android:gravity="center"
+                    android:onClick="@{()-> callback.onClickScanAgain()}"
+                    android:orientation="vertical">
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:layout_width="@dimen/forty_dp"
+                        android:layout_height="@dimen/forty_dp"
+                        android:layout_gravity="center_horizontal"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/raw_scan_new" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/label_scan_nagain"
+                        android:textColor="@color/color_white"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/done"
+                    android:layout_width="150dp"
+                    android:layout_height="@dimen/forty_five_dp"
+                    android:layout_marginTop="@dimen/dimen10dp"
+                    android:background="@drawable/scan_btn_bg"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="Done"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen20sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen30dp"
+                        android:layout_height="@dimen/dimen30dp"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/tickmark" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <data>
+
+        <variable
+            name="callback"
+            type="com.thresholdsoft.apollofeedback.ui.scannedprescriptions.ScannedPrescriptionsActivityCallback" />
+    </data>
+</layout>

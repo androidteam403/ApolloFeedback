@@ -70,4 +70,9 @@
     <dimen name="dimen10sp">10sp</dimen>
     <dimen name="dimen250dp">250dp</dimen>
     <dimen name="dimen115dp">115dp</dimen>
+    <dimen name="dimen280dp">280dp</dimen>
+    <dimen name="dimen90dp">90dp</dimen>
+    <dimen name="dimen35sp">35sp</dimen>
+    <dimen name="dimen305dp">305dp</dimen>
+
 </resources>

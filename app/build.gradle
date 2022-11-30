@@ -69,4 +69,9 @@ dependencies {
     //Modules
     implementation project(path: ':cusotmloader')
 
+    //epson scanner sdk
+    implementation project(path: ':epsonscansdk-release')
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+
 }

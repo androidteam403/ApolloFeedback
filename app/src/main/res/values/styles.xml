@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
 
     <style name="Custom" parent="android:Theme.DeviceDefault.Dialog">
@@ -45,5 +45,17 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="fadeinandoutcustomDialog" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowAnimationStyle">@style/fadeinandoutDialogAnimation</item>
+    </style>
+
+    <style name="fadeinandoutDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_frag_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_frag_fade_out</item>
     </style>
 </resources>

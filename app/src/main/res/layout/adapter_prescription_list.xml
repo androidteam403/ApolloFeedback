@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dimen200dp"
+        android:layout_height="@dimen/dimen305dp"
+        android:layout_marginStart="@dimen/dimen5dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/prescription_view_pager"
+            android:layout_width="@dimen/dimen200dp"
+            android:layout_marginTop="@dimen/dimen25dp"
+            android:layout_height="@dimen/dimen280dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/item_delete"
+            android:layout_width="@dimen/dimen50dp"
+            android:layout_height="@dimen/dimen50dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/scanagain_close" />
+
+        <TextView
+            android:id="@+id/item_count"
+            android:layout_width="@dimen/dimen25dp"
+            android:layout_height="@dimen/dimen35dp"
+            android:layout_margin="@dimen/dimen5dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen30dp"
+            android:layout_height="@dimen/dimen30dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_round_bg"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/dimen5dp"
+            android:src="@drawable/ic_zoom_in" />
+
+    </RelativeLayout>
+</layout>
