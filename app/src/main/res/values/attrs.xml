@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="OtpViewTheme">
+        <attr format="reference" name="otpViewStyle"/>
+    </declare-styleable>
+
+    <declare-styleable name="OtpView">
+        <attr format="integer" name="itemCount"/>
+        <attr format="dimension" name="itemWidth"/>
+        <attr format="dimension" name="itemHeight"/>
+        <attr format="dimension" name="itemRadius"/>
+        <attr format="dimension" name="itemSpacing"/>
+        <attr format="dimension" name="lineWidth"/>
+        <attr format="reference|color" name="lineColor"/>
+        <attr format="enum" name="viewType">
+            <enum name="rectangle" value="0"/>
+            <enum name="line" value="1"/>
+            <enum name="none" value="2"/>
+        </attr>
+        <attr name="android:cursorVisible"/>
+        <attr format="dimension" name="cursorWidth"/>
+        <attr format="reference|color" name="cursorColor"/>
+        <attr name="android:itemBackground"/>
+        <attr format="boolean" name="hideLineWhenFilled"/>
+
+
+        <attr name="startLineColor" format="color"/>
+        <attr name="endLineColor" format="color"/>
+        <attr name="lineStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="dash" value="1" />
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="SmoothCheckBox">
+        <attr name="duration" format="integer"/>
+        <attr name="stroke_width" format="dimension"/>
+        <attr name="color_tick" format="color"/>
+        <attr name="color_checked" format="color"/>
+        <attr name="color_unchecked" format="color"/>
+        <attr name="color_unchecked_stroke" format="color"/>
+    </declare-styleable>
+
+   <!-- <declare-styleable name="TimelineView" >
+        <attr name="marker" format="color|reference"/>
+        <attr name="markerSize" format="dimension"/>
+        <attr name="markerInCenter" format="boolean"/>
+        <attr name="startLineColor" format="color"/>
+        <attr name="endLineColor" format="color"/>
+        <attr name="lineWidth" format="dimension"/>
+        <attr name="lineStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="dash" value="1" />
+        </attr>
+        <attr name="lineStyleDashGap" format="dimension" />
+        <attr name="lineStyleDashLength" format="dimension" />
+        <attr name="lineOrientation" format="enum">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr name="linePadding" format="dimension"/>
+    </declare-styleable>-->
+    <declare-styleable name="ZoomageView">
+        <attr name="zoomage_zoomable" format="boolean" />
+        <attr name="zoomage_translatable" format="boolean" />
+        <attr name="zoomage_restrictBounds" format="boolean" />
+        <attr name="zoomage_animateOnReset" format="boolean" />
+        <attr name="zoomage_doubleTapToZoom" format="boolean" />
+        <attr name="zoomage_doubleTapToZoomScaleFactor" format="float" />
+        <attr name="zoomage_autoCenter" format="boolean" />
+        <attr name="zoomage_minScale" format="float" />
+        <attr name="zoomage_maxScale" format="float" />
+        <attr name="zoomage_autoResetMode" format="enum">
+            <enum name="UNDER" value="0" />
+            <enum name="OVER" value="1" />
+            <enum name="ALWAYS" value="2" />
+            <enum name="NEVER" value="3" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="ToolDotProgress">
+        <attr name="color" format="color" />
+        <attr name="count" format="integer" />
+        <attr name="timeout" format="integer" />
+    </declare-styleable>
+</resources>

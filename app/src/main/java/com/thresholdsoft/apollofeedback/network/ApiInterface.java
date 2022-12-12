@@ -31,10 +31,10 @@ public interface ApiInterface {
     @GET("http://dev.thresholdsoft.com/apollo_feedback_assets/advertisements.json")
     Call<GetAdvertisementResponse> GET_ADVERTISEMENT_API_CALL();
 
-    @GET("http://lms.apollopharmacy.org:8033/APK/apollompos/Self/STORELIST")
+    @GET("https://online.apollopharmacy.org/MAPPS/apollompos/Self/STORELIST")//http://lms.apollopharmacy.org:8033/APK/apollompos/Self/STORELIST
     Call<StoreListResponseModel> GET_STORES_LIST();
 
-    @POST("http://lms.apollopharmacy.org:8033/APK/apollompos/Self/Registration")
+    @POST("https://online.apollopharmacy.org/MAPPS/apollompos/Self/Registration")//http://lms.apollopharmacy.org:8033/APK/apollompos/Self/Registration
     Call<DeviceRegistrationResponse> deviceRegistration(@Body DeviceRegistrationRequest deviceRegistrationRequest);
 
     @POST("https://signage.apollopharmacy.app/zc-v3.1-user-svc/2.0/ads/api/pos_offer/list/get-pos-offers-by-dc")

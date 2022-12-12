@@ -22,6 +22,7 @@ import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
+import com.thresholdsoft.apollofeedback.ui.whyscanprescription.WhyScanPrescriptionActivity;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
@@ -50,7 +51,10 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private void setUp() {
         offersNowBinding.setCallback(this);
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
+            offersNowBinding.setIsConfigurationAvailable(true);
             onClickSettingIcon();
+        } else {
+            offersNowBinding.setIsConfigurationAvailable(false);
         }
 
 
@@ -96,7 +100,13 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 startActivity(ItemsPaymentActivity.getStartIntent(this, mobileNumber));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 finish();
-            } else {
+            }
+            else if ("isPrescription".equals("isPrescription")) {
+                startActivity(WhyScanPrescriptionActivity.getStartIntent(this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
+            }
+            else {
                 new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
             }
         }
@@ -208,6 +218,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
                     finish();
                 } else {
+                    offersNowBinding.setIsConfigurationAvailable(false);
                     getController().feedbakSystemApiCall();
                     getController().getDcOffersNowApi(getDataManager().getDcCode());
                 }

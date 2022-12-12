@@ -8,6 +8,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SessionManager {
     SharedPreferences preferences;
 //    public static final StoreSetupActivityMvpView INSTANCE = ;
@@ -21,6 +28,7 @@ public class SessionManager {
     private static final String PREF_STORE_ADDRESS = "PREF_STORE_ADDRESS";
     private static final String PREF_LABEL_ADDRESS = "PREF_LABEL_ADDRESS";
     private static final String PREF_KEY_DC_CODE = "PREF_KEY_DC_CODE";
+    private static final String PREF_KEY_SCANNED_PRESCRIPTIONS_LIST_PATH = "PREF_KEY_SCANNED_PRESCRIPTIONS_LIST_PATH";
 
 
     public SessionManager(Context context) {
@@ -89,5 +97,23 @@ public class SessionManager {
 
     public String getDcCode() {
         return preferences.getString(PREF_KEY_DC_CODE, "");
+    }
+
+    public void setScannedPrescriptionsPath(List<String> scannedPrescriptionsPathList) {
+        preferences.edit().putString(PREF_KEY_SCANNED_PRESCRIPTIONS_LIST_PATH, new Gson().toJson(scannedPrescriptionsPathList)).apply();
+    }
+
+    List<String> scannedPrescriptionsPathListEmpty = new ArrayList<>();
+
+    public List<String> getScannedPrescriptionsPath() {
+        Gson gson = new Gson();
+        String json = preferences.getString(PREF_KEY_SCANNED_PRESCRIPTIONS_LIST_PATH, "");
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
+        if (gson.fromJson(json, type) != null) {
+            return gson.fromJson(json, type);
+        } else {
+            return scannedPrescriptionsPathListEmpty;
+        }
     }
 }

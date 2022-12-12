@@ -125,7 +125,8 @@
             android:layout_margin="@dimen/dimen10dp"
             android:contentDescription="@string/app_name"
             android:onClick="@{()-> callback.onClickSettingIcon()}"
-            android:src="@drawable/ic_setting" />
+            android:src="@drawable/ic_setting"
+            android:visibility="@{isConfigurationAvailable ? view.VISIBLE : view.GONE}" />
     </RelativeLayout>
 
     <data>
@@ -133,5 +134,14 @@
         <variable
             name="callback"
             type="com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivityCallback" />
+
+        <variable
+            name="mContext"
+            type="android.content.Context" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
     </data>
 </layout>

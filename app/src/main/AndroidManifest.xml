@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.thresholdsoft.apollofeedback">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -20,8 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_apollo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <activity
+            android:name=".ui.whyscanprescription.WhyScanPrescriptionActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 
-
+        </activity>
         <activity
             android:name=".ui.storesetup.StoreSetupActivity"
             android:screenOrientation="landscape"
@@ -36,17 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.itemspayment.NewActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
-<!--        <intent-filter>-->
-<!--            <action android:name="android.intent.action.MAIN" />-->
-
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--        </intent-filter>-->
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".ui.offersnow.OffersNowActivity"
             android:screenOrientation="landscape"
@@ -57,6 +53,14 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".ui.feedback.FeedBackActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".ui.whyscanprescription.epsonscan.EpsonScanActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".ui.scannedprescriptions.ScannedPrescriptionsActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
     </application>

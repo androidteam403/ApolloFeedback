@@ -22,6 +22,14 @@
     <string name="label_redeem_npoints">redeem\npoints</string>
     <string name="label_bill_nvalue">bill\nvalue</string>
     <string name="label_dc_code">DC Code</string>
+    <!--    <string name="label_frequently_bought">Frequently Bought (%1$s)</string>-->
+    <string name="label_frequently_bought">Frequently Bought</string>
+    <string name="label_scan_prescription">Scan Prescription</string>
+    <string name="label_insert_your_prescriptions">Insert Your Prescriptions</string>
+    <string name="label_your_scanned_prescriptions">Your Scanned Prescriptions</string>
+    <string name="label_scan_nagain">Scan\nagain</string>
+    <string name="label_yes">Yes</string>
+    <string name="label_cancel">Cancel</string>
 
 
 </resources>

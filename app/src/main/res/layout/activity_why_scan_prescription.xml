@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/why_scan">
+
+        <!--        <RelativeLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent">-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:contentDescription="@string/app_name"-->
+        <!--                android:scaleType="fitXY"-->
+        <!--                android:src="@drawable/why_scan" />-->
+
+
+        <!--        </RelativeLayout>-->
+
+        <LinearLayout
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/dimen2dp"
+            android:layout_marginEnd="@dimen/dimen100dp"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/background_for_continue"
+            android:gravity="center"
+            android:onClick="@{()-> callback.onClickScanPrescription()}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dimen15dp"
+                android:layout_marginRight="@dimen/dimen15dp"
+                android:fontFamily="@font/roboto_bold"
+                android:padding="@dimen/dimen7dp"
+                android:text="@string/label_scan_prescription"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen12sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <data>
+
+        <variable
+            name="callback"
+            type="com.thresholdsoft.apollofeedback.ui.whyscanprescription.WhyScanPrescriptionActivityCallback" />
+    </data>
+</layout>

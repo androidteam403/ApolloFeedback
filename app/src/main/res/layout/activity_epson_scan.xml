@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/app_bg">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please insert your prescription in scanner"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen25dp"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/scan_pres_image"
+                android:layout_width="@dimen/dimen100dp"
+                android:layout_height="@dimen/dimen100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen20dp"
+                android:background="@drawable/round_black_transparent_bg"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/dimen10dp"
+                android:src="@drawable/raw_scan_new" />
+
+            <LinearLayout
+                android:id="@+id/scan"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/forty_five_dp"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:background="@drawable/scan_btn_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Click Here"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
