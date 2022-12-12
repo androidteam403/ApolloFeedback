@@ -17,8 +17,12 @@ import com.thresholdsoft.apollofeedback.databinding.ActivityFeedBackBinding;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class FeedBackActivity extends BaseActivity implements FeedBackActivityCallBack {
     private ActivityFeedBackBinding activityFeedBackBinding;
+
 
     public static Intent getStartIntent(Context mContext, FeedbackSystemResponse feedbackSystemResponse) {
         Intent intent = new Intent(mContext, FeedBackActivity.class);
@@ -27,16 +31,54 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         return intent;
     }
 
+
+//    Handler handler=new Handler();
+//    Runnable runnable;
+//    int Delay=10*1000;
+//    @Override
+//    protected void onPause() {
+//
+//        FeedbackSystemResponse feedbackSystemResponse=new FeedbackSystemResponse();
+//        if (feedbackSystemResponse.getIsfeedbackScreen()==false){
+//            handler.removeCallbacks(runnable);
+//
+//        }
+//        super.onPause();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        handler.postDelayed(runnable=new Runnable() {
+//            @Override
+//            public void run() {
+//                getController().feedbakSystemApiCall("0",0);
+//                onPause();
+//            }
+//        },Delay);
+//        super.onResume();
+//    }
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+
+                getController().feedbakSystemApiCall("0", 0);
+            }
+        }, 1000, 60000);
+
+
         activityFeedBackBinding = DataBindingUtil.setContentView(this, R.layout.activity_feed_back);
         if (getIntent() != null) {
             FeedbackSystemResponse feedbackSystemResponse = (FeedbackSystemResponse) getIntent().getSerializableExtra(AppConstants.FEEDBACK_SYSTEM_RESPONSE);
             if (feedbackSystemResponse != null)
                 activityFeedBackBinding.setModel(feedbackSystemResponse);
         }
+
 
         activityFeedBackBinding.poor.setOnClickListener(v -> {
             activityFeedBackBinding.setIsFeedbackEnabled(true);
@@ -57,7 +99,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
             activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
 
-            getController().feedbakSystemApiCall("1",1);
+            getController().feedbakSystemApiCall("1", 1);
         });
 
 
@@ -115,7 +157,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
             activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
 
-            getController().feedbakSystemApiCall("3",1);
+            getController().feedbakSystemApiCall("3", 1);
         });
 //        activityFeedBackBinding.averagetick.setOnClickListener(v -> {
 //            activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -188,7 +230,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
             public void run() {
 
             }
-        },120000);
+        }, 120000);
     }
 
 
@@ -197,10 +239,14 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+
     @Override
     public void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse) {
+
+
         if (feedbackSystemResponse != null) {
             if (feedbackSystemResponse.getStatus()) {
+
                 new Handler().postDelayed(() -> {
                     startActivity(OffersNowActivity.getStartIntent(FeedBackActivity.this));
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
