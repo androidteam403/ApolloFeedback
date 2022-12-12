@@ -101,11 +101,11 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 finish();
             }
-//            else if ("isPrescription".equals("isPrescription")) {
-//                startActivity(WhyScanPrescriptionActivity.getStartIntent(this));
-//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                finish();
-//            }
+            else if ("isPrescription".equals("isPrescription")) {
+                startActivity(WhyScanPrescriptionActivity.getStartIntent(this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
+            }
             else {
                 new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
             }
