@@ -1,4 +1,4 @@
-package com.thresholdsoft.apollofeedback.ui.scannedprescriptions;
+package com.thresholdsoft.apollofeedback.ui.whyscanprescription.epsonscan;
 
 import android.content.Context;
 
@@ -7,7 +7,7 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
-import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivityCallback;
+import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.ScannedPrescriptionsActivityCallback;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
 
@@ -15,12 +15,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ScannedPrescriptionsActivityController {
-
+public class EpsonScanActivityController {
     private Context mContext;
-    private ScannedPrescriptionsActivityCallback mCallback;
+    private EpsonScanActivityCallback mCallback;
 
-    public ScannedPrescriptionsActivityController(Context mContext, ScannedPrescriptionsActivityCallback mCallback) {
+    public EpsonScanActivityController(Context mContext, EpsonScanActivityCallback mCallback) {
         this.mContext = mContext;
         this.mCallback = mCallback;
     }
@@ -59,4 +58,3 @@ public class ScannedPrescriptionsActivityController {
         }
     }
 }
-

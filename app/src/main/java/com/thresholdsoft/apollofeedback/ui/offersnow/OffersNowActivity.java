@@ -21,8 +21,10 @@ import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.ScannedPrescriptionsActivity;
 import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
 import com.thresholdsoft.apollofeedback.ui.whyscanprescription.WhyScanPrescriptionActivity;
+import com.thresholdsoft.apollofeedback.ui.whyscanprescription.epsonscan.EpsonScanActivity;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
@@ -102,9 +104,13 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 finish();
             }
             else if ("isPrescription".equals("isPrescription")) {
-                startActivity(WhyScanPrescriptionActivity.getStartIntent(this));
+                Intent i=new Intent(OffersNowActivity.this, ItemsPaymentActivity.class);
+                startActivity(i);
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                finish();
+
+//                startActivity(WhyScanPrescriptionActivity.getStartIntent(this));
+//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//                finish();
             }
             else {
                 new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
