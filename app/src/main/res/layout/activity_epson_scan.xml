@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -14,134 +13,160 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen15dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/dimen55dp"
-                        android:layout_height="@dimen/dimen55dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_apollo_circle_logo" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen10dp"
-                        android:layout_marginLeft="@dimen/dimen10dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
-                            android:text="@string/label_items_payment"
-                            android:textAllCaps="true"
-                            android:textColor="@color/color_white"
-                            android:textSize="@dimen/dimen18sp" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_regular"
-                                android:text="Nagaraju.C"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/dimen14sp" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:text="MEMBER"
-                                android:layout_marginStart="@dimen/dimen10dp"
-                                android:textColor="@color/white"
-                                android:fontFamily="@font/roboto_medium"
-                                android:paddingStart="@dimen/dimen10dp"
-                                android:paddingEnd="@dimen/dimen10dp"
-                                android:textSize="@dimen/dimen12sp"
-                                android:paddingTop="@dimen/four4_dp"
-                                android:paddingBottom="@dimen/four4_dp"
-                                android:background="@drawable/round_black_bg"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-
-                android:layout_marginTop="@dimen/dimen30sp"
-                android:layout_marginEnd="@dimen/dimen20dp"
-                android:layout_marginBottom="@dimen/dimen15dp"
-                android:background="@drawable/new_transparent_bg"
+                android:layout_margin="@dimen/dimen15dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="@dimen/dimen100dp"
-                    android:layout_height="@dimen/dimen100dp"
-                    android:layout_marginStart="@dimen/dimen20dp"
-                    android:layout_marginTop="@dimen/dimen10dp"
-                    android:src="@drawable/raw_scan_new" />
-
+                    android:layout_width="@dimen/dimen30dp"
+                    android:layout_height="@dimen/dimen30dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_apollo_circle_logo" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen30sp"
+                    android:layout_marginStart="@dimen/dimen10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen10dp"
-                        android:fontFamily="@font/roboto_medium"
-                        android:layout_marginStart="@dimen/dimen25dp"
-                        android:layout_marginEnd="@dimen/dimen50dp"
-                        android:paddingTop="@dimen/dimen10dp"
-                        android:paddingEnd="@dimen/dimen10dp"
-                        android:text="Insert your prescription\n and click below button"
-                        android:textColor="@color/white"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/label_items_payment"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_white"
                         android:textSize="@dimen/dimen14sp" />
 
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen50dp"
-                        android:layout_marginTop="@dimen/dimen10dp"
-                        android:layout_marginEnd="@dimen/dimen10dp"
-                        android:id="@+id/scan"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        android:layout_marginBottom="@dimen/dimen20dp"
-                        android:background="@drawable/scan_btn_bg"
-                        android:paddingStart="@dimen/dimen15dp"
-                        android:paddingTop="@dimen/dimen10dp"
-                        android:paddingEnd="@dimen/dimen15dp"
-                        android:paddingBottom="@dimen/dimen10dp"
-                        android:text="SCAN NOW"
-                        android:textAlignment="center"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="@{model.customerofferScreen.customerName}"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/dimen12sp" />
 
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen10dp"
+                            android:layout_marginLeft="@dimen/dimen10dp"
+                            android:layout_marginTop="@dimen/dimen3dp"
+                            android:background="@drawable/black_curves_bg"
+                            android:paddingStart="@dimen/dimen7dp"
+                            android:paddingTop="@dimen/dimen2dp"
+                            android:paddingEnd="@dimen/dimen7dp"
+                            android:paddingBottom="@dimen/dimen2dp"
+                            android:visibility="@{model.customerofferScreen.customerType != null &amp;&amp; !model.customerofferScreen.customerType.isEmpty ? view.VISIBLE : view.GONE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@{model.customerofferScreen.customerType}"
+                                android:textAllCaps="true"
+                                android:textColor="@color/color_white"
+                                android:textSize="@dimen/dimen12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:gravity="center">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dimen20dp"
+                    android:background="@drawable/new_transparent_bg"
+                    android:orientation="horizontal">
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:layout_width="@dimen/dimen70dp"
+                        android:layout_height="@dimen/dimen70dp"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/raw_scan_new" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen25dp"
+                            android:layout_marginTop="@dimen/dimen10dp"
+                            android:layout_marginEnd="@dimen/dimen50dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:paddingTop="@dimen/dimen10dp"
+                            android:paddingEnd="@dimen/dimen10dp"
+                            android:text="Insert your prescription\n and click below button"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dimen18sp" />
+
+
+                        <TextView
+                            android:id="@+id/scan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen50dp"
+                            android:layout_marginTop="@dimen/dimen10dp"
+                            android:layout_marginEnd="@dimen/dimen10dp"
+                            android:layout_marginBottom="@dimen/dimen20dp"
+                            android:background="@drawable/scan_btn_bg"
+                            android:paddingStart="@dimen/dimen15dp"
+                            android:paddingTop="@dimen/dimen10dp"
+                            android:paddingEnd="@dimen/dimen15dp"
+                            android:paddingBottom="@dimen/dimen10dp"
+                            android:text="SCAN NOW"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen14sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
 
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen40dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/red_btn_bg"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dimen15dp"
+                    android:paddingTop="@dimen/dimen5dp"
+                    android:paddingEnd="@dimen/dimen15dp"
+                    android:paddingBottom="@dimen/dimen10dp"
+                    android:text="Your scannned medicine needed prescription"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen12sp"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </LinearLayout>
@@ -184,7 +209,6 @@
                         android:fontFamily="@font/poppins_extra_bold"
                         android:gravity="top"
                         android:text="@{String.valueOf(model.customerScreen.noofSkus)}"
-
                         android:textColor="@color/color_red"
                         android:textSize="@dimen/dimen12sp" />
 
@@ -259,9 +283,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen3dp"
                         android:layout_marginLeft="@dimen/dimen3dp"
-                        android:text="@{model.customerScreen.payment.discountValue}"
-
                         android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@{model.customerScreen.payment.discountValue}"
                         android:textColor="@color/color_red"
                         android:textSize="@dimen/dimen16sp" />
                 </LinearLayout>
@@ -324,9 +347,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen3dp"
                         android:layout_marginLeft="@dimen/dimen3dp"
-                        android:text="@{model.customerScreen.payment.giftAmount}"
-
                         android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@{model.customerScreen.payment.giftAmount}"
                         android:textColor="@color/color_green"
                         android:textSize="@dimen/dimen16sp" />
                 </LinearLayout>
@@ -386,9 +408,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen3dp"
                         android:layout_marginLeft="@dimen/dimen3dp"
-                        android:text="@{model.customerScreen.payment.amouttobeCollected}"
-
                         android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@{model.customerScreen.payment.amouttobeCollected}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen16sp" />
                 </LinearLayout>
@@ -409,40 +430,21 @@
                     android:layout_width="@dimen/dimen30dp"
                     android:layout_height="@dimen/dimen30dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_payment" />
+                    android:src="@drawable/ic_qr_code" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen5dp"
                     android:fontFamily="@font/poppins_extra_bold"
-                    android:text="SELECT\nPAYMENT\nTYPE"
+                    android:text="@string/label_continue_npayment"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen12sp" />
             </LinearLayout>
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginStart="@dimen/dimen170dp"
-            android:layout_marginTop="92dp"
-            android:layout_marginEnd="@dimen/dimen85dp"
-            android:background="@drawable/red_btn_bg"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/dimen15dp"
-            android:paddingTop="@dimen/dimen10dp"
-            android:paddingEnd="@dimen/dimen30sp"
-            android:paddingBottom="@dimen/dimen10dp"
-            android:text="Your scannned medicine needed prescription"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimen14sp"
-            android:textStyle="bold" />
     </RelativeLayout>
-
 
     <data>
 
@@ -454,5 +456,10 @@
         <variable
             name="callback"
             type="com.thresholdsoft.apollofeedback.ui.whyscanprescription.epsonscan.EpsonScanActivityCallback" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
     </data>
 </layout>

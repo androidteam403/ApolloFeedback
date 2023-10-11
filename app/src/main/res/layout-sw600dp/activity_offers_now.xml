@@ -45,7 +45,7 @@
                     android:layout_marginStart="@dimen/dimen10dp"
                     android:layout_marginLeft="@dimen/dimen10dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/label_offers_now"
+                    android:text="@{storeName}"
                     android:textAllCaps="true"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/dimen40sp" />
@@ -143,6 +143,10 @@
         <variable
             name="isConfigurationAvailable"
             type="Boolean" />
+
+        <variable
+            name="storeName"
+            type="String" />
 
         <variable
             name="view"

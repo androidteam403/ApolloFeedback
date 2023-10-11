@@ -42,7 +42,7 @@ public class PrescriptionListAdapter extends RecyclerView.Adapter<PrescriptionLi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String prescriptionPath = prescriptionPathList.get(position);
-        File imgFile = new File(prescriptionPath + "/1.jpg");
+        File imgFile = new File(prescriptionPath);
         if (imgFile.exists()) {
             Uri uri = Uri.fromFile(imgFile);
             holder.prescriptionListBinding.prescriptionViewPager.setImageURI(uri);

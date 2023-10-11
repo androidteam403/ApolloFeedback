@@ -8,6 +8,8 @@ import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.ScannedPrescriptionsActivityCallback;
+import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionRequest;
+import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionResponse;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
 

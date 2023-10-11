@@ -30,6 +30,7 @@
     <string name="label_scan_nagain">Scan\nagain</string>
     <string name="label_yes">Yes</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_store_name">Store Name</string>
 
 
 </resources>

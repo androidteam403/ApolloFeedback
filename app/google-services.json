@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "253192991555",
+    "project_id": "apollo-feedback",
+    "storage_bucket": "apollo-feedback.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253192991555:android:b810083c42e60918d235f6",
+        "android_client_info": {
+          "package_name": "com.thresholdsoft.apollofeedback"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253192991555-kcth7hncivbbpdf8c495ct948vp4sf4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thresholdsoft.apollofeedback",
+            "certificate_hash": "6d2259f0641c9de40a9f17450a1e9a017184f041"
+          }
+        },
+        {
+          "client_id": "253192991555-q0nf02tg55q4thogqpjufnooe7ttl10a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_uvH2ScRA04i-nrM8iNd_fhKKkbty0ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253192991555-q0nf02tg55q4thogqpjufnooe7ttl10a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

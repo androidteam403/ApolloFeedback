@@ -4,7 +4,7 @@
         android:width="2dp"
         android:color="#000"
         android:dashWidth="@dimen/dimen10dp"
-        android:dashGap="4sp"/>
+        android:dashGap="4dp"/>
 
 
 </shape>

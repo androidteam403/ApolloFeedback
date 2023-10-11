@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -31,18 +33,23 @@ import com.thresholdsoft.apollofeedback.databinding.DialogPrescriptionFullviewBi
 import com.thresholdsoft.apollofeedback.databinding.DialogQrcodeBinding;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
-import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
-import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivityController;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.adapter.PrescriptionListAdapter;
+import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionRequest;
+import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionResponse;
 import com.thresholdsoft.apollofeedback.ui.whyscanprescription.epsonscan.EpsonScanActivity;
+import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -53,7 +60,9 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
     private List<String> scannedPrescriptionsPathList;
     private PrescriptionListAdapter prescriptionListAdapter;
     private FeedbackSystemResponse feedbackSystemResponse;
-
+    private boolean isFeedbackScreen = false;
+    private boolean isPrescriptionsUploaded = false;
+    private boolean isOnClickUploadPrescriptions = false;
     public static Intent getStartActivity(Context context, String filePath) {
         Intent intent = new Intent(context, ScannedPrescriptionsActivity.class);
         intent.putExtra("FILE_PATH", filePath);
@@ -69,20 +78,21 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
     }
 
     private void setUp() {
-        getController().feedbakSystemApiCall();
+//        getController().feedbakSystemApiCall();
         String filePath = null;
         if (getIntent() != null) {
             filePath = (String) getIntent().getStringExtra("FILE_PATH");
         }
         if (getSessionManager().getScannedPrescriptionsPath() != null && getSessionManager().getScannedPrescriptionsPath().size() > 0) {
             this.scannedPrescriptionsPathList = getSessionManager().getScannedPrescriptionsPath();
-            scannedPrescriptionsPathList.add(filePath);
+            if (filePath != null && !filePath.isEmpty()) scannedPrescriptionsPathList.add(filePath);
             getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
         } else {
             scannedPrescriptionsPathList = new ArrayList<>();
-            scannedPrescriptionsPathList.add(filePath);
+            if (filePath != null && !filePath.isEmpty()) scannedPrescriptionsPathList.add(filePath);
             getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
         }
+        scannedPrescriptionsBinding.setIsScanAgain(scannedPrescriptionsPathList.size() <= 6);
         prescriptionListAdapter();
     }
 
@@ -101,6 +111,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
     private SessionManager getSessionManager() {
         return new SessionManager(this);
     }
+
     boolean isDialogShow = false;
 
     @Override
@@ -152,23 +163,109 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
                         qrCodeGeneration(feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode(), dialogQrcodeBinding, this);
                         dialogQrcodeBinding.qrCodeImage.setOnClickListener(view -> {
                             qrCodeDialog.dismiss();
-                            startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
-                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                            finish();
+//                            if (!isFeedbackScreen) {
+//                                isFeedbakIdleHandler.removeCallbacks(isFeedbakIdlRunnable);
+//                                isFeedbakIdleHandler.postDelayed(isFeedbakIdlRunnable, 1000 * 60);
+//                            }
+                            if (!this.isFeedbackScreen) {
+                                feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                                this.isFeedbackScreen = true;
+//                            if (this.isPrescriptionsUploaded) {
+//                                startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+//                                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//                                finish();
+//                            }
+                                scannedPrescriptionsBinding.setIsScanAgain(false);
+                                if (scannedPrescriptionsPathList != null && scannedPrescriptionsPathList.size() > 0) {
+                                    onClickUploadPrescriptions();
+                                } else {
+                                    startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+                                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                                    finish();
+                                }
+                            }
+
                         });
                         qrCodeDialog.show();
                     }
                 }
-                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
+//                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
+                feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
             } else if (feedbackSystemResponse.getIsfeedbackScreen()) {
-                startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                finish();
+//                if (!isFeedbackScreen) {
+//                    isFeedbakIdleHandler.removeCallbacks(isFeedbakIdlRunnable);
+//                    isFeedbakIdleHandler.postDelayed(isFeedbakIdlRunnable, 1000 * 60);
+//                }
+                if (!this.isFeedbackScreen) {
+                    feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                    this.isFeedbackScreen = true;
+//                if (this.isPrescriptionsUploaded) {
+//                    List<String> scannedPrescriptionsPathList = new ArrayList<>();
+//                    getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
+//                    startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+//                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//                    finish();
+//                }
+//                feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+//                feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
+                    scannedPrescriptionsBinding.setIsScanAgain(false);
+                    if (scannedPrescriptionsPathList != null && scannedPrescriptionsPathList.size() > 0) {
+                        onClickUploadPrescriptions();
+                    } else {
+                        startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+                        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                        finish();
+                    }
+                }
             } else {
-                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
+//                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
+                feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
+
             }
         }
 
+    }
+
+    Handler feedbakSystemApiCallHandler = new Handler();
+    Runnable feedbakSystemApiCallRunnable = new Runnable() {
+        @Override
+        public void run() {
+//            if (!feedbackSystemResponse.getIsPrescriptionScan()) {
+            getController().feedbakSystemApiCall();
+//            }
+        }
+    };
+//    Handler isFeedbakIdleHandler = new Handler();
+//    Runnable isFeedbakIdlRunnable = new Runnable() {
+//        @Override
+//        public void run() {
+//            List<String> scannedPrescriptionsPathList = new ArrayList<>();
+//            getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
+//            startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+//            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//            finish();
+//        }
+//    };
+
+    @Override
+    protected void onPause() {
+//        isFeedbakIdleHandler.removeCallbacks(isFeedbakIdlRunnable);
+        feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+//        if (isFeedbackScreen) {
+//            isFeedbakIdleHandler.removeCallbacks(isFeedbakIdlRunnable);
+//            isFeedbakIdleHandler.postDelayed(isFeedbakIdlRunnable, 1000 * 60);
+//        }
+        feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+//        feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
+        getController().feedbakSystemApiCall();
+        super.onResume();
     }
 
     @Override
@@ -176,6 +273,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
     }
+
     private void qrCodeGeneration(Object qrCodeData, DialogQrcodeBinding dialogQrcodeBinding, Context context) {
         // below line is for getting
         // the windowmanager service.
@@ -216,7 +314,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
 
     @Override
     public void onClickScanAgain() {
-        startActivity(EpsonScanActivity.getStartActivity(this));
+        startActivity(EpsonScanActivity.getStartActivity(this, true));
         finish();
     }
 
@@ -225,7 +323,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
         Dialog prescriptionZoomDialog = new Dialog(this, R.style.fadeinandoutcustomDialog);
         DialogPrescriptionFullviewBinding prescriptionFullviewBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_prescription__fullview, null, false);
         prescriptionZoomDialog.setContentView(prescriptionFullviewBinding.getRoot());
-        File imgFile = new File(prescriptionPath + "/1.jpg");
+        File imgFile = new File(prescriptionPath);
         if (imgFile.exists()) {
             Uri uri = Uri.fromFile(imgFile);
             prescriptionFullviewBinding.prescriptionFullviewImg.setImageURI(uri);
@@ -253,6 +351,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
                 getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
                 if (scannedPrescriptionsPathList != null && scannedPrescriptionsPathList.size() > 0 && prescriptionListAdapter != null) {
                     prescriptionListAdapter.setPrescriptionPathList(scannedPrescriptionsPathList);
+                    scannedPrescriptionsBinding.setIsScanAgain(scannedPrescriptionsPathList.size() <= 6);
                     prescriptionListAdapter.notifyDataSetChanged();
                 } else {
                     finish();
@@ -260,5 +359,120 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
             }
         });
         dialogCustomAlertBinding.dialogButtonNO.setOnClickListener(v12 -> dialog.dismiss());
+    }
+
+    @Override
+    public void onSuccessKioskSelfCheckOutTransactionApiCAll(KioskSelfCheckOutTransactionResponse kioskSelfCheckOutTransactionResponse, int prescriptionPos) {
+        if (kioskSelfCheckOutTransactionResponse.getRequestStatus() == 0) {
+            if (prescriptionPos == (scannedPrescriptionsPathList.size() - 1)) {
+                this.isPrescriptionsUploaded = true;
+                CommonUtils.hideDialog();
+                Toast.makeText(this, kioskSelfCheckOutTransactionResponse.getReturnMessage(), Toast.LENGTH_SHORT).show();
+                if (isFeedbackScreen) {
+                    List<String> scannedPrescriptionsPathList = new ArrayList<>();
+                    getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
+                    startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    finish();
+                }
+
+            } else {
+                KioskSelfCheckOutTransactionRequest kioskSelfCheckOutTransactionRequest = new KioskSelfCheckOutTransactionRequest();
+                kioskSelfCheckOutTransactionRequest.setPrescString(encodeImage(scannedPrescriptionsPathList.get(prescriptionPos + 1)));
+                kioskSelfCheckOutTransactionRequest.setPrescId(getSessionManager().getSiteId() + "-" + CommonUtils.getCurrentTimeStamp());
+                kioskSelfCheckOutTransactionRequest.setFromdate(CommonUtils.getCurrentDateTime());
+                kioskSelfCheckOutTransactionRequest.setTodate("");
+                kioskSelfCheckOutTransactionRequest.setStoreid(getSessionManager().getSiteId());
+                kioskSelfCheckOutTransactionRequest.setKioskid(getSessionManager().getSiteId() + "_" + getSessionManager().getTerminalId());
+                if (feedbackSystemResponse != null && feedbackSystemResponse.getCustomerofferScreen() != null && feedbackSystemResponse.getCustomerofferScreen().getCustomerName() != null) {
+                    kioskSelfCheckOutTransactionRequest.setCustomername(feedbackSystemResponse.getCustomerofferScreen().getCustomerName());
+                }
+                kioskSelfCheckOutTransactionRequest.setMobileno(Objects.requireNonNull(feedbackSystemResponse).getCustomerScreen().getBillNumber());
+                kioskSelfCheckOutTransactionRequest.setKiosklink(scannedPrescriptionsPathList.get(prescriptionPos + 1).substring(scannedPrescriptionsPathList.get(prescriptionPos + 1).indexOf("-") + 1).replaceAll("/", "_"));
+                kioskSelfCheckOutTransactionRequest.setCreateddate(CommonUtils.getCurrentDateTime());
+                kioskSelfCheckOutTransactionRequest.setStatusid(1);
+                kioskSelfCheckOutTransactionRequest.setRequesttype("INSERTPRESCRIPTION");
+                getController().kioskSelfCheckOutTransactionApiCAll(kioskSelfCheckOutTransactionRequest, prescriptionPos + 1);
+            }
+
+        }
+    }
+
+    private String encodeImage(String path) {
+        File imagefile = new File(path);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(imagefile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Bitmap bm = BitmapFactory.decodeStream(fis);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.NO_WRAP);
+        //Base64.de
+        return encImage;
+
+    }
+
+
+
+    @Override
+    public void onClickUploadPrescriptions() {
+        if (!isOnClickUploadPrescriptions) {
+            isOnClickUploadPrescriptions = true;
+            if (feedbackSystemResponse != null) {
+                if (scannedPrescriptionsPathList != null && scannedPrescriptionsPathList.size() > 0) {
+                    KioskSelfCheckOutTransactionRequest kioskSelfCheckOutTransactionRequest = new KioskSelfCheckOutTransactionRequest();
+
+//            File imagefile = new File(scannedPrescriptionsPathList.get(0));
+//
+//            InputStream inputStream = null; // You can get an inputStream using any I/O API
+//            try {
+//                inputStream = new FileInputStream(imagefile);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            byte[] bytes;
+//            byte[] buffer = new byte[8192];
+//            int bytesRead;
+//            ByteArrayOutputStream output = new ByteArrayOutputStream();
+//
+//            try {
+//                while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                    output.write(buffer, 0, bytesRead);
+//                }
+//            }
+//            catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            bytes = output.toByteArray();
+//            String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);
+
+                    kioskSelfCheckOutTransactionRequest.setPrescString(encodeImage(scannedPrescriptionsPathList.get(0)));
+
+//            kioskSelfCheckOutTransactionRequest.setPrescString(encodeImage(scannedPrescriptionsPathList.get(0)));
+
+//            kioskSelfCheckOutTransactionRequest.setPrescString(Base64.encodeToString(scannedPrescriptionsPathList.get(0).getBytes(), Base64.DEFAULT));
+                    kioskSelfCheckOutTransactionRequest.setPrescId(getSessionManager().getSiteId() + "-" + CommonUtils.getCurrentTimeStamp());
+                    kioskSelfCheckOutTransactionRequest.setFromdate(CommonUtils.getCurrentDateTime());
+                    kioskSelfCheckOutTransactionRequest.setTodate("");
+                    kioskSelfCheckOutTransactionRequest.setStoreid(getSessionManager().getSiteId());
+                    kioskSelfCheckOutTransactionRequest.setKioskid(getSessionManager().getSiteId() + "_" + getSessionManager().getTerminalId());
+                    if (feedbackSystemResponse != null && feedbackSystemResponse.getCustomerofferScreen() != null && feedbackSystemResponse.getCustomerofferScreen().getCustomerName() != null) {
+                        kioskSelfCheckOutTransactionRequest.setCustomername(feedbackSystemResponse.getCustomerofferScreen().getCustomerName());
+                    }
+                    kioskSelfCheckOutTransactionRequest.setMobileno(Objects.requireNonNull(feedbackSystemResponse).getCustomerScreen().getBillNumber());
+                    kioskSelfCheckOutTransactionRequest.setKiosklink(scannedPrescriptionsPathList.get(0).substring(scannedPrescriptionsPathList.get(0).indexOf("-") + 1).replaceAll("/", "_"));
+                    kioskSelfCheckOutTransactionRequest.setCreateddate(CommonUtils.getCurrentDateTime());
+                    kioskSelfCheckOutTransactionRequest.setStatusid(1);
+                    kioskSelfCheckOutTransactionRequest.setRequesttype("INSERTPRESCRIPTION");
+                    CommonUtils.showDialog(this, "Please Wait...");
+                    getController().kioskSelfCheckOutTransactionApiCAll(kioskSelfCheckOutTransactionRequest, 0);
+                }
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,14 +18,12 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
+import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
-import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.ScannedPrescriptionsActivity;
 import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
-import com.thresholdsoft.apollofeedback.ui.whyscanprescription.WhyScanPrescriptionActivity;
-import com.thresholdsoft.apollofeedback.ui.whyscanprescription.epsonscan.EpsonScanActivity;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
@@ -34,7 +33,8 @@ import java.util.Objects;
 
 public class OffersNowActivity extends BaseActivity implements OffersNowActivityCallback {
     private ActivityOffersNowBinding offersNowBinding;
-
+    private FeedbackSystemResponse feedbackSystemResponse;
+    Button b;
     public static Intent getStartIntent(Context mContext) {
         Intent intent = new Intent(mContext, OffersNowActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -61,7 +61,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
 
 //        getController().getOffersNowApiCall();
-        getController().feedbakSystemApiCall();
+//        getController().feedbakSystemApiCall();
         getController().getDcOffersNowApi(getDataManager().getDcCode());
     }
 
@@ -94,6 +94,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     @Override
     public void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse) {
+        this.feedbackSystemResponse = feedbackSystemResponse;
         if (feedbackSystemResponse != null) {
             if (feedbackSystemResponse.getCustomerScreen() != null && feedbackSystemResponse.getCustomerScreen().getBillNumber() != null) {
                 this.mobileNumber = feedbackSystemResponse.getCustomerScreen().getBillNumber();
@@ -102,20 +103,47 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 startActivity(ItemsPaymentActivity.getStartIntent(this, mobileNumber));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 finish();
-            }
-            else if ("isPrescription".equals("isPrescription")) {
-                Intent i=new Intent(OffersNowActivity.this, ItemsPaymentActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-
-//                startActivity(WhyScanPrescriptionActivity.getStartIntent(this));
-//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                finish();
-            }
-            else {
-                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
+            } else {
+//                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
+                feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
             }
         }
+    }
+
+    Handler feedbakSystemApiCallHandler = new Handler();
+    Runnable feedbakSystemApiCallRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (feedbackSystemResponse != null) {
+                if (!feedbackSystemResponse.getIsPrescriptionScan()) {
+                    getController().feedbakSystemApiCall();
+                }
+            } else {
+                getController().feedbakSystemApiCall();
+            }
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        List<String> scannedPrescriptionsPathList = new ArrayList<>();
+        getDateManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
+        offersNowBinding.setStoreName(getDataManager().getStoreName());
+        feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+//        feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
+        getController().feedbakSystemApiCall();
+        super.onResume();
+    }
+
+    private SessionManager getDateManager() {
+        return new SessionManager(this);
     }
 
     @Override

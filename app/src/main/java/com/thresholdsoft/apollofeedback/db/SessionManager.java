@@ -28,6 +28,7 @@ public class SessionManager {
     private static final String PREF_STORE_ADDRESS = "PREF_STORE_ADDRESS";
     private static final String PREF_LABEL_ADDRESS = "PREF_LABEL_ADDRESS";
     private static final String PREF_KEY_DC_CODE = "PREF_KEY_DC_CODE";
+    private static final String PREF_KEY_STORE_NAME = "PREF_KEY_STORE_NAME";
     private static final String PREF_KEY_SCANNED_PRESCRIPTIONS_LIST_PATH = "PREF_KEY_SCANNED_PRESCRIPTIONS_LIST_PATH";
 
 
@@ -71,9 +72,8 @@ public class SessionManager {
     }
 
     public String getEposUrl() {
-        return preferences.getString(PREF_KEY_EPOS_URL, "http://online.apollopharmacy.org:51/FEEDBACK/");
+        return preferences.getString(PREF_KEY_EPOS_URL, "http://online.apollopharmacy.org:51/EPOS/");
     }
-
 
     public void setStoreAddress(String storeAddress) {
         preferences.edit().putString(PREF_STORE_ADDRESS, storeAddress).apply();
@@ -97,6 +97,14 @@ public class SessionManager {
 
     public String getDcCode() {
         return preferences.getString(PREF_KEY_DC_CODE, "");
+    }
+
+    public void setStoreName(String storeName) {
+        preferences.edit().putString(PREF_KEY_STORE_NAME, storeName).apply();
+    }
+
+    public String getStoreName() {
+        return preferences.getString(PREF_KEY_STORE_NAME, "");
     }
 
     public void setScannedPrescriptionsPath(List<String> scannedPrescriptionsPathList) {

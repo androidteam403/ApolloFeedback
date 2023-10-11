@@ -3,6 +3,7 @@ package com.thresholdsoft.apollofeedback.ui.whyscanprescription;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -37,17 +38,28 @@ public class WhyScanPrescriptionActivity extends BaseActivity implements WhyScan
         getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
     }
 
+    Handler navigatePrescriptionHandler = new Handler();
+    Runnable navigatePrescriptionRunnable = this::onClickScanPrescription;
+
     private SessionManager getSessionManager() {
         return new SessionManager(this);
     }
 
     @Override
+    protected void onPause() {
+        navigatePrescriptionHandler.removeCallbacks(navigatePrescriptionRunnable);
+        super.onPause();
+    }
+
+    @Override
     protected void onResume() {
+        navigatePrescriptionHandler.removeCallbacks(navigatePrescriptionRunnable);
+        navigatePrescriptionHandler.postDelayed(navigatePrescriptionRunnable, 3000);
         super.onResume();
     }
 
     @Override
     public void onClickScanPrescription() {
-        startActivity(EpsonScanActivity.getStartActivity(this));
+        startActivity(EpsonScanActivity.getStartActivity(this, false));
     }
 }

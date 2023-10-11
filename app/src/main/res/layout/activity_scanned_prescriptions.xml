@@ -16,73 +16,89 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen15dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="@dimen/dimen55dp"
-                    android:layout_height="@dimen/dimen55dp"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_apollo_circle_logo" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginLeft="@dimen/dimen10dp"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/label_items_payment"
-                        android:textAllCaps="true"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen18sp" />
+                    <ImageView
+                        android:layout_width="@dimen/dimen55dp"
+                        android:layout_height="@dimen/dimen55dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_apollo_circle_logo" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="@dimen/dimen10dp"
+                        android:layout_marginLeft="@dimen/dimen10dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="Nagaraju.C"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dimen14sp" />
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/label_items_payment"
+                            android:textAllCaps="true"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/dimen18sp" />
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen10dp"
-                            android:background="@drawable/round_black_bg"
-                            android:fontFamily="@font/roboto_medium"
-                            android:paddingStart="@dimen/dimen10dp"
-                            android:paddingTop="@dimen/four4_dp"
-                            android:paddingEnd="@dimen/dimen10dp"
-                            android:paddingBottom="@dimen/four4_dp"
-                            android:text="MEMBER"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dimen12sp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@{model.customerofferScreen.customerName != null &amp;&amp; !model.customerofferScreen.customerName.isEmpty ? model.customerofferScreen.customerName : `---`}"
+                                android:textColor="@color/color_white"
+                                android:textSize="@dimen/dimen14sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen5dp"
+                                android:layout_marginLeft="@dimen/dimen5dp"
+                                android:background="@drawable/black_curves_bg"
+                                android:paddingStart="@dimen/dimen7dp"
+                                android:paddingTop="@dimen/dimen2dp"
+                                android:paddingEnd="@dimen/dimen7dp"
+                                android:paddingBottom="@dimen/dimen2dp"
+                                android:visibility="@{model.customerofferScreen.customerType != null &amp;&amp; !model.customerofferScreen.customerType.isEmpty ? view.VISIBLE : view.GONE}">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:text="@{model.customerofferScreen.customerType}"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="@dimen/dimen12sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen10dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Your Scanned Prescription"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dimen14sp" />
+
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:layout_marginTop="@dimen/dimen25dp"
-                    android:text="Your Scanned Prescription"
-                    android:textAllCaps="true"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dimen14sp" />
 
             </LinearLayout>
 
@@ -134,13 +150,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/prescription_list_recyclerview"
-                    android:layout_width="@dimen/dimen400dp"
-                    android:layout_height="@dimen/dimen200dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen150dp"
                     android:layout_gravity="center_horizontal" />
 
 
@@ -149,10 +166,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen10dp"
                     android:layout_marginEnd="@dimen/dimen10dp"
-
                     android:background="@drawable/dotted_border"
-
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -188,6 +204,75 @@
 
                 </LinearLayout>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="@dimen/dimen50dp"
+                    android:layout_height="@dimen/dimen50dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/bg_redsolid_whitestroke_rounded"
+                    android:gravity="center"
+                    android:onClick="@{()-> callback.onClickScanAgain()}"
+                    android:orientation="vertical"
+                    android:visibility="@{isScanAgain ? view.VISIBLE : view.GONE}">
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:layout_width="@dimen/dimen25dp"
+                        android:layout_height="@dimen/dimen25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/raw_scan_new" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/label_scan_nagain"
+                        android:textColor="@color/color_white"
+                        android:textSize="8sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen45dp"
+                    android:layout_marginStart="@dimen/dimen50dp"
+                    android:background="@drawable/scan_btn_bg"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
+                        android:paddingStart="@dimen/dimen25dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="5dp"
+                        android:text="Done"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen20sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen30sp"
+                        android:layout_height="@dimen/dimen30sp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="@dimen/dimen10dp"
+                        android:contentDescription="@string/app_name"
+                        android:paddingEnd="@dimen/four4_dp"
+                        android:src="@drawable/tickmark" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -231,40 +316,6 @@
             </LinearLayout>
 
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/done"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="@dimen/dimen20sp"
-            android:layout_marginBottom="125dp"
-            android:background="@drawable/scan_btn_bg"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:paddingStart="19sp"
-                android:paddingTop="8dp"
-                android:paddingEnd="5dp"
-                android:text="Done"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen15dp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="@dimen/twentyseven27_dp"
-                android:layout_height="@dimen/twentyseven27_dp"
-                android:layout_marginTop="@dimen/five5_sp"
-                android:layout_marginEnd="@dimen/dimen10dp"
-                android:contentDescription="@string/app_name"
-                android:paddingEnd="@dimen/four4_dp"
-                android:src="@drawable/tickmark" />
         </LinearLayout>
 
 
@@ -379,10 +430,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen3dp"
-                        android:text="@{model.customerScreen.payment.discountValue}"
-
                         android:layout_marginLeft="@dimen/dimen3dp"
+
                         android:fontFamily="@font/poppins_extra_bold"
+                        android:text="@{model.customerScreen.payment.discountValue}"
                         android:textColor="@color/color_red"
                         android:textSize="@dimen/dimen16sp" />
                 </LinearLayout>
@@ -445,9 +496,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen3dp"
                         android:layout_marginLeft="@dimen/dimen3dp"
-                        android:text="@{model.customerScreen.payment.giftAmount}"
-
                         android:fontFamily="@font/poppins_extra_bold"
+
+                        android:text="@{model.customerScreen.payment.giftAmount}"
                         android:textColor="@color/color_green"
                         android:textSize="@dimen/dimen16sp" />
                 </LinearLayout>
@@ -507,9 +558,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen3dp"
                         android:layout_marginLeft="@dimen/dimen3dp"
-                        android:text="@{model.customerScreen.payment.amouttobeCollected}"
-
                         android:fontFamily="@font/poppins_extra_bold"
+
+                        android:text="@{model.customerScreen.payment.amouttobeCollected}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen16sp" />
                 </LinearLayout>
@@ -530,14 +581,14 @@
                     android:layout_width="@dimen/dimen30dp"
                     android:layout_height="@dimen/dimen30dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_payment" />
+                    android:src="@drawable/ic_qr_code" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen5dp"
                     android:fontFamily="@font/poppins_extra_bold"
-                    android:text="SELECT\nPAYMENT\nTYPE"
+                    android:text="@string/label_continue_npayment"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen12sp" />
@@ -546,6 +597,7 @@
     </RelativeLayout>
 
     <data>
+
         <variable
             name="model"
             type="com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse" />
@@ -554,5 +606,14 @@
         <variable
             name="callback"
             type="com.thresholdsoft.apollofeedback.ui.scannedprescriptions.ScannedPrescriptionsActivityCallback" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
+        <variable
+            name="isScanAgain"
+            type="Boolean" />
+
     </data>
 </layout>

@@ -44,7 +44,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     private StoreListResponseModel.StoreListObj selectedStoreContactNum = null;
     StoreSetupModel storeSetupModel;
     StoreSetupActivityCallback storeSetupActivityCallback;
-    String eposUrl = "http://online.apollopharmacy.org:51/FEEDBACK/";
+    String eposUrl = "http://online.apollopharmacy.org:51/EPOS/";
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, StoreSetupActivity.class);
@@ -74,7 +74,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 
         if (getIntent() != null) {
             Date c = Calendar.getInstance().getTime();
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+            SimpleDateFormat currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             registerDate = currentDate.format(c);
             deviceType = android.os.Build.MODEL;
             storeSetupModel = new StoreSetupModel();
@@ -159,6 +159,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
         String url = activityStoreSetupBinding.baseUrl.getText().toString().trim();
         String terminalId = activityStoreSetupBinding.terminalIdText.getText().toString().trim();
         String dcCode = activityStoreSetupBinding.dcCode.getText().toString().trim();
+        String storeName = activityStoreSetupBinding.storeNameEdittext.getText().toString().trim();
 
         if (terminalId.isEmpty()) {
             activityStoreSetupBinding.terminalIdText.setError("Please Enter Terminal Id");
@@ -171,6 +172,10 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
         } else if (dcCode.isEmpty()) {
             activityStoreSetupBinding.dcCode.setError("Please Enter DC Code");
             activityStoreSetupBinding.dcCode.requestFocus();
+            return false;
+        } else if (storeName.isEmpty()) {
+            activityStoreSetupBinding.storeNameEdittext.setError("Please Enter Store Name");
+            activityStoreSetupBinding.storeNameEdittext.requestFocus();
             return false;
         }
         return true;
@@ -217,9 +222,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     @Override
     public void onVerifyClick() {
         if (isValidate()) {
-            storeSetupController.getDeviceRegistrationDetails(activityStoreSetupBinding.date.getText().toString(),
-                    activityStoreSetupBinding.deviceType.getText().toString(), activityStoreSetupBinding.macId.getText().toString(), latitude, longitude,
-                    activityStoreSetupBinding.storeId.getText().toString(), activityStoreSetupBinding.terminalIdText.getText().toString(), "admin");
+            storeSetupController.getDeviceRegistrationDetails(activityStoreSetupBinding.date.getText().toString(), activityStoreSetupBinding.deviceType.getText().toString(), activityStoreSetupBinding.macId.getText().toString(), latitude, longitude, activityStoreSetupBinding.storeId.getText().toString(), activityStoreSetupBinding.terminalIdText.getText().toString(), "admin");
         }
     }
 
@@ -311,6 +314,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
             getDataManager().setStoreAddress(activityStoreSetupBinding.storeName.getText().toString());
             getDataManager().setLabelAddress(activityStoreSetupBinding.storeAddress.getText().toString());
             getDataManager().setDcCode(activityStoreSetupBinding.dcCode.getText().toString());
+            getDataManager().setStoreName(activityStoreSetupBinding.storeNameEdittext.getText().toString());
 //            Toast.makeText(this, "" + deviceRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
 //            startActivity(OffersNowActivity.getStartIntent(StoreSetupActivity.this));
 //            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);

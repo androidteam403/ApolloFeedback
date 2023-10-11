@@ -17,7 +17,8 @@ public class FolderUtility {
 
     public String getImageDirRoot()
     {
-        final File filePath = new File( this.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "EpsonScan2SDKSample");
+        //String extStorageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        final File filePath = new File(this.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "EpsonScan2SDKSample");// this.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return filePath.getAbsolutePath();
     }
 

@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".ui.scannedprescriptions.ScannedPrescriptionsActivity"
+            android:name=".ui.whyscanprescription.WhyScanPrescriptionActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 

@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
 }
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
@@ -13,8 +15,8 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
-
+        versionName "1.0.2"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -73,5 +75,10 @@ dependencies {
     implementation project(path: ':epsonscansdk-release')
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+
+    //firebase
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.1'
+    implementation 'com.google.firebase:firebase-analytics:18.0.2'
 
 }

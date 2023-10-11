@@ -6,6 +6,10 @@ import android.provider.Settings;
 
 import com.thresholdsoft.apollofeedback.R;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import dmax.dialog.SpotsDialog;
@@ -36,8 +40,9 @@ public class CommonUtils {
 
     public static void hideDialog() {
         try {
-            if (spotsDialog.isShowing())
-                spotsDialog.dismiss();
+            if (spotsDialog != null)
+                if (spotsDialog.isShowing())
+                    spotsDialog.dismiss();
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -51,5 +56,24 @@ public class CommonUtils {
 
     public static boolean isLoadingShowing() {
         return spotsDialog.isShowing();
+    }
+
+    public static String getCurrentTimeStamp() {
+        int time = (int) (System.currentTimeMillis());
+        Timestamp tsTemp = new Timestamp(time);
+        return tsTemp.toString();
+    }
+
+    public static String getCurrentDateTime() {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            String currentDateTime = dateFormat.format(new Date()); // Find todays date
+
+            return currentDateTime;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
     }
 }

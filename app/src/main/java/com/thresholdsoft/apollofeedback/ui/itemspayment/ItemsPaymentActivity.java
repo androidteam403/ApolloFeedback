@@ -22,11 +22,13 @@ import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityItemsPaymentBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogQrcodeBinding;
+import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.UpsellCrosssellModel;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
+import com.thresholdsoft.apollofeedback.ui.whyscanprescription.WhyScanPrescriptionActivity;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
 import java.text.DecimalFormat;
@@ -66,7 +68,7 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
         if (getIntent() != null) {
             mobileNumber = (String) getIntent().getStringExtra(MOBILE_NUMBER);
         }
-        getController().feedbakSystemApiCall();
+//        getController().feedbakSystemApiCall();
         if (mobileNumber != null && !mobileNumber.isEmpty()) {
             this.isUpsellCrosssellValid = true;
             getController().crossshellApiCall(mobileNumber);
@@ -156,6 +158,13 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
                 finish();
             } else if ((feedbackSystemResponse.getIspaymentScreen())) {
                 itemsPaymentBinding.setModel(feedbackSystemResponse);
+                if (feedbackSystemResponse.getIsPrescriptionScan()) {
+                    List<String> scannedPrescriptionsPathList = new ArrayList<>();
+                    getDateManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
+                    startActivity(WhyScanPrescriptionActivity.getStartIntent(this));
+                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    finish();
+                }
                 if (feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode().isEmpty()) {
                     if (!isDialogShow) {
                         isDialogShow = true;
@@ -175,15 +184,51 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
                         qrCodeDialog.show();
                     }
                 }
-                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
+//                new Handler().postDelayed(() -> {
+//                    if (!feedbackSystemResponse.getIsPrescriptionScan()) {
+//                        getController().feedbakSystemApiCall();
+//                    }
+//                }, 5000);
+                feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
             } else if (feedbackSystemResponse.getIsfeedbackScreen()) {
                 startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 finish();
             } else {
-                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
+                feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
+//                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
             }
         }
+    }
+
+    Handler feedbakSystemApiCallHandler = new Handler();
+    Runnable feedbakSystemApiCallRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (feedbackSystemResponse != null) {
+                if (!feedbackSystemResponse.getIsPrescriptionScan()) {
+                    getController().feedbakSystemApiCall();
+                }
+            } else {
+                getController().feedbakSystemApiCall();
+            }
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+//        feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
+        getController().feedbakSystemApiCall();
+        super.onResume();
     }
 
     @Override
@@ -293,5 +338,9 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
             // exception handling.
             Log.e("Tag", e.toString());
         }
+    }
+
+    private SessionManager getDateManager() {
+        return new SessionManager(this);
     }
 }

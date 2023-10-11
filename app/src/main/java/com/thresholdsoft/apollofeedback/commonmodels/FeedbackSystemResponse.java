@@ -21,18 +21,22 @@ public class FeedbackSystemResponse implements Serializable {
     @SerializedName("homeScreen")
     @Expose
     private HomeScreen homeScreen;
+
+    @SerializedName("isPrescriptionScan")
+    @Expose
+    private boolean isPrescriptionScan;
     @SerializedName("iscustomerScreen")
     @Expose
-    private Boolean iscustomerScreen;
+    private boolean iscustomerScreen;
     @SerializedName("isfeedbackScreen")
     @Expose
-    private Boolean isfeedbackScreen;
+    private boolean isfeedbackScreen;
     @SerializedName("isofferScreen")
     @Expose
-    private Boolean isofferScreen;
+    private boolean isofferScreen;
     @SerializedName("ispaymentScreen")
     @Expose
-    private Boolean ispaymentScreen;
+    private boolean ispaymentScreen;
     @SerializedName("message")
     @Expose
     private String message;
@@ -72,35 +76,43 @@ public class FeedbackSystemResponse implements Serializable {
         this.homeScreen = homeScreen;
     }
 
-    public Boolean getIscustomerScreen() {
+    public boolean getIsPrescriptionScan() {
+        return isPrescriptionScan;
+    }
+
+    public void setIsPrescriptionScan(boolean isPrescriptionScan) {
+        isPrescriptionScan = isPrescriptionScan;
+    }
+
+    public boolean getIscustomerScreen() {
         return iscustomerScreen;
     }
 
-    public void setIscustomerScreen(Boolean iscustomerScreen) {
+    public void setIscustomerScreen(boolean iscustomerScreen) {
         this.iscustomerScreen = iscustomerScreen;
     }
 
-    public Boolean getIsfeedbackScreen() {
+    public boolean getIsfeedbackScreen() {
         return isfeedbackScreen;
     }
 
-    public void setIsfeedbackScreen(Boolean isfeedbackScreen) {
+    public void setIsfeedbackScreen(boolean isfeedbackScreen) {
         this.isfeedbackScreen = isfeedbackScreen;
     }
 
-    public Boolean getIsofferScreen() {
+    public boolean getIsofferScreen() {
         return isofferScreen;
     }
 
-    public void setIsofferScreen(Boolean isofferScreen) {
+    public void setIsofferScreen(boolean isofferScreen) {
         this.isofferScreen = isofferScreen;
     }
 
-    public Boolean getIspaymentScreen() {
+    public boolean getIspaymentScreen() {
         return ispaymentScreen;
     }
 
-    public void setIspaymentScreen(Boolean ispaymentScreen) {
+    public void setIspaymentScreen(boolean ispaymentScreen) {
         this.ispaymentScreen = ispaymentScreen;
     }
 
@@ -112,11 +124,11 @@ public class FeedbackSystemResponse implements Serializable {
         this.message = message;
     }
 
-    public Boolean getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -228,7 +240,7 @@ public class FeedbackSystemResponse implements Serializable {
         private Object feedbackurl;
         @SerializedName("paymentStatus")
         @Expose
-        private Boolean paymentStatus;
+        private boolean paymentStatus;
         @SerializedName("transactionid")
         @Expose
         private Object transactionid;
@@ -249,11 +261,11 @@ public class FeedbackSystemResponse implements Serializable {
             this.feedbackurl = feedbackurl;
         }
 
-        public Boolean getPaymentStatus() {
+        public boolean getPaymentStatus() {
             return paymentStatus;
         }
 
-        public void setPaymentStatus(Boolean paymentStatus) {
+        public void setPaymentStatus(boolean paymentStatus) {
             this.paymentStatus = paymentStatus;
         }
 
