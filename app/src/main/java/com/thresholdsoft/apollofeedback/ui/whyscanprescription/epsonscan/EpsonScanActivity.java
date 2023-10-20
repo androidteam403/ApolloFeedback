@@ -61,6 +61,8 @@ import androidmads.library.qrgenearator.QRGEncoder;
 public class EpsonScanActivity extends BaseActivity implements FindScannerCallback, EpsonScanActivityCallback {
     private ActivityEpsonScanBinding epsonScanBinding;
     private final int REQUEST_CODE = 1000;
+    private final int IMAGES_AUDIO_VIDEO_REQUEST_CODE = 1001;
+    private final int READ_WRITE_REQUEST_CODE = 1002;
     private List<UsbProfile> usbDevices;
     EpsonScanner scanner;
     private FeedbackSystemResponse feedbackSystemResponse;
@@ -93,13 +95,28 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
 //        getController().feedbakSystemApiCall();
         {
             // Android 6, API 23以上でパーミッションの確認
-            if (Build.VERSION.SDK_INT >= 23) {
+            /*if (Build.VERSION.SDK_INT >= 23) {
                 String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,};
                 checkPermission(permissions, REQUEST_CODE);
+            }*/
+
+           /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                String[] permissions = {Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO, Manifest.permission.READ_MEDIA_VIDEO};
+                checkPermission(permissions, IMAGES_AUDIO_VIDEO_REQUEST_CODE);
+            } else {
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                checkPermission(permissions, READ_WRITE_REQUEST_CODE);
             }
+*/
+
         }
         FindUsbScannerTask task = new FindUsbScannerTask(EpsonScanActivity.this, EpsonScanActivity.this);
         task.execute();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO, Manifest.permission.READ_MEDIA_VIDEO}, IMAGES_AUDIO_VIDEO_REQUEST_CODE);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, READ_WRITE_REQUEST_CODE);
+        }
         onScanClick();
     }
 
@@ -151,6 +168,31 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
                     } else {
                         Toast toast = Toast.makeText(this, "Rejected Permission: " + permissions[i], Toast.LENGTH_SHORT);
                         toast.show();
+                    }
+                }
+                break;
+            case READ_WRITE_REQUEST_CODE:
+                if (grantResults.length > 0) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                            && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                        if (devicePath != null && !devicePath.isEmpty()) {
+                            scanDialog(devicePath);
+                        }
+                    } else {
+                        Toast.makeText(this, "Rejected Permission: " + permissions[0] + "," + permissions[1], Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+            case IMAGES_AUDIO_VIDEO_REQUEST_CODE:
+                if (grantResults.length > 0) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                            && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                            && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                        if (devicePath != null && !devicePath.isEmpty()) {
+                            scanDialog(devicePath);
+                        }
+                    } else {
+                        Toast.makeText(this, "Rejected Permission: " + permissions[0] + "," + permissions[1] + "," + permissions[2], Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

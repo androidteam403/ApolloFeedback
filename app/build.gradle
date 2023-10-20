@@ -5,7 +5,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
 //    buildToolsVersion "31.0.0"
     dataBinding {
         enabled = true
@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId "com.thresholdsoft.apollofeedback"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0.2"
         multiDexEnabled true
