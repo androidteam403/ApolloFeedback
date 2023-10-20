@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -64,7 +65,16 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <ImageView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/imagesRcv"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen200dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/layout_image_slider" />
+
+                <!--<ImageView
                     android:id="@+id/offers_now_one"
                     android:layout_width="@dimen/dimen0dp"
                     android:layout_height="wrap_content"
@@ -98,7 +108,7 @@
                     android:layout_margin="3dp"
                     android:layout_weight=".25"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY" />-->
 
             </LinearLayout>
 
