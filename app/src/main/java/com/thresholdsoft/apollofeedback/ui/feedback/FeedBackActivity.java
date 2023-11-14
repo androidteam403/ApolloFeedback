@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,11 +29,48 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         return intent;
     }
 
+    Handler feedbackEditboxHandler = new Handler();
+    Runnable feedbackEditboxRunnable = new Runnable() {
+        @Override
+        public void run() {
+            switch (feedbackRatingFromPhysical) {
+                case "7":
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("2", 1);
+                    fair();
+                    break;
+                case "b":
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("3", 1);
+                    average();
+                    break;
+                case "6":
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("4", 1);
+                    happy();
+                    break;
+                case "=":
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("5", 1);
+                    excellent();
+                    break;
+                default:
+
+            }
+        }
+    };
+    private String feedbackRatingFromPhysical = "";
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityFeedBackBinding = DataBindingUtil.setContentView(this, R.layout.activity_feed_back);
+        onFeedbackSecreteEditboxListener();
         if (getIntent() != null) {
             FeedbackSystemResponse feedbackSystemResponse = (FeedbackSystemResponse) getIntent().getSerializableExtra(AppConstants.FEEDBACK_SYSTEM_RESPONSE);
             if (feedbackSystemResponse != null)
@@ -39,25 +78,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         }
 
         activityFeedBackBinding.poor.setOnClickListener(v -> {
-            activityFeedBackBinding.setIsFeedbackEnabled(true);
-            activityFeedBackBinding.fairtick.setVisibility(View.GONE);
-            activityFeedBackBinding.fair.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.averagetick.setVisibility(View.GONE);
-            activityFeedBackBinding.average.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.happytick.setVisibility(View.GONE);
-            activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
-            activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.poorTick.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.poor.setVisibility(View.GONE);
-            activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-
-            activityFeedBackBinding.fair.setImageDrawable(getResources().getDrawable(R.drawable.dull_fair));
-            activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
-            activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
-            activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
-
-            getController().feedbakSystemApiCall("1", 1);
+            poor();
         });
 
 
@@ -69,25 +90,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 
 
         activityFeedBackBinding.fair.setOnClickListener(v -> {
-            activityFeedBackBinding.setIsFeedbackEnabled(true);
-            activityFeedBackBinding.poorTick.setVisibility(View.GONE);
-            activityFeedBackBinding.poor.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.averagetick.setVisibility(View.GONE);
-            activityFeedBackBinding.average.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.happytick.setVisibility(View.GONE);
-            activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
-            activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.fairtick.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.fair.setVisibility(View.GONE);
-            activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-
-            activityFeedBackBinding.poor.setImageDrawable(getResources().getDrawable(R.drawable.dull_poor));
-            activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
-            activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
-            activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
-
-            getController().feedbakSystemApiCall("2", 1);
+            fair();
         });
 //        activityFeedBackBinding.fairtick.setOnClickListener(v -> {
 //            activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -97,25 +100,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //
 //        });
         activityFeedBackBinding.average.setOnClickListener(v -> {
-            activityFeedBackBinding.setIsFeedbackEnabled(true);
-            activityFeedBackBinding.poorTick.setVisibility(View.GONE);
-            activityFeedBackBinding.poor.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.fairtick.setVisibility(View.GONE);
-            activityFeedBackBinding.fair.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.happytick.setVisibility(View.GONE);
-            activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
-            activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.averagetick.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.average.setVisibility(View.GONE);
-            activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-
-            activityFeedBackBinding.poor.setImageDrawable(getResources().getDrawable(R.drawable.dull_poor));
-            activityFeedBackBinding.fair.setImageDrawable(getResources().getDrawable(R.drawable.dull_fair));
-            activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
-            activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
-
-            getController().feedbakSystemApiCall("3", 1);
+            average();
         });
 //        activityFeedBackBinding.averagetick.setOnClickListener(v -> {
 //            activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -126,25 +111,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //        });
 
         activityFeedBackBinding.happy.setOnClickListener(v -> {
-            activityFeedBackBinding.setIsFeedbackEnabled(true);
-            activityFeedBackBinding.poorTick.setVisibility(View.GONE);
-            activityFeedBackBinding.poor.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.fairtick.setVisibility(View.GONE);
-            activityFeedBackBinding.fair.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.averagetick.setVisibility(View.GONE);
-            activityFeedBackBinding.average.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
-            activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.happytick.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.happy.setVisibility(View.GONE);
-            activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-
-            activityFeedBackBinding.poor.setImageDrawable(getResources().getDrawable(R.drawable.dull_poor));
-            activityFeedBackBinding.fair.setImageDrawable(getResources().getDrawable(R.drawable.dull_fair));
-            activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
-            activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
-
-            getController().feedbakSystemApiCall("4", 1);
+            happy();
         });
 
 //        activityFeedBackBinding.happytick.setOnClickListener(v -> {
@@ -155,25 +122,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //
 //        });
         activityFeedBackBinding.excellent.setOnClickListener(v -> {
-            activityFeedBackBinding.setIsFeedbackEnabled(true);
-            activityFeedBackBinding.poorTick.setVisibility(View.GONE);
-            activityFeedBackBinding.poor.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.fairtick.setVisibility(View.GONE);
-            activityFeedBackBinding.fair.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.averagetick.setVisibility(View.GONE);
-            activityFeedBackBinding.average.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.happytick.setVisibility(View.GONE);
-            activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.excellenttick.setVisibility(View.VISIBLE);
-            activityFeedBackBinding.excellent.setVisibility(View.GONE);
-            activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
-
-            activityFeedBackBinding.poor.setImageDrawable(getResources().getDrawable(R.drawable.dull_poor));
-            activityFeedBackBinding.fair.setImageDrawable(getResources().getDrawable(R.drawable.dull_fair));
-            activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
-            activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
-
-            getController().feedbakSystemApiCall("5", 1);
+            excellent();
         });
 //        activityFeedBackBinding.excellenttick.setOnClickListener(v -> {
 //            activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
@@ -188,6 +137,115 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         }, 120000);
     }
 
+    private void poor() {
+        activityFeedBackBinding.setIsFeedbackEnabled(true);
+        activityFeedBackBinding.fairtick.setVisibility(View.GONE);
+        activityFeedBackBinding.fair.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.averagetick.setVisibility(View.GONE);
+        activityFeedBackBinding.average.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.happytick.setVisibility(View.GONE);
+        activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
+        activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.poorTick.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.poor.setVisibility(View.GONE);
+        activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
+
+        activityFeedBackBinding.fair.setImageDrawable(getResources().getDrawable(R.drawable.dull_fair));
+        activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
+        activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
+        activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
+
+        getController().feedbakSystemApiCall("1", 1);
+    }
+
+    private void fair() {
+        activityFeedBackBinding.setIsFeedbackEnabled(true);
+        activityFeedBackBinding.poorTick.setVisibility(View.GONE);
+        activityFeedBackBinding.poor.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.averagetick.setVisibility(View.GONE);
+        activityFeedBackBinding.average.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.happytick.setVisibility(View.GONE);
+        activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
+        activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.fairtick.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.fair.setVisibility(View.GONE);
+        activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
+
+        activityFeedBackBinding.poor.setImageDrawable(getResources().getDrawable(R.drawable.dull_poor));
+        activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
+        activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
+        activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
+
+        getController().feedbakSystemApiCall("2", 1);
+    }
+
+    private void average() {
+        activityFeedBackBinding.setIsFeedbackEnabled(true);
+        activityFeedBackBinding.poorTick.setVisibility(View.GONE);
+        activityFeedBackBinding.poor.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.fairtick.setVisibility(View.GONE);
+        activityFeedBackBinding.fair.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.happytick.setVisibility(View.GONE);
+        activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
+        activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.averagetick.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.average.setVisibility(View.GONE);
+        activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
+
+        activityFeedBackBinding.poor.setImageDrawable(getResources().getDrawable(R.drawable.dull_poor));
+        activityFeedBackBinding.fair.setImageDrawable(getResources().getDrawable(R.drawable.dull_fair));
+        activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
+        activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
+
+        getController().feedbakSystemApiCall("3", 1);
+    }
+
+    private void happy() {
+        activityFeedBackBinding.setIsFeedbackEnabled(true);
+        activityFeedBackBinding.poorTick.setVisibility(View.GONE);
+        activityFeedBackBinding.poor.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.fairtick.setVisibility(View.GONE);
+        activityFeedBackBinding.fair.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.averagetick.setVisibility(View.GONE);
+        activityFeedBackBinding.average.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
+        activityFeedBackBinding.excellent.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.happytick.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.happy.setVisibility(View.GONE);
+        activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
+
+        activityFeedBackBinding.poor.setImageDrawable(getResources().getDrawable(R.drawable.dull_poor));
+        activityFeedBackBinding.fair.setImageDrawable(getResources().getDrawable(R.drawable.dull_fair));
+        activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
+        activityFeedBackBinding.excellent.setImageDrawable(getResources().getDrawable(R.drawable.dull_excellent));
+
+        getController().feedbakSystemApiCall("4", 1);
+    }
+
+    private void excellent() {
+        activityFeedBackBinding.setIsFeedbackEnabled(true);
+        activityFeedBackBinding.poorTick.setVisibility(View.GONE);
+        activityFeedBackBinding.poor.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.fairtick.setVisibility(View.GONE);
+        activityFeedBackBinding.fair.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.averagetick.setVisibility(View.GONE);
+        activityFeedBackBinding.average.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.happytick.setVisibility(View.GONE);
+        activityFeedBackBinding.happy.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.excellenttick.setVisibility(View.VISIBLE);
+        activityFeedBackBinding.excellent.setVisibility(View.GONE);
+        activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
+
+        activityFeedBackBinding.poor.setImageDrawable(getResources().getDrawable(R.drawable.dull_poor));
+        activityFeedBackBinding.fair.setImageDrawable(getResources().getDrawable(R.drawable.dull_fair));
+        activityFeedBackBinding.average.setImageDrawable(getResources().getDrawable(R.drawable.dull_average));
+        activityFeedBackBinding.happy.setImageDrawable(getResources().getDrawable(R.drawable.dull_happy));
+
+        getController().feedbakSystemApiCall("5", 1);
+    }
 
     @Override
     public void onFailureMessage(String message) {
@@ -204,7 +262,8 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                     finish();
                 }, 3000);
             } else {
-                Toast.makeText(this, feedbackSystemResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                if (feedbackSystemResponse != null && feedbackSystemResponse.getMessage() != null)
+                    Toast.makeText(this, feedbackSystemResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -229,7 +288,38 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 
     }
 
+    @Override
+    protected void onPause() {
+        feedbackRatingFromPhysical = "";
+        feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+        super.onPause();
+    }
+
     private FeedBackActivityController getController() {
         return new FeedBackActivityController(this, this);
+    }
+
+    private void onFeedbackSecreteEditboxListener() {
+        activityFeedBackBinding.feedbackSecretEditbox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s != null && !s.toString().isEmpty()) {
+                    feedbackRatingFromPhysical = s.toString();
+                    activityFeedBackBinding.feedbackSecretEditbox.setText("");
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    feedbackEditboxHandler.postDelayed(feedbackEditboxRunnable, 1000);
+                }
+            }
+        });
     }
 }

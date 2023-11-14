@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -65,45 +66,55 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen40dp"
                 android:layout_marginTop="@dimen/dimen10dp"
+                android:gravity="center_horizontal"
                 android:layout_marginEnd="@dimen/dimen40dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <ImageView
-                    android:id="@+id/offers_now_one"
-                    android:layout_width="@dimen/dimen0dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/imagesRcv"
+                    android:layout_width="1040dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight=".25"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY" />
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/layout_image_slider" />
 
-                <ImageView
-                    android:id="@+id/offers_now_two"
-                    android:layout_width="@dimen/dimen0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight=".25"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY" />
+                <!-- <ImageView
+                     android:id="@+id/offers_now_one"
+                     android:layout_width="@dimen/dimen0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="3dp"
+                     android:layout_weight=".25"
+                     android:contentDescription="@string/app_name"
+                     android:scaleType="fitXY" />
 
-                <ImageView
-                    android:id="@+id/offers_now_three"
-                    android:layout_width="@dimen/dimen0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight=".25"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY" />
+                 <ImageView
+                     android:id="@+id/offers_now_two"
+                     android:layout_width="@dimen/dimen0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="3dp"
+                     android:layout_weight=".25"
+                     android:contentDescription="@string/app_name"
+                     android:scaleType="fitXY" />
 
-                <ImageView
-                    android:id="@+id/offers_now_four"
-                    android:layout_width="@dimen/dimen0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight=".25"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY" />
+                 <ImageView
+                     android:id="@+id/offers_now_three"
+                     android:layout_width="@dimen/dimen0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="3dp"
+                     android:layout_weight=".25"
+                     android:contentDescription="@string/app_name"
+                     android:scaleType="fitXY" />
+
+                 <ImageView
+                     android:id="@+id/offers_now_four"
+                     android:layout_width="@dimen/dimen0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="3dp"
+                     android:layout_weight=".25"
+                     android:contentDescription="@string/app_name"
+                     android:scaleType="fitXY" />-->
 
             </LinearLayout>
 

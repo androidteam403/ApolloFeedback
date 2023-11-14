@@ -26,6 +26,13 @@
                     android:layout_marginLeft="@dimen/dimen400dp"
                     android:orientation="vertical">
 
+                    <EditText
+                        android:id="@+id/feedback_secret_editbox"
+                        android:layout_width=".1dp"
+                        android:layout_height=".1dp"
+                        android:focusable="true"
+                        android:importantForAutofill="no" />
+
                     <ImageView
                         android:layout_width="@dimen/dimen100dp"
                         android:layout_height="@dimen/dimen100dp"

@@ -57,8 +57,15 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".ui.feedback.FeedBackActivity"
+            android:exported="true"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+                        <!--<intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>-->
+        </activity>
         <activity
             android:name=".ui.whyscanprescription.epsonscan.EpsonScanActivity"
             android:screenOrientation="landscape"

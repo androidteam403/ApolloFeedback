@@ -5,17 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
@@ -42,6 +37,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private ActivityOffersNowBinding offersNowBinding;
     private FeedbackSystemResponse feedbackSystemResponse;
     Button b;
+
     public static Intent getStartIntent(Context mContext) {
         Intent intent = new Intent(mContext, OffersNowActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -134,6 +130,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     @Override
     protected void onPause() {
+        recyclerViewScrollerHandler.removeCallbacks(recyclerViewScrollerRunnable);
         feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
         super.onPause();
     }
@@ -183,11 +180,12 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
 
     DcOffersNowResponse dcOffersNowResponse;
+    List<String> imagesList;
 
     @Override
     public void onSuccesDcOffersNowApi(DcOffersNowResponse dcOffersNowResponse) {
         this.dcOffersNowResponse = dcOffersNowResponse;
-        List<String> imagesList = new ArrayList<String>();
+        imagesList = new ArrayList<String>();
         for (DcOffersNowResponse.Data.ListData.Row rows : dcOffersNowResponse.getData().getListData().getRows()) {
             String excepSites = rows.getExceptionSites();
             String k[] = excepSites.split(",");
@@ -202,23 +200,22 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     for (DcOffersNowResponse.Data.ListData.Row.PosMediaLibrary.File filePath : posMedia.getFile()) {
                         imagesList.add(filePath.getPath());
                     }
-
                 }
             }
         }
-        // For Demo (Should be removed)
-        imagesList.add("5771F5CB3B77CABA143F55555B7A45E64A29471485B6A997A0B798FDC964C52E4160E6E9BDFF4D97E46A107F1185330BE9BE56FEC6E2C512EC7E08CAAA498D8FA633B599A9A34C9C97BCF338231C7AA94CA9F9532B11799C9B49C4956F2CD50F6F7D30D87E24CC8E67E0F7A508B704746698D98077139CA0B79B489EB437781D7555A90D8D50191A30BF926B2BA779EC749C845ED513A538CACE537E28BC8EC291B03A67C1319ADDB5EA587B86C4AD607B1DF5234522FCC2B3F246673D234798A5637191B8675B171E3B774A845B1255CF175C46927F9CE37FDC1F4FD27578F0DC5241B416582B68A98A98D10716FEC8");
-        imagesList.add("51AA8A069C9A576B4B9765B274AF856AE5B01293F541151F7ADCB3C7DC4DA0774160E6E9BDFF4D97E46A107F1185330BE9BE56FEC6E2C512EC7E08CAAA498D8FA633B599A9A34C9C97BCF338231C7AA94CA9F9532B11799C9B49C4956F2CD50F6F7D30D87E24CC8E67E0F7A508B704746698D98077139CA0B79B489EB437781DB5F580D3D1F3BFB377B9954F244CA380EFEFFC09F8CFD96F258113474816C34491B03A67C1319ADDB5EA587B86C4AD607B1DF5234522FCC2B3F246673D234798A5637191B8675B171E3B774A845B1255CF175C46927F9CE37FDC1F4FD27578F0DC5241B416582B68A98A98D10716FEC8");
-        imagesList.add("5771F5CB3B77CABA143F55555B7A45E64A29471485B6A997A0B798FDC964C52E4160E6E9BDFF4D97E46A107F1185330BE9BE56FEC6E2C512EC7E08CAAA498D8FA633B599A9A34C9C97BCF338231C7AA94CA9F9532B11799C9B49C4956F2CD50F6F7D30D87E24CC8E67E0F7A508B704746698D98077139CA0B79B489EB437781D7555A90D8D50191A30BF926B2BA779EC749C845ED513A538CACE537E28BC8EC291B03A67C1319ADDB5EA587B86C4AD607B1DF5234522FCC2B3F246673D234798A5637191B8675B171E3B774A845B1255CF175C46927F9CE37FDC1F4FD27578F0DC5241B416582B68A98A98D10716FEC8");
-        imagesList.add("51AA8A069C9A576B4B9765B274AF856AE5B01293F541151F7ADCB3C7DC4DA0774160E6E9BDFF4D97E46A107F1185330BE9BE56FEC6E2C512EC7E08CAAA498D8FA633B599A9A34C9C97BCF338231C7AA94CA9F9532B11799C9B49C4956F2CD50F6F7D30D87E24CC8E67E0F7A508B704746698D98077139CA0B79B489EB437781DB5F580D3D1F3BFB377B9954F244CA380EFEFFC09F8CFD96F258113474816C34491B03A67C1319ADDB5EA587B86C4AD607B1DF5234522FCC2B3F246673D234798A5637191B8675B171E3B774A845B1255CF175C46927F9CE37FDC1F4FD27578F0DC5241B416582B68A98A98D10716FEC8");
-        imagesList.add("5771F5CB3B77CABA143F55555B7A45E64A29471485B6A997A0B798FDC964C52E4160E6E9BDFF4D97E46A107F1185330BE9BE56FEC6E2C512EC7E08CAAA498D8FA633B599A9A34C9C97BCF338231C7AA94CA9F9532B11799C9B49C4956F2CD50F6F7D30D87E24CC8E67E0F7A508B704746698D98077139CA0B79B489EB437781D7555A90D8D50191A30BF926B2BA779EC749C845ED513A538CACE537E28BC8EC291B03A67C1319ADDB5EA587B86C4AD607B1DF5234522FCC2B3F246673D234798A5637191B8675B171E3B774A845B1255CF175C46927F9CE37FDC1F4FD27578F0DC5241B416582B68A98A98D10716FEC8");
 
         if (imagesList != null && imagesList.size() > 0) {
             ImageSlideAdapter imageSlideAdapter = new ImageSlideAdapter(OffersNowActivity.this, imagesList);
             offersNowBinding.imagesRcv.setAdapter(imageSlideAdapter);
             layoutManager = new LinearLayoutManager(OffersNowActivity.this, LinearLayoutManager.HORIZONTAL, false);
             offersNowBinding.imagesRcv.setLayoutManager(layoutManager);
-            offersNowBinding.imagesRcv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            if (imagesList.size() > 4) {
+                recyclerViewScrollerHandler.removeCallbacks(recyclerViewScrollerRunnable);
+                recyclerViewScrollerHandler.postDelayed(recyclerViewScrollerRunnable, 5000);
+            }
+
+
+           /* offersNowBinding.imagesRcv.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
@@ -258,7 +255,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     handler.postDelayed(this, 10000);
                 }
             };
-            handler.postDelayed(scrollRunnable, 10000);
+            handler.postDelayed(scrollRunnable, 10000);*/
 
             /*offersNowBinding.offersNowOne.setVisibility(View.INVISIBLE);
             offersNowBinding.offersNowTwo.setVisibility(View.INVISIBLE);
@@ -286,6 +283,25 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //            offersNowBinding.offersNowFour.setVisibility(View.INVISIBLE);
         }
     }
+
+    Handler recyclerViewScrollerHandler = new Handler();
+    Runnable recyclerViewScrollerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            LinearLayoutManager layoutManager = (LinearLayoutManager) offersNowBinding.imagesRcv.getLayoutManager();
+            int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+            int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+            if ((lastVisibleItemPosition + 1) < imagesList.size()) {
+                smoothScrollToPosition(lastVisibleItemPosition+1);
+                recyclerViewScrollerHandler.removeCallbacks(recyclerViewScrollerRunnable);
+                recyclerViewScrollerHandler.postDelayed(recyclerViewScrollerRunnable, 5000);
+            } else {
+                smoothScrollToPosition(0);
+                recyclerViewScrollerHandler.removeCallbacks(recyclerViewScrollerRunnable);
+                recyclerViewScrollerHandler.postDelayed(recyclerViewScrollerRunnable, 10000);
+            }
+        }
+    };
 
     private void smoothScrollToPosition(int currentIndex) {
         CustomSmoothScroller customSmoothScroller = new CustomSmoothScroller(OffersNowActivity.this);
