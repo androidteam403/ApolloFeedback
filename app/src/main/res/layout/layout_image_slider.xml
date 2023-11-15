@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/image"
+        <androidx.cardview.widget.CardView
+            android:layout_margin="@dimen/dimen5dp"
+            android:id="@+id/cardViewStore"
             android:layout_width="@dimen/dimen250dp"
             android:layout_height="@dimen/dimen400dp"
-            android:layout_margin="@dimen/dimen5dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/sample"
-            android:scaleType="fitXY" />
+            android:visibility="visible"
+            app:cardElevation="@dimen/dimen15dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:elevation="@dimen/dimen20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="@dimen/dimen250dp"
+                        android:layout_height="@dimen/dimen400dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/sample"
+                        android:scaleType="fitXY" />
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
 
         <!--<ImageView
             android:id="@+id/offers_now_two"
