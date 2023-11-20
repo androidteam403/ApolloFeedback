@@ -75,5 +75,9 @@
     <dimen name="dimen35sp">35sp</dimen>
     <dimen name="dimen305dp">305dp</dimen>
     <dimen name="dimen210dp">210dp</dimen>
+    <dimen name="dimen105dp">105dp</dimen>
+    <dimen name="dimen110dp">110dp</dimen>
+    <dimen name="dimen125dp">125dp</dimen>
+    <dimen name="dimen135dp">135dp</dimen>
 
 </resources>

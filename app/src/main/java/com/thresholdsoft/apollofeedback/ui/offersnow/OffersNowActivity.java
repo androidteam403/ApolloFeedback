@@ -103,9 +103,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 this.mobileNumber = feedbackSystemResponse.getCustomerScreen().getBillNumber();
             }
             if (Objects.requireNonNull(feedbackSystemResponse).getIspaymentScreen()) {
-                startActivity(ItemsPaymentActivity.getStartIntent(this, mobileNumber));
+               /* startActivity(ItemsPaymentActivity.getStartIntent(this, mobileNumber));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                finish();
+                finish();*/
             } else {
 //                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
                 feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);

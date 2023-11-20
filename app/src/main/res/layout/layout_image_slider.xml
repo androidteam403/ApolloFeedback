@@ -6,12 +6,13 @@
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:layout_margin="@dimen/dimen5dp"
+            android:layout_margin="@dimen/dimen10dp"
             android:id="@+id/cardViewStore"
             android:layout_width="@dimen/dimen250dp"
             android:layout_height="@dimen/dimen400dp"
             android:visibility="visible"
-            app:cardElevation="@dimen/dimen15dp">
+            android:elevation="@dimen/dimen30dp"
+            app:cardElevation="@dimen/dimen30dp">
 
             <FrameLayout
                 android:layout_width="match_parent"
