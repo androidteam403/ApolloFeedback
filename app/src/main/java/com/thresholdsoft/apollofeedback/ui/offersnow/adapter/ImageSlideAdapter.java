@@ -13,12 +13,14 @@ import com.bumptech.glide.Glide;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.databinding.LayoutImageSliderBinding;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
+import com.yinglan.shadowimageview.ShadowImageView;
 
 import java.util.List;
 
 public class ImageSlideAdapter extends RecyclerView.Adapter<ImageSlideAdapter.ViewHolder> {
     private Context context;
     private List<String> images;
+    private ShadowImageView shadowImageView;
 
     public ImageSlideAdapter(Context context, List<String> images) {
         this.context = context;
