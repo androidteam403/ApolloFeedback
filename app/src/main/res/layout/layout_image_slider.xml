@@ -3,28 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:layout_width="@dimen/dimen250dp"
-        android:clipToPadding="false"
-        android:padding="@dimen/dimen10dp"
-        android:layout_height="@dimen/dimen400dp">
+        android:layout_width="@dimen/dimen270dp"
+        android:layout_height="410dp"
+        android:clipToPadding="false">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="@dimen/dimen30dp"
-            >
-
+            android:layout_height="match_parent">
 
 
             <androidx.cardview.widget.CardView
-                android:layout_margin="@dimen/dimen10dp"
                 android:id="@+id/cardViewStore"
                 android:layout_width="@dimen/dimen250dp"
-                android:layout_height="@dimen/dimen400dp"
+                android:layout_height="390dp"
+                android:layout_margin="@dimen/dimen10dp"
                 android:visibility="visible"
-                app:cardBackgroundColor="@color/black"
-                app:cardElevation="@dimen/dimen10dp"
-                android:elevation="@dimen/dimen10dp">
+                app:cardElevation="@dimen/dimen5dp"
+                android:fadingEdgeLength="@dimen/dimen5dp">
 
                 <!--            <FrameLayout-->
 
@@ -35,7 +30,6 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
 
 
                     <ImageView
@@ -56,9 +50,6 @@
 
 
         </RelativeLayout>
-
-
-
 
 
         <!--<ImageView
