@@ -263,9 +263,9 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         if (feedbackSystemResponse != null) {
             if (feedbackSystemResponse.getStatus()) {
                 new Handler().postDelayed(() -> {
-                    /*startActivity(OffersNowActivity.getStartIntent(FeedBackActivity.this));
+                    startActivity(OffersNowActivity.getStartIntent(FeedBackActivity.this));
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                    finish();*/
+                    finish();
                 }, 3000);
             } else {
                 if (feedbackSystemResponse != null && feedbackSystemResponse.getMessage() != null)
