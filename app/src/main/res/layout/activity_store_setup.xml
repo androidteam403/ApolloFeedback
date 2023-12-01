@@ -304,8 +304,44 @@
                         android:layout_marginTop="@dimen/dimen15sp"
                         android:layout_marginBottom="@dimen/dimen15sp"
                         android:background="@color/customer_doctor_divider" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_marginStart="@dimen/dimen5dp"
+                            android:layout_marginEnd="@dimen/dimen5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_calibration_btn"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center"
+                            android:onClick="@{()-> callback.onClickFeedbackCalibration()}"
+                            android:text="Feedback Calibration"
+                            android:textColor="@color/white"
+                            tools:ignore="RtlCompat" />
+                        <TextView
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:layout_marginStart="@dimen/dimen5dp"
+                            android:layout_marginEnd="@dimen/dimen5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_calibration_btn"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center"
+                            android:onClick="@{()-> callback.onClickFeedbackTest()}"
+                            android:text="Test"
+                            android:textColor="@color/white"
+                            tools:ignore="RtlCompat" />
+                    </LinearLayout>
 
                     <TextView
+                        android:layout_marginTop="@dimen/dimen5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
