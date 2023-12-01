@@ -1,18 +1,28 @@
 package com.thresholdsoft.apollofeedback.ui.storesetup;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivityStoreSetupBinding;
+import com.thresholdsoft.apollofeedback.databinding.DialogFeedbackCalibrationBinding;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.model.UserAddress;
 import com.thresholdsoft.apollofeedback.ui.storesetup.dialog.GetStoresDialog;
@@ -328,6 +338,167 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     @Override
     public void closeIcon() {
         onBackPressed();
+    }
+
+    @Override
+    public void onClickFeedbackCalibration() {
+        smileyDialog("enterRating");
+    }
+
+    @Override
+    public void onClickFeedbackTest() {
+        smileyDialog("test");
+    }
+
+    void smileyDialog(String value) {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DialogFeedbackCalibrationBinding feedBackbinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_feedback_calibration, null, false);
+        dialog.setContentView(feedBackbinding.getRoot());
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setCancelable(false);
+        if (value.equals("enterRating")) {
+            feedBackbinding.poorRatingRangeEdittext.setVisibility(View.VISIBLE);
+            feedBackbinding.fairRatingRangeEdittext.setVisibility(View.VISIBLE);
+            feedBackbinding.averageRatingRangeEdittext.setVisibility(View.VISIBLE);
+            feedBackbinding.happyRatingRangeEdittext.setVisibility(View.VISIBLE);
+            feedBackbinding.excellentRatingRangeEdittext.setVisibility(View.VISIBLE);
+            feedBackbinding.submitCalib.setVisibility(View.VISIBLE);
+        } else {
+            feedBackbinding.poorRatingRangeEdittext.setVisibility(View.GONE);
+            feedBackbinding.fairRatingRangeEdittext.setVisibility(View.GONE);
+            feedBackbinding.averageRatingRangeEdittext.setVisibility(View.GONE);
+            feedBackbinding.happyRatingRangeEdittext.setVisibility(View.GONE);
+            feedBackbinding.excellentRatingRangeEdittext.setVisibility(View.GONE);
+            feedBackbinding.submitCalib.setVisibility(View.GONE);
+            feedBackbinding.poorIc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                feedBackbinding.setIsFeedbackEnabled(true);
+                    feedBackbinding.fairtick.setVisibility(View.GONE);
+                    feedBackbinding.fair.setVisibility(View.VISIBLE);
+                    feedBackbinding.averagetick.setVisibility(View.GONE);
+                    feedBackbinding.average.setVisibility(View.VISIBLE);
+                    feedBackbinding.happytick.setVisibility(View.GONE);
+                    feedBackbinding.happy.setVisibility(View.VISIBLE);
+                    feedBackbinding.excellenttick.setVisibility(View.GONE);
+                    feedBackbinding.excellent.setVisibility(View.VISIBLE);
+                    feedBackbinding.poorTick.setVisibility(View.VISIBLE);
+                    feedBackbinding.poor.setVisibility(View.GONE);
+//                feedBackbinding.feedbackthanku.setVisibility(View.VISIBLE);
+                }
+            });
+            feedBackbinding.fairIc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                activityFeedBackBinding.setIsFeedbackEnabled(true);
+                    feedBackbinding.poorTick.setVisibility(View.GONE);
+                    feedBackbinding.poor.setVisibility(View.VISIBLE);
+                    feedBackbinding.averagetick.setVisibility(View.GONE);
+                    feedBackbinding.average.setVisibility(View.VISIBLE);
+                    feedBackbinding.happytick.setVisibility(View.GONE);
+                    feedBackbinding.happy.setVisibility(View.VISIBLE);
+                    feedBackbinding.excellenttick.setVisibility(View.GONE);
+                    feedBackbinding.excellent.setVisibility(View.VISIBLE);
+                    feedBackbinding.fairtick.setVisibility(View.VISIBLE);
+                    feedBackbinding.fair.setVisibility(View.GONE);
+//                activityFeedBackBinding.feedbackthanku.setVisibility(View.VISIBLE);
+                }
+            });
+            feedBackbinding.averageIc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                feedBackbinding.setIsFeedbackEnabled(true);
+                    feedBackbinding.poorTick.setVisibility(View.GONE);
+                    feedBackbinding.poor.setVisibility(View.VISIBLE);
+                    feedBackbinding.fairtick.setVisibility(View.GONE);
+                    feedBackbinding.fair.setVisibility(View.VISIBLE);
+                    feedBackbinding.happytick.setVisibility(View.GONE);
+                    feedBackbinding.happy.setVisibility(View.VISIBLE);
+                    feedBackbinding.excellenttick.setVisibility(View.GONE);
+                    feedBackbinding.excellent.setVisibility(View.VISIBLE);
+                    feedBackbinding.averagetick.setVisibility(View.VISIBLE);
+                    feedBackbinding.average.setVisibility(View.GONE);
+//                feedBackbinding.feedbackthanku.setVisibility(View.VISIBLE);
+                }
+            });
+            feedBackbinding.happyIc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                feedBackbinding.setIsFeedbackEnabled(true);
+                    feedBackbinding.poorTick.setVisibility(View.GONE);
+                    feedBackbinding.poor.setVisibility(View.VISIBLE);
+                    feedBackbinding.fairtick.setVisibility(View.GONE);
+                    feedBackbinding.fair.setVisibility(View.VISIBLE);
+                    feedBackbinding.averagetick.setVisibility(View.GONE);
+                    feedBackbinding.average.setVisibility(View.VISIBLE);
+                    feedBackbinding.excellenttick.setVisibility(View.GONE);
+                    feedBackbinding.excellent.setVisibility(View.VISIBLE);
+                    feedBackbinding.happytick.setVisibility(View.VISIBLE);
+                    feedBackbinding.happy.setVisibility(View.GONE);
+//                feedBackbinding.feedbackthanku.setVisibility(View.VISIBLE);
+                }
+            });
+            feedBackbinding.excellentIc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                feedBackbinding.setIsFeedbackEnabled(true);
+                    feedBackbinding.poorTick.setVisibility(View.GONE);
+                    feedBackbinding.poor.setVisibility(View.VISIBLE);
+                    feedBackbinding.fairtick.setVisibility(View.GONE);
+                    feedBackbinding.fair.setVisibility(View.VISIBLE);
+                    feedBackbinding.averagetick.setVisibility(View.GONE);
+                    feedBackbinding.average.setVisibility(View.VISIBLE);
+                    feedBackbinding.happytick.setVisibility(View.GONE);
+                    feedBackbinding.happy.setVisibility(View.VISIBLE);
+                    feedBackbinding.excellenttick.setVisibility(View.VISIBLE);
+                    feedBackbinding.excellent.setVisibility(View.GONE);
+//                feedBackbinding.feedbackthanku.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+        feedBackbinding.closeWhiteRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        feedBackbinding.submitCalib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!feedBackbinding.poorRatingRangeEdittext.getText().toString().isEmpty() &&
+                        !feedBackbinding.fairRatingRangeEdittext.getText().toString().isEmpty() &&
+                        !feedBackbinding.averageRatingRangeEdittext.getText().toString().isEmpty() &&
+                        !feedBackbinding.happyRatingRangeEdittext.getText().toString().isEmpty() &&
+                        !feedBackbinding.excellentRatingRangeEdittext.getText().toString().isEmpty()) {
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(StoreSetupActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        {
+
+        }
+        ;
+//        Button yesBtn = dialog.findViewById(R.id.yes_button);
+//        yesBtn.setOnClickListener(view -> {
+//            isAllowFragmentChange = false;
+//            dialog.dismiss();
+//            displaySelectedScreen(itemName);
+////            listView.setSelected(0);
+//        });
+//        noBtn.setOnClickListener(view -> dialog.dismiss());
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.copyFrom(window.getAttributes());
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+            window.setAttributes(layoutParams);
+        }
+        dialog.show();
     }
 
     public void selectButton() {

@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen30dp"
+                    android:layout_height="@dimen/dimen30dp"
+                    android:layout_marginTop="@dimen/dimen85dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/minus"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/poor"
+                            android:layout_width="@dimen/dimen70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/poor_ic"
+                                android:layout_width="@dimen/dimen70dp"
+                                android:layout_height="@dimen/dimen50dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/poor_round"
+                                android:visibility="visible" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_poor"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/thirteen13sp"
+                                tools:ignore="RtlSymmetry" />
+
+                            <EditText
+                                android:id="@+id/poor_rating_range_edittext"
+                                android:layout_width="@dimen/dimen50dp"
+                                android:layout_height="@dimen/dimen40dp"
+                                android:background="@drawable/grey_border_bg"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:padding="@dimen/dimen5dp"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold"
+                                tools:ignore="RtlCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/poor_tick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen140dp"
+                                android:layout_height="@dimen/dimen140dp"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/poor_round_selected" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_poor"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen18sp"
+                                tools:ignore="RtlSymmetry" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/fair"
+                            android:layout_width="@dimen/dimen70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/fair_ic"
+                                android:layout_width="@dimen/dimen70dp"
+                                android:layout_height="@dimen/dimen50dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/fair_round"
+                                android:visibility="visible" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_fair"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/thirteen13sp"
+                                tools:ignore="RtlSymmetry" />
+
+                            <EditText
+                                android:id="@+id/fair_rating_range_edittext"
+                                android:layout_width="@dimen/dimen50dp"
+                                android:layout_height="@dimen/dimen40dp"
+                                android:background="@drawable/grey_border_bg"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:padding="@dimen/dimen5dp"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold"
+                                tools:ignore="RtlCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/fairtick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen140dp"
+                                android:layout_height="@dimen/dimen140dp"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/fair_round_selected"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_fair"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen18sp"
+                                tools:ignore="RtlSymmetry" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/average"
+                            android:layout_width="@dimen/dimen70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/average_ic"
+                                android:layout_width="@dimen/dimen70dp"
+                                android:layout_height="@dimen/dimen50dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/average_round"
+                                android:visibility="visible" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_average"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/thirteen13sp"
+                                tools:ignore="RtlSymmetry" />
+
+                            <EditText
+                                android:id="@+id/average_rating_range_edittext"
+                                android:layout_width="@dimen/dimen50dp"
+                                android:layout_height="@dimen/dimen40dp"
+                                android:background="@drawable/grey_border_bg"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:padding="@dimen/dimen5dp"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold"
+                                tools:ignore="RtlCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/averagetick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen140dp"
+                                android:layout_height="@dimen/dimen140dp"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/average_round_selected" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_average"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen18sp"
+                                tools:ignore="RtlSymmetry" />
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/happy"
+                            android:layout_width="@dimen/dimen70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/happy_ic"
+                                android:layout_width="@dimen/dimen70dp"
+                                android:layout_height="@dimen/dimen50dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/happy_round"
+                                android:visibility="visible" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_happy"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/thirteen13sp"
+                                tools:ignore="RtlSymmetry" />
+
+                            <EditText
+                                android:id="@+id/happy_rating_range_edittext"
+                                android:layout_width="@dimen/dimen50dp"
+                                android:layout_height="@dimen/dimen40dp"
+                                android:background="@drawable/grey_border_bg"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:padding="@dimen/dimen5dp"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold"
+                                tools:ignore="RtlCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/happytick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen140dp"
+                                android:layout_height="@dimen/dimen140dp"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/happy_round_selected" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_happy"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen18sp"
+                                tools:ignore="RtlSymmetry" />
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/excellent"
+                            android:layout_width="@dimen/dimen70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/excellent_ic"
+                                android:layout_width="@dimen/dimen70dp"
+                                android:layout_height="@dimen/dimen50dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/excellent_round"
+                                android:visibility="visible" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_excellent"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/thirteen13sp"
+                                tools:ignore="RtlSymmetry" />
+
+                            <EditText
+                                android:id="@+id/excellent_rating_range_edittext"
+                                android:layout_width="@dimen/dimen50dp"
+                                android:layout_height="@dimen/dimen40dp"
+                                android:background="@drawable/grey_border_bg"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:padding="@dimen/dimen5dp"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold"
+                                tools:ignore="RtlCompat" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/excellenttick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen140dp"
+                                android:layout_height="@dimen/dimen140dp"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/excellent_round_selected" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:gravity="center_horizontal"
+                                android:text="@string/label_excellent"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen18sp"
+                                tools:ignore="RtlSymmetry" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <!--                <LinearLayout-->
+                    <!--                    android:layout_width="wrap_content"-->
+                    <!--                    android:layout_height="match_parent"-->
+                    <!--                    android:gravity="center"-->
+                    <!--                    android:orientation="vertical">-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/fair"-->
+                    <!--                        android:layout_width="@dimen/dimen70dp"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:orientation="vertical">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/fair_ic"-->
+                    <!--                            android:layout_width="@dimen/dimen50dp"-->
+                    <!--                            android:layout_height="@dimen/dimen50dp"-->
+                    <!--                            android:contentDescription="@string/app_name"-->
+                    <!--                            android:src="@drawable/fair_round"-->
+                    <!--                            android:visibility="visible" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:fontFamily="@font/poppins_regular"-->
+                    <!--                            android:gravity="center_horizontal"-->
+                    <!--                            android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                            android:text="@string/label_fair"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/white"-->
+                    <!--                            android:textSize="@dimen/thirteen13sp"-->
+                    <!--                            tools:ignore="RtlSymmetry" />-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:id="@+id/fair_rating_range_edittext"-->
+                    <!--                            android:layout_width="@dimen/dimen50dp"-->
+                    <!--                            android:layout_height="@dimen/dimen40dp"-->
+                    <!--                            android:padding="@dimen/dimen5dp"-->
+                    <!--                            android:background="@drawable/grey_border_bg"-->
+                    <!--                            android:inputType="number"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/black"-->
+                    <!--                            android:maxLength="1"-->
+                    <!--                            android:textSize="@dimen/dimen12sp"-->
+                    <!--                            android:textStyle="bold"-->
+                    <!--                            tools:ignore="RtlCompat" />-->
+
+                    <!--                    </LinearLayout>-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/fairtick"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginStart="@dimen/dimen10dp"-->
+                    <!--                        android:orientation="vertical"-->
+                    <!--                        android:visibility="gone">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:layout_width="@dimen/dimen140dp"-->
+                    <!--                            android:layout_height="@dimen/dimen140dp"-->
+                    <!--                            android:contentDescription="@string/app_name"-->
+                    <!--                            android:scaleType="fitXY"-->
+                    <!--                            android:src="@drawable/fair_round_selected" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                            android:fontFamily="@font/poppins_regular"-->
+                    <!--                            android:gravity="center_horizontal"-->
+                    <!--                            android:text="@string/label_fair"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/white"-->
+                    <!--                            android:textSize="@dimen/dimen18sp"-->
+                    <!--                            tools:ignore="RtlSymmetry" />-->
+
+                    <!--                    </LinearLayout>-->
+
+
+                    <!--                </LinearLayout>-->
+
+                    <!--                <LinearLayout-->
+                    <!--                    android:layout_width="wrap_content"-->
+                    <!--                    android:layout_height="match_parent"-->
+                    <!--                    android:gravity="center"-->
+                    <!--                    android:orientation="vertical">-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/average"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:orientation="vertical">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/average_ic"-->
+                    <!--                            android:layout_width="@dimen/dimen50dp"-->
+                    <!--                            android:layout_height="@dimen/dimen50dp"-->
+                    <!--                            android:contentDescription="@string/app_name"-->
+                    <!--                            android:src="@drawable/average_round"-->
+                    <!--                            android:visibility="visible" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:fontFamily="@font/poppins_regular"-->
+                    <!--                            android:gravity="center_horizontal"-->
+                    <!--                            android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                            android:text="@string/label_average"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/white"-->
+                    <!--                            android:textSize="@dimen/thirteen13sp" />-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:id="@+id/average_rating_range_edittext"-->
+                    <!--                            android:layout_width="@dimen/dimen50dp"-->
+                    <!--                            android:layout_height="@dimen/dimen40dp"-->
+                    <!--                            android:padding="@dimen/dimen5dp"-->
+                    <!--                            android:background="@drawable/grey_border_bg"-->
+                    <!--                            android:inputType="number"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/black"-->
+                    <!--                            android:maxLength="1"-->
+                    <!--                            android:textSize="@dimen/dimen12sp"-->
+                    <!--                            android:textStyle="bold"-->
+                    <!--                            tools:ignore="RtlCompat" />-->
+
+                    <!--                    </LinearLayout>-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/averagetick"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginStart="@dimen/dimen10dp"-->
+                    <!--                        android:orientation="vertical"-->
+                    <!--                        android:visibility="gone">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:layout_width="@dimen/dimen140dp"-->
+                    <!--                            android:layout_height="@dimen/dimen140dp"-->
+                    <!--                            android:contentDescription="@string/app_name"-->
+                    <!--                            android:scaleType="fitXY"-->
+                    <!--                            android:src="@drawable/average_round_selected" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:fontFamily="@font/poppins_regular"-->
+                    <!--                            android:gravity="center_horizontal"-->
+                    <!--                            android:text="@string/label_average"-->
+                    <!--                            android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/white"-->
+                    <!--                            android:textSize="@dimen/dimen18sp" />-->
+
+                    <!--                    </LinearLayout>-->
+
+                    <!--                </LinearLayout>-->
+
+                    <!--                <LinearLayout-->
+                    <!--                    android:layout_gravity="center"-->
+                    <!--                    android:layout_width="wrap_content"-->
+                    <!--                    android:layout_height="wrap_content"-->
+                    <!--                    android:gravity="center"-->
+                    <!--                    android:orientation="vertical">-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:layout_gravity="center"-->
+                    <!--                        android:id="@+id/happy"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginStart="@dimen/dimen10dp"-->
+                    <!--                        android:orientation="vertical">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:layout_gravity="center"-->
+                    <!--                            android:id="@+id/happy_ic"-->
+                    <!--                            android:layout_width="@dimen/dimen50dp"-->
+                    <!--                            android:layout_height="@dimen/dimen50dp"-->
+                    <!--                            android:contentDescription="@string/app_name"-->
+                    <!--                            android:src="@drawable/happy_round"-->
+                    <!--                            android:visibility="visible" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                            android:fontFamily="@font/poppins_regular"-->
+                    <!--                            android:gravity="center_horizontal"-->
+                    <!--                            android:text="@string/label_happy"-->
+                    <!--                            android:textColor="@color/white"-->
+                    <!--                            android:textSize="@dimen/thirteen13sp"-->
+                    <!--                            tools:ignore="RtlSymmetry" />-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:layout_gravity="center"-->
+                    <!--                            android:gravity="center"-->
+                    <!--                            android:id="@+id/happy_rating_range_edittext"-->
+                    <!--                            android:layout_width="@dimen/dimen50dp"-->
+                    <!--                            android:layout_height="@dimen/dimen40dp"-->
+                    <!--                            android:padding="@dimen/dimen5dp"-->
+                    <!--                            android:background="@drawable/grey_border_bg"-->
+                    <!--                            android:inputType="number"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/black"-->
+                    <!--                            android:maxLength="1"-->
+                    <!--                            android:textSize="@dimen/dimen12sp"-->
+                    <!--                            android:textStyle="bold"-->
+                    <!--                            tools:ignore="RtlCompat" />-->
+
+                    <!--                    </LinearLayout>-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/happytick"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginStart="@dimen/dimen10dp"-->
+                    <!--                        android:orientation="vertical"-->
+                    <!--                        android:visibility="gone">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:layout_width="@dimen/dimen140dp"-->
+                    <!--                            android:layout_height="@dimen/dimen140dp"-->
+                    <!--                            android:contentDescription="@string/app_name"-->
+                    <!--                            android:scaleType="fitXY"-->
+                    <!--                            android:src="@drawable/happy_round_selected" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                            android:fontFamily="@font/poppins_regular"-->
+                    <!--                            android:gravity="center_horizontal"-->
+                    <!--                            android:text="@string/label_happy"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/white"-->
+                    <!--                            android:textSize="@dimen/dimen18sp"-->
+                    <!--                            tools:ignore="RtlSymmetry" />-->
+
+                    <!--                    </LinearLayout>-->
+
+
+                    <!--                </LinearLayout>-->
+
+                    <!--                <LinearLayout-->
+                    <!--                    android:layout_marginStart="@dimen/dimen10dp"-->
+                    <!--                    android:layout_gravity="center"-->
+                    <!--                    android:layout_width="wrap_content"-->
+                    <!--                    android:layout_height="wrap_content"-->
+                    <!--                    android:gravity="center"-->
+                    <!--                    android:orientation="vertical">-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/excellent"-->
+                    <!--                        android:layout_width="@dimen/dimen90dp"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginStart="@dimen/dimen10dp"-->
+                    <!--                        android:orientation="vertical">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:layout_gravity="center"-->
+                    <!--                            android:id="@+id/excellent_ic"-->
+                    <!--                            android:layout_width="@dimen/dimen50dp"-->
+                    <!--                            android:layout_height="@dimen/dimen50dp"-->
+                    <!--                            android:contentDescription="@string/app_name"-->
+                    <!--                            android:src="@drawable/excellent_round"-->
+                    <!--                            android:visibility="visible" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_gravity="center"-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:fontFamily="@font/poppins_regular"-->
+                    <!--                            android:gravity="center_horizontal"-->
+                    <!--                            android:text="@string/label_excellent"-->
+                    <!--                            android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                            android:textColor="@color/white"-->
+                    <!--                            android:textSize="@dimen/thirteen13sp" />-->
+
+                    <!--                        <EditText-->
+                    <!--                            android:layout_gravity="center"-->
+                    <!--                            android:gravity="center"-->
+                    <!--                            android:id="@+id/excellent_rating_range_edittext"-->
+                    <!--                            android:layout_width="@dimen/dimen50dp"-->
+                    <!--                            android:layout_height="@dimen/dimen40dp"-->
+                    <!--                            android:padding="@dimen/dimen5dp"-->
+                    <!--                            android:background="@drawable/grey_border_bg"-->
+                    <!--                            android:inputType="number"-->
+                    <!--                            android:textAlignment="center"-->
+                    <!--                            android:textColor="@color/black"-->
+                    <!--                            android:maxLength="1"-->
+                    <!--                            android:textSize="@dimen/dimen12sp"-->
+                    <!--                            android:textStyle="bold"-->
+                    <!--                            tools:ignore="RtlCompat" />-->
+
+                    <!--                    </LinearLayout>-->
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/excellenttick"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginStart="@dimen/dimen10dp"-->
+                    <!--                        android:orientation="vertical"-->
+                    <!--                        android:visibility="gone">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:layout_width="@dimen/dimen140dp"-->
+                    <!--                            android:layout_height="@dimen/dimen140dp"-->
+                    <!--                            android:contentDescription="@string/app_name"-->
+                    <!--                            android:scaleType="fitXY"-->
+                    <!--                            android:src="@drawable/excellent_round_selected" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:fontFamily="@font/poppins_regular"-->
+                    <!--                            android:gravity="center_horizontal"-->
+                    <!--                            android:text="@string/label_excellent"-->
+                    <!--                            android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                            android:textColor="@color/white"-->
+                    <!--                            android:textSize="@dimen/dimen18sp" />-->
+
+                    <!--                    </LinearLayout>-->
+
+                    <!--                </LinearLayout>-->
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen30dp"
+                    android:layout_height="@dimen/dimen30dp"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginTop="@dimen/dimen85dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/plus"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/submit_calib"
+                android:layout_width="@dimen/dimen120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen_sp"
+                android:layout_marginTop="@dimen/dimen15dp"
+                android:layout_toEndOf="@+id/cancel"
+                android:background="@drawable/bg_cancel_btn"
+                android:backgroundTint="@color/colorPrimary"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:text="Submit"
+                android:textColor="@color/white"
+                tools:ignore="RtlCompat" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/close_white_rating"
+            android:layout_width="@dimen/dimen20dp"
+            android:layout_height="@dimen/dimen20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/dimen15dp"
+            android:src="@drawable/ic_close" />
+
+
+    </RelativeLayout>
+</layout>

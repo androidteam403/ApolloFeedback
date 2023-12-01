@@ -43,4 +43,8 @@ public interface StoreSetupActivityCallback {
     void getDeviceRegistrationDetails(DeviceRegistrationResponse body);
 
     void closeIcon();
+
+    void onClickFeedbackCalibration();
+
+    void onClickFeedbackTest();
 }
