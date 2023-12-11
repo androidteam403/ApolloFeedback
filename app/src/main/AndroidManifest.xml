@@ -3,6 +3,7 @@
     package="com.thresholdsoft.apollofeedback">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -23,11 +24,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".ui.offersnow.CameraActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".ui.offersnow.OffersNowActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.whyscanprescription.WhyScanPrescriptionActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".ui.storesetup.StoreSetupActivity"
             android:screenOrientation="landscape"
@@ -37,18 +43,16 @@
             android:exported="true"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity
             android:name=".ui.itemspayment.NewActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".ui.offersnow.OffersNowActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
@@ -60,11 +64,14 @@
             android:exported="true"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
-                        <!--<intent-filter>
+
+            <!--
+                        <intent-filter>
                             <action android:name="android.intent.action.MAIN" />
 
                             <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>-->
+                        </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".ui.whyscanprescription.epsonscan.EpsonScanActivity"

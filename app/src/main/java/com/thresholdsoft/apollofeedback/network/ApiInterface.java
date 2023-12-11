@@ -10,6 +10,7 @@ import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowRequest;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.ZeroCodeApiModelResponse;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionRequest;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionResponse;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreListResponseModel;
@@ -17,9 +18,14 @@ import com.thresholdsoft.apollofeedback.utils.fileupload.FileDownloadRequest;
 import com.thresholdsoft.apollofeedback.utils.fileupload.FileDownloadResponse;
 import com.thresholdsoft.apollofeedback.utils.fileupload.FileUploadResponse;
 
+import java.util.Map;
+
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -66,4 +72,25 @@ public interface ApiInterface {
 
     @POST
     Call<FileDownloadResponse> FILE_DOWNLOAD_API_CALL(@Url String url, @Header("token") String token, @Body FileDownloadRequest fileDownloadRequest);
+
+    @Multipart
+    @POST("http://20.197.55.11:5000/file-upload")
+    Call<ZeroCodeApiModelResponse> ZERO_CODE_FILE_UPLOAD(@Header("TYPE") String type,
+                                                         @Part MultipartBody.Part file, @Part("name") String title);
+
+//    @Multipart
+//    @POST("http://20.197.55.11:5000/file-upload")
+//    Call<ZeroCodeApiModelResponse> ZERO_CODE_FILE_UPLOADS(@Header("TYPE") String type,
+//                                                         @Part MultipartBody.Part file, @Part("name") RequestBody title);
+
+    @Multipart
+    @POST("http://20.197.55.11:5000/file-upload")
+    Call<ZeroCodeApiModelResponse> ZERO_CODE_FILE_UPLOADS(@Part MultipartBody.Part file,
+                                                          @Part("name") RequestBody description);
+
+    @Multipart
+    @POST("http://20.197.55.11:5000/file-upload")
+    Call<ZeroCodeApiModelResponse> ZERO_CODE_FILE_UPLOADS_WITHOUT_NAME(@Part MultipartBody.Part file);
+
+
 }

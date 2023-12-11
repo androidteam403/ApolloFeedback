@@ -23,6 +23,10 @@ public class ApiClient {
         return getRetrofitInstance(baseUrl).create(ApiInterface.class);
     }
 
+    public static ApiInterface getApiServiceZerCode(String baseUrl) {
+        return getRetrofitInstance("http://20.197.55.11:5000/").create(ApiInterface.class);
+    }
+
     private static Retrofit getRetrofitInstance(String baseUrl) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
