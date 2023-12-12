@@ -22,7 +22,18 @@
         android:networkSecurityConfig="@xml/network_security_confing"
         android:roundIcon="@mipmap/ic_launcher_apollo_round"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.MyApplication">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.thresholdsoft.apollofeedback.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
         <activity
             android:name=".ui.offersnow.CameraActivity"
             android:exported="true">

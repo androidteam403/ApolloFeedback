@@ -4,11 +4,13 @@ package com.thresholdsoft.apollofeedback.ui.offersnow;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Rect;
@@ -23,10 +25,14 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
@@ -41,6 +47,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -65,9 +73,13 @@ import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,6 +94,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     int currentIndex = 0;
     boolean isAutoScrolling = true;
     LinearLayoutManager layoutManager;
+
+    File imageFromCameraFile = null;
+    private String fileNameForCompressedImage = null;
     private ActivityOffersNowBinding offersNowBinding;
     private FeedbackSystemResponse feedbackSystemResponse;
     Button b;
@@ -314,6 +329,11 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     private void setUp() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO, Manifest.permission.READ_MEDIA_VIDEO}, 998);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 999);
+        }
         offersNowBinding.setCallback(this);
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
             offersNowBinding.setIsConfigurationAvailable(true);
@@ -408,31 +428,62 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //                        Toast.makeText(this, "No faces found"+ faces.size(), Toast.LENGTH_SHORT).show();
                     }
                     for (Face face : faces) {
-                        Rect boundingBox = face.getBoundingBox();
-                        Bitmap croppedBitmap = cropBitmap(bitmap, boundingBox);
-                        runOnUiThread(() -> {; // Initialize your bitmap
+                        runOnUiThread(() -> {
+                            Rect boundingBox = face.getBoundingBox();
+                            Bitmap croppedBitmap = cropBitmap(bitmap, boundingBox);
+                            File dcimDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+                            File directory = new File(dcimDirectory , "FaceRecogn");
+                            if (!directory.exists()) {
+//                                directory.mkdirs();
+                                boolean isCreated = directory.mkdirs();
+                                if (!isCreated) {
+                                    Toast.makeText(this, "Directory Creation, Failed to create directory", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                                    Toast.makeText(this, "External Storage is not mounted properly", Toast.LENGTH_SHORT).show();
 
-// Specify the output file path. Example for internal storage:
+                                    Log.e("Directory Creation", "External Storage is not mounted properly");
+                                    return;
+                                }
+                            }
                             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                             String filename = "JPEG_" + timeStamp + ".jpg";
-                            File outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
+
+                            ContentValues values = new ContentValues();
+                            values.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
+                            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+                            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM + File.separator + "FaceRecogni");
+
+                            Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//
+//                            try (OutputStream out = getContentResolver().openOutputStream(uri)) {
+//                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+
+                            InputStream inputStream = null;
+                            try {
+                                inputStream = getContentResolver().openInputStream(uri);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                                // Handle error
+                            }
+                            Bitmap bitmaps = BitmapFactory.decodeStream(inputStream);
 
                             FileOutputStream out = null;
+                            File file=null;
                             try {
-                                out = new FileOutputStream(outputFile);
+                                // Create a file to save the image
+                                 file = new File(getExternalFilesDir(null), "converted_image.jpg"); // Change path as needed
+                                out = new FileOutputStream(file);
 
-                                // Compress the bitmap to JPEG format and write it to the output stream
-                                // Quality is set to 100 (highest)
-                                croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                                String name = "";
-                                if(!name.isEmpty()){
-                                    getController().zeroCodeApiCall(outputFile, name, croppedBitmap);
-                                }else{
-                                    getController().zeroCodeApiCallWithoutName(outputFile, croppedBitmap);
-                                }
-
+                                // Compress the bitmap to JPEG format and save
+                                bitmaps.compress(Bitmap.CompressFormat.JPEG, 100, out); // 100 is the best quality
                             } catch (Exception e) {
                                 e.printStackTrace();
+                                // Handle error
                             } finally {
                                 try {
                                     if (out != null) {
@@ -442,6 +493,35 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                                     e.printStackTrace();
                                 }
                             }
+
+
+                            getController().zeroCodeApiCallWithoutName(file, bitmap);
+
+
+//                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+//                            String filename = "JPEG_" + timeStamp + ".jpg";
+//                            File outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
+//
+//                            FileOutputStream out = null;
+//                            try {
+//                                out = new FileOutputStream(outputFile);
+//
+//                                // Compress the bitmap to JPEG format and write it to the output stream
+//                                // Quality is set to 100 (highest)
+//                                croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+//
+//
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            } finally {
+//                                try {
+//                                    if (out != null) {
+//                                        out.close();
+//                                    }
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
                             // Assuming you have an ImageView with the ID imageView
 //                            openDialogBox(croppedBitmap);
                             stopFrameCapture();
@@ -456,6 +536,18 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     Toast.makeText(this, "unable to find faces", Toast.LENGTH_SHORT).show();
                     // Handle any errors
                 });
+    }
+
+    public static File savebitmap(Bitmap bmp) throws IOException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        File f = new File(Environment.getExternalStorageDirectory()
+                + File.separator + "testimage.jpg");
+        f.createNewFile();
+        FileOutputStream fo = new FileOutputStream(f);
+        fo.write(bytes.toByteArray());
+        fo.close();
+        return f;
     }
 
     private Bitmap cropBitmap(Bitmap bitmap, Rect rect) {
@@ -808,15 +900,15 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(true);
 
-        feedBackbinding.nameF.setVisibility(View.GONE);
-        feedBackbinding.phoneNoF.setVisibility(View.GONE);
-        feedBackbinding.userName.setVisibility(View.VISIBLE);
-        feedBackbinding.userPhoneNo.setVisibility(View.VISIBLE);
-        feedBackbinding.warningImage.setVisibility(View.GONE);
-        feedBackbinding.yourDetailsNotFound.setVisibility(View.GONE);
-        feedBackbinding.warningImage.setVisibility(View.GONE);
-        feedBackbinding.verifiedYourDetails.setVisibility(View.VISIBLE);
-        feedBackbinding.fillYourDetailsText.setVisibility(View.GONE);
+//        feedBackbinding.nameF.setVisibility(View.GONE);
+//        feedBackbinding.phoneNoF.setVisibility(View.GONE);
+//        feedBackbinding.userName.setVisibility(View.VISIBLE);
+//        feedBackbinding.userPhoneNo.setVisibility(View.VISIBLE);
+//        feedBackbinding.warningImage.setVisibility(View.GONE);
+//        feedBackbinding.yourDetailsNotFound.setVisibility(View.GONE);
+//        feedBackbinding.warningImage.setVisibility(View.GONE);
+//        feedBackbinding.verifiedYourDetails.setVisibility(View.VISIBLE);
+//        feedBackbinding.fillYourDetailsText.setVisibility(View.GONE);
 
 //            feedBackbinding.closeWhiteRating.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -832,9 +924,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         feedBackbinding.onClickContinueF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
-                offersNowBinding.offersLayout.setVisibility(View.GONE);
-                dialog.dismiss();
+//                offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
+//                offersNowBinding.offersLayout.setVisibility(View.GONE);
+//                dialog.dismiss();
 
 //                offersNowBinding.textureView.setVisibility(View.GONE);
 //                offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
@@ -876,8 +968,88 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     public void onClickCapture() {
         offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
         offersNowBinding.offersLayout.setVisibility(View.GONE);
+//        if (!checkPermission()) {
+//            askPermissions(777);
+//            return;
+//        } else {
+//            openCameras();
+//        }
+
+
 
     }
+
+
+    private boolean checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_MEDIA_IMAGES
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_MEDIA_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_MEDIA_VIDEO
+            ) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED;
+        }
+    }
+
+    private void askPermissions(int PermissonCode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(
+                    new String[]{
+                            Manifest.permission.READ_MEDIA_AUDIO,
+                            Manifest.permission.READ_MEDIA_IMAGES,
+                            Manifest.permission.READ_MEDIA_VIDEO,
+                            Manifest.permission.CAMERA
+                    }, PermissonCode
+            );
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(
+                        new String[]{
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA
+                        }, PermissonCode
+                );
+            }
+        }
+    }
+
+
+
+
+    private void openCameras() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        imageFromCameraFile =
+                new File(getApplicationContext().getCacheDir(), System.currentTimeMillis() + ".jpg");
+        fileNameForCompressedImage = System.currentTimeMillis() + ".jpg";
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFromCameraFile));
+        } else {
+            Uri photoUri = FileProvider.getUriForFile(
+                    getApplicationContext(),
+                    getApplicationContext().getPackageName() + ".provider",
+                    imageFromCameraFile
+            );
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        }
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(intent, 777);
+    }
+
+    Uri imageUri = null;
+
+
 
     @Override
     public void onSuccessMultipartResponse(ZeroCodeApiModelResponse response, Bitmap image, File file) {

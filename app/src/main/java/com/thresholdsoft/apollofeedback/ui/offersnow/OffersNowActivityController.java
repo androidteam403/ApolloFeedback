@@ -157,7 +157,7 @@ public class OffersNowActivityController {
                 public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
                     CommonUtils.hideDialog();
                     if (response.isSuccessful()) {
-                        mCallback.onSuccessMultipartResponse(response.body(), croppedBitmap , file);
+                        mCallback.onSuccessMultipartResponse(response.body(), croppedBitmap, file);
                     } else {
                         mCallback.onFailureMessage("Response not successful");
                     }
@@ -174,12 +174,12 @@ public class OffersNowActivityController {
         }
     }
 
-    public void zeroCodeApiCallWithoutName(File image, Bitmap croppedBitmap) {
+    public void zeroCodeApiCallWithoutName(File image, Bitmap bitmap) {
         if (NetworkUtils.isNetworkConnected(mContext)) {
             CommonUtils.showDialog(mContext, "Please wait...");
 
             // Create RequestBody for the image file
-            @SuppressLint("ResourceType") RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), image);
+            @SuppressLint("ResourceType") RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), image);
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", image.getName(), requestBody);
 
             // Create RequestBody for the 'name' field
@@ -195,7 +195,7 @@ public class OffersNowActivityController {
                 public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
                     CommonUtils.hideDialog();
                     if (response.isSuccessful()) {
-                        mCallback.onSuccessMultipartResponse(response.body(), croppedBitmap, image);
+                        mCallback.onSuccessMultipartResponse(response.body(), bitmap, image);
                     } else {
                         mCallback.onFailureMessage("Response not successful");
                     }

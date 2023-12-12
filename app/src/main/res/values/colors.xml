@@ -29,5 +29,7 @@
     <color name="red">#FF0000</color>
     <color name="search_customer_bg">#e8f3f5</color>
     <color name="home_bottom_background">#FDB916</color>
+    <color name="teal_blue">#176772</color>
+    <color name="greY">#aaaaaa</color>
 
 </resources>
