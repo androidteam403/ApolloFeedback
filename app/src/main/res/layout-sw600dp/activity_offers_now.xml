@@ -9,7 +9,81 @@
         android:background="@drawable/app_bg"
         tools:context=".ui.offersnow.OffersNowActivity">
 
+        <LinearLayout
+            android:id="@+id/textureView_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen15dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextureView
+                android:id="@+id/textureView"
+                android:layout_width="@dimen/dimen350dp"
+                android:layout_height="@dimen/dimen350dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen20dp"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen70dp"
+                    android:layout_height="@dimen/dimen70dp"
+                    android:src="@drawable/face" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Face Recognition Secure Access"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!--                    <TextView-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:text="Click on below button to continue"-->
+                    <!--                        android:textColor="#176772"-->
+                    <!--                        android:textSize="@dimen/dimen16sp"-->
+                    <!--                        android:textStyle="bold" />-->
+
+                    <!--                    <TextView-->
+                    <!--                        android:padding="@dimen/dimen5dp"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_below="@id/banners_layout"-->
+                    <!--                        android:layout_centerInParent="true"-->
+                    <!--                        android:layout_gravity="center"-->
+                    <!--                        android:layout_marginStart="@dimen/dimen5dp"-->
+                    <!--                        android:layout_marginTop="@dimen/dimen5dp"-->
+                    <!--                        android:layout_marginEnd="@dimen/dimen5dp"-->
+                    <!--                        android:background="@drawable/ripple_button_continue"-->
+                    <!--                        android:fontFamily="@font/roboto_bold"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:onClick="@{()-> callback.onClickCapture()}"-->
+                    <!--                        android:text="Capture"-->
+                    <!--                        android:textColor="@color/white"-->
+                    <!--                        android:visibility="visible"-->
+                    <!--                        tools:ignore="RtlCompat" />-->
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
         <RelativeLayout
+            android:id="@+id/offers_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen30dp"
@@ -54,6 +128,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/banners_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -66,8 +141,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen40dp"
                 android:layout_marginTop="@dimen/dimen10dp"
-                android:gravity="center_horizontal"
                 android:layout_marginEnd="@dimen/dimen40dp"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -130,6 +205,64 @@
                 android:onClick="@{()-> callback.onClickSkip()}"
                 android:src="@drawable/ic_skip"
                 android:visibility="gone" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/image_capture_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/banners_layout"
+            android:layout_marginTop="@dimen/dimen10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dimen70dp"
+                android:layout_height="@dimen/dimen70dp"
+                android:src="@drawable/face" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Face Recognition Secure Access"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click on below button to continue"
+                    android:textColor="#176772"
+                    android:textSize="@dimen/dimen16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/banners_layout"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:layout_marginEnd="@dimen/dimen5dp"
+                    android:background="@drawable/ripple_button_continue"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:onClick="@{()-> callback.onClickCapture()}"
+                    android:padding="@dimen/dimen5dp"
+                    android:text="Capture"
+                    android:textColor="@color/white"
+                    android:visibility="visible"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
 
 
         </LinearLayout>

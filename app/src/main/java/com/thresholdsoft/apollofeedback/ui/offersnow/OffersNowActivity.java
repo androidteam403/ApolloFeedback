@@ -448,11 +448,11 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                                 }
                             }
                             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                            String filename = "JPEG_" + timeStamp + ".jpg";
+                            String filename =  timeStamp + ".jpg";
 
                             ContentValues values = new ContentValues();
                             values.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
-                            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+                            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
                             values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM + File.separator + "FaceRecogni");
 
                             Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
