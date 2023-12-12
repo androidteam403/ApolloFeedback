@@ -419,100 +419,71 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
 
-    private void processFrame(Bitmap bitmap) {
-//        Toast.makeText(this, "ProcessFrame"+ bitmap, Toast.LENGTH_SHORT).show();
-        InputImage image = InputImage.fromBitmap(bitmap, 0); // Assuming no rotation needed
-        faceDetector.process(image)
-                .addOnSuccessListener(faces -> {
-                    if(faces.size()==0){
-//                        Toast.makeText(this, "No faces found"+ faces.size(), Toast.LENGTH_SHORT).show();
-                    }
-                    for (Face face : faces) {
-                        runOnUiThread(() -> {
-                            Rect boundingBox = face.getBoundingBox();
-                            Bitmap croppedBitmap = cropBitmap(bitmap, boundingBox);
-                            File dcimDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-                            File directory = new File(dcimDirectory , "FaceRecogn");
-                            if (!directory.exists()) {
-//                                directory.mkdirs();
-                                boolean isCreated = directory.mkdirs();
-                                if (!isCreated) {
-                                    Toast.makeText(this, "Directory Creation, Failed to create directory", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                                    Toast.makeText(this, "External Storage is not mounted properly", Toast.LENGTH_SHORT).show();
-
-                                    Log.e("Directory Creation", "External Storage is not mounted properly");
-                                    return;
-                                }
-                            }
-                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                            String filename =  timeStamp + ".jpg";
-
-                            ContentValues values = new ContentValues();
-                            values.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
-                            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM + File.separator + "FaceRecogni");
-
-                            Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//    private void processFrame(Bitmap bitmap) {
+////        Toast.makeText(this, "ProcessFrame"+ bitmap, Toast.LENGTH_SHORT).show();
+//        InputImage image = InputImage.fromBitmap(bitmap, 0); // Assuming no rotation needed
+//        faceDetector.process(image)
+//                .addOnSuccessListener(faces -> {
+//                    if(faces.size()==0){
+////                        Toast.makeText(this, "No faces found"+ faces.size(), Toast.LENGTH_SHORT).show();
+//                    }
+//                    for (Face face : faces) {
+//                        runOnUiThread(() -> {
+//                            Rect boundingBox = face.getBoundingBox();
+//                            Bitmap croppedBitmap = cropBitmap(bitmap, boundingBox);
+//                            File dcimDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+//                            File directory = new File(dcimDirectory , "FaceRecogn");
+//                            if (!directory.exists()) {
+////                                directory.mkdirs();
+//                                boolean isCreated = directory.mkdirs();
+//                                if (!isCreated) {
+//                                    Toast.makeText(this, "Directory Creation, Failed to create directory", Toast.LENGTH_SHORT).show();
+//                                    return;
+//                                }
+//                                if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+//                                    Toast.makeText(this, "External Storage is not mounted properly", Toast.LENGTH_SHORT).show();
 //
-//                            try (OutputStream out = getContentResolver().openOutputStream(uri)) {
-//                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
+//                                    Log.e("Directory Creation", "External Storage is not mounted properly");
+//                                    return;
+//                                }
 //                            }
-
-                            InputStream inputStream = null;
-                            try {
-                                inputStream = getContentResolver().openInputStream(uri);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                                // Handle error
-                            }
-                            Bitmap bitmaps = BitmapFactory.decodeStream(inputStream);
-
-                            FileOutputStream out = null;
-                            File file=null;
-                            try {
-                                // Create a file to save the image
-                                 file = new File(getExternalFilesDir(null), "converted_image.jpg"); // Change path as needed
-                                out = new FileOutputStream(file);
-
-                                // Compress the bitmap to JPEG format and save
-                                bitmaps.compress(Bitmap.CompressFormat.JPEG, 100, out); // 100 is the best quality
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                // Handle error
-                            } finally {
-                                try {
-                                    if (out != null) {
-                                        out.close();
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-
-                            getController().zeroCodeApiCallWithoutName(file, bitmap);
-
-
 //                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
 //                            String filename = "JPEG_" + timeStamp + ".jpg";
-//                            File outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
+//
+//                            ContentValues values = new ContentValues();
+//                            values.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
+//                            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+//                            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM + File.separator + "FaceRecogni");
+//
+//                            Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+////
+////                            try (OutputStream out = getContentResolver().openOutputStream(uri)) {
+////                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+////                            } catch (IOException e) {
+////                                e.printStackTrace();
+////                            }
+//
+//                            InputStream inputStream = null;
+//                            try {
+//                                inputStream = getContentResolver().openInputStream(uri);
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                                // Handle error
+//                            }
+//                            Bitmap bitmaps = BitmapFactory.decodeStream(inputStream);
 //
 //                            FileOutputStream out = null;
+//                            File file=null;
 //                            try {
-//                                out = new FileOutputStream(outputFile);
+//                                // Create a file to save the image
+//                                 file = new File(getExternalFilesDir(null), "converted_image.jpg"); // Change path as needed
+//                                out = new FileOutputStream(file);
 //
-//                                // Compress the bitmap to JPEG format and write it to the output stream
-//                                // Quality is set to 100 (highest)
-//                                croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-//
-//
+//                                // Compress the bitmap to JPEG format and save
+//                                bitmaps.compress(Bitmap.CompressFormat.JPEG, 100, out); // 100 is the best quality
 //                            } catch (Exception e) {
 //                                e.printStackTrace();
+//                                // Handle error
 //                            } finally {
 //                                try {
 //                                    if (out != null) {
@@ -522,6 +493,94 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //                                    e.printStackTrace();
 //                                }
 //                            }
+//
+//
+//                            getController().zeroCodeApiCallWithoutName(file, bitmap);
+//
+//
+////                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+////                            String filename = "JPEG_" + timeStamp + ".jpg";
+////                            File outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
+////
+////                            FileOutputStream out = null;
+////                            try {
+////                                out = new FileOutputStream(outputFile);
+////
+////                                // Compress the bitmap to JPEG format and write it to the output stream
+////                                // Quality is set to 100 (highest)
+////                                croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+////
+////
+////                            } catch (Exception e) {
+////                                e.printStackTrace();
+////                            } finally {
+////                                try {
+////                                    if (out != null) {
+////                                        out.close();
+////                                    }
+////                                } catch (IOException e) {
+////                                    e.printStackTrace();
+////                                }
+////                            }
+//                            // Assuming you have an ImageView with the ID imageView
+////                            openDialogBox(croppedBitmap);
+//                            stopFrameCapture();
+//
+//                        });
+////                        Toast.makeText(this, "No. of Faces found: "+ faces.size(), Toast.LENGTH_SHORT).show();
+//                        // Handle detected faces
+//                        // You can crop the bitmap around the face.getBoundingBox() if needed
+//                    }
+//                })
+//                .addOnFailureListener(e -> {
+//                    Toast.makeText(this, "unable to find faces", Toast.LENGTH_SHORT).show();
+//                    // Handle any errors
+//                });
+//    }
+
+    private void processFrame(Bitmap bitmap) {
+//        Toast.makeText(this, "ProcessFrame"+ bitmap, Toast.LENGTH_SHORT).show();
+        InputImage image = InputImage.fromBitmap(bitmap, 0); // Assuming no rotation needed
+        faceDetector.process(image)
+                .addOnSuccessListener(faces -> {
+                    if(faces.size()==0){
+//                        Toast.makeText(this, "No faces found"+ faces.size(), Toast.LENGTH_SHORT).show();
+                    }
+                    for (Face face : faces) {
+                        Rect boundingBox = face.getBoundingBox();
+                        Bitmap croppedBitmap = cropBitmap(bitmap, boundingBox);
+                        runOnUiThread(() -> {; // Initialize your bitmap
+
+// Specify the output file path. Example for internal storage:
+                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                            String filename = "JPEG_" + timeStamp + ".jpg";
+                            File outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
+
+                            FileOutputStream out = null;
+                            try {
+                                out = new FileOutputStream(outputFile);
+
+                                // Compress the bitmap to JPEG format and write it to the output stream
+                                // Quality is set to 100 (highest)
+                                croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                                String name = "";
+                                if(!name.isEmpty()){
+                                    getController().zeroCodeApiCall(outputFile, name, croppedBitmap);
+                                }else{
+                                    getController().zeroCodeApiCallWithoutName(outputFile, croppedBitmap);
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                try {
+                                    if (out != null) {
+                                        out.close();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                             // Assuming you have an ImageView with the ID imageView
 //                            openDialogBox(croppedBitmap);
                             stopFrameCapture();
