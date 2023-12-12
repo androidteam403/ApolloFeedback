@@ -1,8 +1,13 @@
 package com.thresholdsoft.apollofeedback.ui.offersnow;
 
+import android.graphics.Bitmap;
+
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.ZeroCodeApiModelResponse;
+
+import java.io.File;
 
 public interface OffersNowActivityCallback {
     void onClickSkip();
@@ -22,4 +27,8 @@ public interface OffersNowActivityCallback {
     void onSuccesDcOffersNowApi(DcOffersNowResponse body);
 
     void onFailureDcOffersNowApi();
+
+    void onClickCapture();
+
+    void onSuccessMultipartResponse(ZeroCodeApiModelResponse zeroCodeApiModelResponse, Bitmap image, File file);
 }

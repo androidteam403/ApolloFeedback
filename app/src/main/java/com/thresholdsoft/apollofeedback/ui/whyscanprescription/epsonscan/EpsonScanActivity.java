@@ -43,7 +43,6 @@ import com.thresholdsoft.apollofeedback.databinding.DialogScanStatusBinding;
 import com.thresholdsoft.apollofeedback.ui.epsonsdk.FindScannerCallback;
 import com.thresholdsoft.apollofeedback.ui.epsonsdk.FindUsbScannerTask;
 import com.thresholdsoft.apollofeedback.ui.epsonsdk.FolderUtility;
-import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.ScannedPrescriptionsActivity;
 
 import java.io.File;
@@ -473,9 +472,9 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
             }
             this.feedbackSystemResponse = feedbackSystemResponse;//remove this line after testing
             if (feedbackSystemResponse.getIscustomerScreen()) {
-                startActivity(OffersNowActivity.getStartIntent(EpsonScanActivity.this));
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                finish();
+//                startActivity(OffersNowActivity.getStartIntent(EpsonScanActivity.this));
+//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//                finish();
             } else if ((feedbackSystemResponse.getIspaymentScreen())) {
                 epsonScanBinding.setModel(feedbackSystemResponse);
                 if (feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode().isEmpty()) {

@@ -16,7 +16,6 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityFeedBackBinding;
-import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 
 public class FeedBackActivity extends BaseActivity implements FeedBackActivityCallBack {
@@ -263,9 +262,9 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         if (feedbackSystemResponse != null) {
             if (feedbackSystemResponse.getStatus()) {
                 new Handler().postDelayed(() -> {
-                    startActivity(OffersNowActivity.getStartIntent(FeedBackActivity.this));
-                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                    finish();
+//                    startActivity(OffersNowActivity.getStartIntent(FeedBackActivity.this));
+//                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//                    finish();
                 }, 3000);
             } else {
                 if (feedbackSystemResponse != null && feedbackSystemResponse.getMessage() != null)
