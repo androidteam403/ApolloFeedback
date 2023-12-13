@@ -27,7 +27,6 @@ import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.UpsellCrosssellModel;
-import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.ui.whyscanprescription.WhyScanPrescriptionActivity;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
@@ -153,9 +152,9 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
             }
             this.feedbackSystemResponse = feedbackSystemResponse;//remove this line after testing
             if (feedbackSystemResponse.getIscustomerScreen()) {
-                startActivity(OffersNowActivity.getStartIntent(ItemsPaymentActivity.this));
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                finish();
+//                startActivity(OffersNowActivity.getStartIntent(ItemsPaymentActivity.this));
+//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//                finish();
             } else if ((feedbackSystemResponse.getIspaymentScreen())) {
                 itemsPaymentBinding.setModel(feedbackSystemResponse);
                 if (feedbackSystemResponse.getIsPrescriptionScan()) {

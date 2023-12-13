@@ -1,23 +1,27 @@
 package com.thresholdsoft.apollofeedback.ui.offersnow;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.widget.Toast;
+import android.graphics.Bitmap;
 
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemRequest;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.network.ApiClient;
 import com.thresholdsoft.apollofeedback.network.ApiInterface;
-import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationRequest;
-import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowRequest;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
-import com.thresholdsoft.apollofeedback.utils.AppConstants;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.ZeroCodeApiModelResponse;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
 
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +60,161 @@ public class OffersNowActivityController {
             mCallback.onFailureMessage("Something went wrong.");
         }
     }
+
+//    public void zeroCodeApiCall(File image, String name) {
+//        if (NetworkUtils.isNetworkConnected(mContext)) {
+//            CommonUtils.showDialog(mContext, "Please wait...");
+//            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"),image);
+//            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", image.getName(), requestBody);
+//
+//            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
+////            Map<String,String> params = new HashMap<>();
+////            if (name != null) {
+////                params.put("name", name);
+////            }else{
+////                params.put("", "");
+////            }
+//            Call<ZeroCodeApiModelResponse> call = apiInterface.ZERO_CODE_FILE_UPLOADS("multipart/form-data", fileToUpload, "params");
+//            call.enqueue(new Callback<ZeroCodeApiModelResponse>() {
+//                @Override
+//                public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
+//                    if (response.isSuccessful()) {
+//                        mCallback.onSuccessMultipartResponse(response.body());
+////                        mCallback.onSuccesGetOffersNowApi(response.body());
+//                    }
+//                    CommonUtils.hideDialog();
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ZeroCodeApiModelResponse> call, Throwable t) {
+//                    CommonUtils.hideDialog();
+//                    mCallback.onFailureMessage(t.getMessage());
+//                }
+//            });
+//        } else {
+//            mCallback.onFailureMessage("Something went wrong.");
+//        }
+//    }
+
+//    public void zeroCodeApiCall(File image, String name) {
+//        if (NetworkUtils.isNetworkConnected(mContext)) {
+//            CommonUtils.showDialog(mContext, "Please wait...");
+//
+//            // Create RequestBody for the image file
+//            RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"), image);
+//            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", image.getName(), requestBody);
+//
+//            // Create RequestBody for the 'name' field
+//            RequestBody nameRequestBody = RequestBody.create(MediaType.parse("text/plain"), name);
+//
+//            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
+//
+//            // Call the API method with the file and name request bodies
+//            Call<ZeroCodeApiModelResponse> call = apiInterface.ZERO_CODE_FILE_UPLOADS( fileToUpload, nameRequestBody);
+//
+//            call.enqueue(new Callback<ZeroCodeApiModelResponse>() {
+//                @Override
+//                public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
+//                    if (response.isSuccessful()) {
+//                        mCallback.onSuccessMultipartResponse(response.body());
+//                    }
+//                    CommonUtils.hideDialog();
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ZeroCodeApiModelResponse> call, Throwable t) {
+//                    CommonUtils.hideDialog();
+//                    mCallback.onFailureMessage(t.getMessage());
+//                }
+//            });
+//        } else {
+//            mCallback.onFailureMessage("Something went wrong.");
+//        }
+//    }
+
+    public void zeroCodeApiCall(File file, String name, Bitmap croppedBitmap) {
+        if (NetworkUtils.isNetworkConnected(mContext)) {
+            CommonUtils.showDialog(mContext, "Please wait...");
+
+//            // Create RequestBody for the image file
+//            RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"), image);
+//            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", image.getName(), requestBody);
+//
+//            // Create RequestBody for the 'name' field
+//            RequestBody nameRequestBody = RequestBody.create(MediaType.parse("text/plain"), name);
+
+            ApiInterface apiInterface = ApiClient.getApiService("http://20.197.55.11:5000/");
+
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+            RequestBody description = RequestBody.create(MediaType.parse("text/plain"), name);
+
+
+            Call<ZeroCodeApiModelResponse> call = apiInterface.ZERO_CODE_FILE_UPLOADS(body, description);
+
+            call.enqueue(new Callback<ZeroCodeApiModelResponse>() {
+                @Override
+                public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
+                    CommonUtils.hideDialog();
+                    if (response.isSuccessful()) {
+                        mCallback.onSuccessMultipartResponse(response.body(), croppedBitmap, file);
+                    } else {
+                        mCallback.onFailureMessage("Response not successful");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ZeroCodeApiModelResponse> call, Throwable t) {
+                    CommonUtils.hideDialog();
+                    mCallback.onFailureMessage(t.getMessage());
+                }
+            });
+        } else {
+            mCallback.onFailureMessage("No network connection.");
+        }
+    }
+
+    public void zeroCodeApiCallWithoutName(File image, Bitmap bitmap) {
+        if (NetworkUtils.isNetworkConnected(mContext)) {
+            CommonUtils.showDialog(mContext, "Please wait...");
+
+            // Create RequestBody for the image file
+            @SuppressLint("ResourceType") RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), image);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", image.getName(), requestBody);
+
+            // Create RequestBody for the 'name' field
+//            RequestBody nameRequestBody = RequestBody.create(MediaType.parse("text/plain"), name);
+
+            ApiInterface apiInterface = ApiClient.getApiService("http://20.197.55.11:5000/");
+
+            // Call the API method with the file and name request bodies
+            Call<ZeroCodeApiModelResponse> call = apiInterface.ZERO_CODE_FILE_UPLOADS_WITHOUT_NAME(fileToUpload);
+
+            call.enqueue(new Callback<ZeroCodeApiModelResponse>() {
+                @Override
+                public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
+                    CommonUtils.hideDialog();
+                    if (response.isSuccessful()) {
+                        mCallback.onSuccessMultipartResponse(response.body(), bitmap, image);
+                    } else {
+                        mCallback.onFailureMessage("Response not successful");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ZeroCodeApiModelResponse> call, Throwable t) {
+                    CommonUtils.hideDialog();
+                    mCallback.onFailureMessage(t.getMessage());
+                }
+            });
+        } else {
+            mCallback.onFailureMessage("No network connection.");
+        }
+    }
+
+
+
+
 
     public void feedbakSystemApiCall() {
         if (NetworkUtils.isNetworkConnected(mContext)) {

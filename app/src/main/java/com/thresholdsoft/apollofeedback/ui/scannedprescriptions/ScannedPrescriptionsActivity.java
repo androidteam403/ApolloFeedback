@@ -33,7 +33,6 @@ import com.thresholdsoft.apollofeedback.databinding.DialogPrescriptionFullviewBi
 import com.thresholdsoft.apollofeedback.databinding.DialogQrcodeBinding;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
-import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.adapter.PrescriptionListAdapter;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionRequest;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionResponse;
@@ -146,9 +145,9 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
             }
             this.feedbackSystemResponse = feedbackSystemResponse;//remove this line after testing
             if (feedbackSystemResponse.getIscustomerScreen()) {
-                startActivity(OffersNowActivity.getStartIntent(ScannedPrescriptionsActivity.this));
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                finish();
+//                startActivity(OffersNowActivity.getStartIntent(ScannedPrescriptionsActivity.this));
+//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+//                finish();
             } else if ((feedbackSystemResponse.getIspaymentScreen())) {
                 scannedPrescriptionsBinding.setModel(feedbackSystemResponse);
                 if (feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode().isEmpty()) {
