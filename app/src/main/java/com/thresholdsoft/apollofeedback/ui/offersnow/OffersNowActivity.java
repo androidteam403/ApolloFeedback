@@ -160,6 +160,11 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     private void openCamera() {
+        if (imageReader != null) {
+            imageReader.close();
+            imageReader = null;
+        }
+
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             String cameraId = manager.getCameraIdList()[0];
@@ -188,7 +193,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     if(!isFaceDetected){
                         Image image = null;
                         try {
-                            image = reader.acquireLatestImage();
+                            image = reader.acquireNextImage();
                             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
                             byte[] bytes = new byte[buffer.capacity()];
                             buffer.get(bytes);
@@ -221,11 +226,13 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 @Override
                 public void onDisconnected(@NonNull CameraDevice camera) {
                     // camera.close(); // handle camera disconnection
+                    closeCamera();
                 }
 
                 @Override
                 public void onError(@NonNull CameraDevice camera, int error) {
                     // camera.close(); // handle camera error
+                    closeCamera();
                 }
             }, backgroundHandler);
         } catch (CameraAccessException e) {
@@ -480,7 +487,8 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         feedBackbinding.onClickContinueF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((responses.getMessage().equals("Image match found")) || (responses.getMessage().equals("Image, Added to training data"))) {
+                if ((responses.getMessage().equals("Image match found")) || (responses.getMessage().equals("Image, Added to training data"))
+                || (responses.getMessage().equals("Image, Added to traning data"))) {
                     if (null != cameraDevice) {
                         cameraDevice.close();
                         cameraDevice = null;
@@ -495,7 +503,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     closeCamera();
                     offersNowBinding.textureViewLayout.setVisibility(View.GONE);
                     offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
-                    offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
+                    offersNowBinding.imageCaptureBtn.setVisibility(View.GONE);
                     offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
 
                     dialog.dismiss();
@@ -504,7 +512,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     if (feedBackbinding.phoneNoF.getText().toString().isEmpty() || feedBackbinding.nameF.getText().toString().isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
                     } else {
-                        showDialogs(getApplicationContext(), "Please Wait...");
+                        showDialogs(OffersNowActivity.this, "Please Wait...");
                         getController().zeroCodeApiCall(file, feedBackbinding.nameF.getText().toString() + "-" + feedBackbinding.phoneNoF.getText().toString(), image);
                     }
 
@@ -685,12 +693,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     protected void onPause() {
         recyclerViewScrollerHandler.removeCallbacks(recyclerViewScrollerRunnable);
         feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
-        super.onPause();
+
         closeCamera();
         stopBackgroundThread();
+        super.onPause();
     }
 
     private void closeCamera() {
+//        clearSurfaceView();
         try {
             if (null != cameraCaptureSession) {
                 cameraCaptureSession.close();
@@ -709,9 +719,21 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
     }
 
+    private void clearSurfaceView() {
+        SurfaceHolder holder = offersNowBinding.surfaceView.getHolder();
+        if (holder != null) {
+            Canvas canvas = holder.lockCanvas();
+            if (canvas != null) {
+                canvas.drawColor(Color.BLACK); // Clear with black or any background color
+                holder.unlockCanvasAndPost(canvas);
+            }
+        }
+    }
+
+
     @Override
     protected void onResume() {
-        isFaceDetected=false;
+
         List<String> scannedPrescriptionsPathList = new ArrayList<>();
         getDateManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
         offersNowBinding.setStoreName(getDataManager().getStoreName());
@@ -720,6 +742,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         getController().feedbakSystemApiCall();
 
         super.onResume();
+        isFaceDetected=false;
         startBackgroundThread();
         if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
             openCamera();
@@ -898,6 +921,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     @Override
     public void onClickCapture() {
+        isFaceDetected=false;
         offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
         offersNowBinding.offersLayout.setVisibility(View.GONE);
 //        if (!checkPermission()) {
