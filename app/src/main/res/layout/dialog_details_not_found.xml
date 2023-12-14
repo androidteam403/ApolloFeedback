@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#27c1c8"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/apollo_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/settings"
+                android:layout_width="@dimen/dimen30dp"
+                android:layout_height="@dimen/dimen30dp"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:layout_marginBottom="@dimen/dimen10dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_apollo_circle_logo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/pink_bg_recog"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/apollo_close"
+            android:layout_width="325dp"
+            android:layout_height="@dimen/dimen300dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen15dp">
+
+                    <ImageView
+                        android:id="@+id/warning_image"
+                        android:layout_width="@dimen/dimen25dp"
+                        android:layout_height="@dimen/dimen25dp"
+                        android:src="@drawable/alert"
+                        app:tint="@color/red" />
+
+                    <LinearLayout
+                        android:layout_marginStart="@dimen/dimen10dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+
+                        <TextView
+                            android:id="@+id/your_details_not_found"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/dimen16sp"
+                            android:textColor="#ed1c24"
+                            android:text="Your details not found"/>
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/verified_your_details"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/dimen16sp"
+                            android:textColor="@color/teal_blue"
+                            android:text="Verified your details"/>
+
+
+                        <TextView
+                            android:id="@+id/fill_your_details_text"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/dimen12sp"
+                            android:text="Fill your details"/>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="@dimen/dimen15dp"
+                    android:layout_marginEnd="@dimen/dimen15dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen20dp">
+
+                    <ImageView
+                        android:id="@+id/person_image"
+                        android:background="@color/grey"
+                        android:layout_width="@dimen/dimen70dp"
+                        android:layout_height="@dimen/dimen70dp"
+                        android:src="@drawable/boy" />
+
+                    <LinearLayout
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/dimen14sp"
+                            android:textColor="@color/black"
+                            android:text="Soumya Rai"/>
+
+                        <EditText
+                            android:id="@+id/name_f"
+                            android:lines="1"
+                            android:padding="@dimen/dimen5dp"
+                            android:background="@drawable/grey_bg_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen14sp"
+                            android:textColorHint="@color/greY"
+                            android:hint="Name"/>
+
+                        <TextView
+                            android:id="@+id/user_phone_no"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/dimen14sp"
+                            android:textColor="@color/black"
+                            android:text="12345 67891"/>
+
+                        <EditText
+                            android:id="@+id/phoneNo_f"
+                            android:textColor="@color/black"
+                            android:maxLength="10"
+                            android:inputType="number"
+                            android:lines="1"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:padding="@dimen/dimen5dp"
+                            android:background="@drawable/grey_bg_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/dimen14sp"
+                            android:textColorHint="@color/greY"
+                            android:hint="Phone No."/>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/dimen15dp"
+                    android:layout_marginTop="@dimen/dimen20dp"
+                    android:layout_marginEnd="@dimen/dimen15dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen30dp"
+                        android:layout_height="@dimen/dimen30dp"
+                        android:src="@drawable/greentick_1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen7dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="I read the "
+                                android:textColor="#898989"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Privacy Policy "
+                                android:textColor="@color/teal_blue"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="and"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="I accept the "
+                                android:textColor="#898989"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Terms &amp; Conditions "
+                                android:textColor="@color/teal_blue"
+                                android:textSize="@dimen/dimen12sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/onClickContinue_f"
+                    android:layout_width="@dimen/dimen120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen20dp"
+                    android:background="@drawable/ripple_button_continue"
+                    android:padding="@dimen/four4_dp">
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:text="Continue"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

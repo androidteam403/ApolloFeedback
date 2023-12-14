@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
-
+        android:id="@+id/parentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/app_bg"
@@ -12,19 +12,23 @@
 
         <LinearLayout
             android:visibility="gone"
-            android:layout_marginTop="@dimen/dimen15dp"
             android:id="@+id/textureView_layout"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextureView
-                android:id="@+id/textureView"
-                android:layout_marginTop="@dimen/dimen20dp"
-                android:visibility="visible"
-                android:layout_width="@dimen/dimen350dp"
-                android:layout_height="@dimen/dimen350dp"
-                android:layout_gravity="center" />
+            <SurfaceView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/surfaceView"/>
+
+<!--            <TextureView-->
+<!--                android:id="@+id/textureView"-->
+<!--                android:layout_marginTop="@dimen/dimen20dp"-->
+<!--                android:visibility="visible"-->
+<!--                android:layout_width="@dimen/dimen350dp"-->
+<!--                android:layout_height="@dimen/dimen350dp"-->
+<!--                android:layout_gravity="center" />-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -250,25 +254,47 @@
                         android:textColor="#176772"
                         android:textSize="@dimen/dimen16sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:padding="@dimen/dimen5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/banners_layout"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/dimen5dp"
-                        android:layout_marginTop="@dimen/dimen5dp"
-                        android:layout_marginEnd="@dimen/dimen5dp"
-                        android:background="@drawable/ripple_button_continue"
-                        android:fontFamily="@font/roboto_bold"
-                        android:gravity="center"
+                    <LinearLayout
                         android:onClick="@{()-> callback.onClickCapture()}"
-                        android:text="Capture"
-                        android:textColor="@color/white"
-                        android:visibility="visible"
-                        tools:ignore="RtlCompat" />
+                        android:id="@+id/onClickContinue_f"
+                        android:layout_width="@dimen/dimen100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dimen10dp"
+                        android:background="@drawable/ripple_button_continue"
+                        android:padding="@dimen/four4_dp">
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="4dp"
+                            android:text="Continue"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dimen18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+<!--                    <TextView-->
+<!--                        android:padding="@dimen/dimen5dp"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@id/banners_layout"-->
+<!--                        android:layout_centerInParent="true"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginStart="@dimen/dimen5dp"-->
+<!--                        android:layout_marginTop="@dimen/dimen5dp"-->
+<!--                        android:layout_marginEnd="@dimen/dimen5dp"-->
+<!--                        android:background="@drawable/ripple_button_continue"-->
+<!--                        android:fontFamily="@font/roboto_bold"-->
+<!--                        android:gravity="center"-->
+<!--                        android:onClick="@{()-> callback.onClickCapture()}"-->
+<!--                        android:text="Capture"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:visibility="visible"-->
+<!--                        tools:ignore="RtlCompat" />-->
                 </LinearLayout>
 
 
