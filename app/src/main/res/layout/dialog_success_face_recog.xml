@@ -7,11 +7,14 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="@dimen/dimen10dp"
+        android:gravity="end"
         android:id="@+id/apollo_close"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_gravity="end"
             android:id="@+id/settings"
             android:layout_width="@dimen/dimen30dp"
             android:layout_height="@dimen/dimen30dp"
@@ -20,8 +23,9 @@
             android:layout_marginEnd="@dimen/dimen10dp"
             android:layout_marginBottom="@dimen/dimen10dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_apollo_circle_logo" />
+            android:src="@drawable/cross_mark" />
     </LinearLayout>
+
 
     <LinearLayout
         android:background="@drawable/pink_bg_recog"

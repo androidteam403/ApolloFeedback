@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.camera2.CameraAccessException;
@@ -94,7 +95,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private Handler backgroundHandler;
     private HandlerThread backgroundThread;
 
-    SurfaceHolder.Callback surfaceHolderCallback;
     private com.google.mlkit.vision.face.FaceDetector faceDetector;
 
     public static Intent getStartIntent(Context mContext) {
@@ -104,6 +104,26 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     private String mobileNumber;
+
+    SurfaceHolder.Callback surfaceHolderCallbacks = new SurfaceHolder.Callback() {
+
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            closeCamera();
+            startBackgroundThread();
+            openCamera();
+        }
+
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            stopBackgroundThread();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,22 +148,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
         SurfaceHolder surfaceHolder = offersNowBinding.surfaceView.getHolder();
 
-        surfaceHolderCallback = new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                startBackgroundThread();
-                openCamera();
-            }
 
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                stopBackgroundThread();
-            }
-        };
 
         setupFaceDetector();
     }
@@ -158,7 +163,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
         faceDetector = FaceDetection.getClient(options);
     }
-
+    Image image;
     private void openCamera() {
         if (imageReader != null) {
             imageReader.close();
@@ -190,13 +195,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
-                    if(!isFaceDetected){
-                        Image image = null;
+//                    if(!isFaceDetected){
+                         image = null;
                         try {
                             image = reader.acquireNextImage();
                             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
                             byte[] bytes = new byte[buffer.capacity()];
                             buffer.get(bytes);
+                            image.close();
                             Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
 
                             detectFaces(bitmapImage); // Assuming you have a detectFaces method for processing
@@ -205,7 +211,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                                 image.close();
                             }
                         }
-                    }
+//                    }
 
                 }
             };
@@ -225,13 +231,13 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
                 @Override
                 public void onDisconnected(@NonNull CameraDevice camera) {
-                    // camera.close(); // handle camera disconnection
+                    camera.close(); // handle camera disconnection
                     closeCamera();
                 }
 
                 @Override
                 public void onError(@NonNull CameraDevice camera, int error) {
-                    // camera.close(); // handle camera error
+                     camera.close(); // handle camera error
                     closeCamera();
                 }
             }, backgroundHandler);
@@ -373,9 +379,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                                     Toast.makeText(this, "Face detected", Toast.LENGTH_SHORT).show();
                                     showDialogs(this, "Please Wait...");
-                                    stopFrameCapture();
-                                    stopBackgroundThread();
-                                    closeCamera();
+
+//                                    stopBackgroundThread();
+//                                    closeCamera();
                                     getController().zeroCodeApiCallWithoutName(outputFile, bitmap);
 
                                 } catch (Exception e) {
@@ -389,6 +395,8 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                                         e.printStackTrace();
                                     }
                                 }
+
+                            stopFrameCapture();
 
 
                                 // Assuming you have an ImageView with the ID imageView
@@ -432,10 +440,12 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         if(dialog!=null){
             dialog.dismiss();
         }
+
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         feedBackbinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_success_face_recog, null, false);
         dialog.setContentView(feedBackbinding.getRoot());
+        dialog.setCancelable(false);
 //            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(true);
 
@@ -473,6 +483,30 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             feedBackbinding.fillYourDetailsText.setVisibility(View.VISIBLE);
         }
 
+        feedBackbinding.settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopBackgroundThread();
+                offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
+                //                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+//                        Canvas canvas = offersNowBinding.surfaceView.getHolder().lockCanvas();
+//                        canvas.drawColor(Color.BLACK); // or any other color
+//                        offersNowBinding.surfaceView.getHolder().unlockCanvasAndPost(canvas);
+//                    }
+                closeCamera();
+                offersNowBinding.textureViewLayout.setVisibility(View.GONE);
+                offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
+                offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
+                offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
+
+                dialog.dismiss();
+            }
+
+            });
+
+
+
+
 
 //            feedBackbinding.closeWhiteRating.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -489,24 +523,25 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             public void onClick(View view) {
                 if ((responses.getMessage().equals("Image match found")) || (responses.getMessage().equals("Image, Added to training data"))
                 || (responses.getMessage().equals("Image, Added to traning data"))) {
-                    if (null != cameraDevice) {
-                        cameraDevice.close();
-                        cameraDevice = null;
-                    }
-                    stopBackgroundThread();
+//                    if (null != cameraDevice) {
+//                        cameraDevice.close();
+//                        cameraDevice = null;
+//                    }
+                   stopBackgroundThread();
                     offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
-                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-                        Canvas canvas = offersNowBinding.surfaceView.getHolder().lockCanvas();
-                        canvas.drawColor(Color.BLACK); // or any other color
-                        offersNowBinding.surfaceView.getHolder().unlockCanvasAndPost(canvas);
-                    }
-                    closeCamera();
+//                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+//                        Canvas canvas = offersNowBinding.surfaceView.getHolder().lockCanvas();
+//                        canvas.drawColor(Color.BLACK); // or any other color
+//                        offersNowBinding.surfaceView.getHolder().unlockCanvasAndPost(canvas);
+//                    }
+                   closeCamera();
                     offersNowBinding.textureViewLayout.setVisibility(View.GONE);
                     offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
-                    offersNowBinding.imageCaptureBtn.setVisibility(View.GONE);
+                    offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
                     offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
 
                     dialog.dismiss();
+//                    isFaceDetected=false;
                 }
                 else {
                     if (feedBackbinding.phoneNoF.getText().toString().isEmpty() || feedBackbinding.nameF.getText().toString().isEmpty()) {
@@ -702,18 +737,19 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private void closeCamera() {
 //        clearSurfaceView();
         try {
-            if (null != cameraCaptureSession) {
-                cameraCaptureSession.close();
-                cameraCaptureSession = null;
-            }
-            if (null != cameraDevice) {
-                cameraDevice.close();
-                cameraDevice = null;
-            }
-            if (null != imageReader) {
-                imageReader.close();
-                imageReader = null;
-            }
+//            if (null != cameraCaptureSession) {
+//                cameraCaptureSession.close();
+//                cameraCaptureSession = null;
+//            }
+//            if (null != cameraDevice) {
+//                cameraDevice.close();
+//                cameraDevice = null;
+//            }
+//            if (null != imageReader) {
+//                imageReader.close();
+//                imageReader = null;
+//            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -743,11 +779,15 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
         super.onResume();
         isFaceDetected=false;
+//        resetSurfaceView();
         startBackgroundThread();
         if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
             openCamera();
         } else {
-            offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallback);
+
+                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+
+
         }
     }
 
@@ -918,12 +958,33 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     public void onFailureDcOffersNowApi() {
 
     }
+    private void resetSurfaceView() {
+        SurfaceHolder holder = offersNowBinding.surfaceView.getHolder();
+        if (holder != null) {
+            Canvas canvas = holder.lockCanvas();
+            if (canvas != null) {
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); // Clear the canvas
+                holder.unlockCanvasAndPost(canvas);
+            }
+        }
+    }
 
     @Override
     public void onClickCapture() {
+        startBackgroundThread();
         isFaceDetected=false;
         offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
         offersNowBinding.offersLayout.setVisibility(View.GONE);
+
+
+        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+            openCamera();
+        } else {
+
+                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+
+        }
+
 //        if (!checkPermission()) {
 //            askPermissions(777);
 //            return;
@@ -933,10 +994,11 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
 
     }
-
+    ZeroCodeApiModelResponse responses;
     @Override
     public void onSuccessMultipartResponse(ZeroCodeApiModelResponse response, Bitmap image, File file) {
         if (response != null) {
+            responses=response;
             Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
             Toast.makeText(this, response.getName(), Toast.LENGTH_SHORT).show();
 
@@ -954,30 +1016,26 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if(dialog!=null && dialog.isShowing()){
+//            dialog.dismiss();
+        }else{
+            super.onBackPressed();
+        }
+
         finishAffinity();
         System.exit(0);
-        if (null != cameraDevice) {
-            cameraDevice.close();
-            cameraDevice = null;
-        }
-        stopBackgroundThread();
-        if(offersNowBinding.surfaceView.isEnabled()){
-            offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
-            if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-                Canvas canvas = offersNowBinding.surfaceView.getHolder().lockCanvas();
-                canvas.drawColor(Color.BLACK); // or any other color
-                offersNowBinding.surfaceView.getHolder().unlockCanvasAndPost(canvas);
-            }
-            closeCamera();
-            offersNowBinding.textureViewLayout.setVisibility(View.GONE);
-            offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
-            offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
-            offersNowBinding.imagesRcv.setVisibility(View.GONE);
+//        isFaceDetected=false;
+//        stopBackgroundThread();
+//        offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
+//       closeCamera();
+//            offersNowBinding.textureViewLayout.setVisibility(View.GONE);
+//            offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
+//            offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
+//            offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
         }
 
 
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
