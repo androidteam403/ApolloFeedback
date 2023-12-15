@@ -134,7 +134,7 @@ public class OffersNowActivityController {
 
     public void zeroCodeApiCall(File file, String name, Bitmap croppedBitmap) {
         if (NetworkUtils.isNetworkConnected(mContext)) {
-            CommonUtils.showDialog(mContext, "Please wait...");
+//            CommonUtils.showDialog(mContext, "Please wait...");
 
 //            // Create RequestBody for the image file
 //            RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"), image);
@@ -155,11 +155,13 @@ public class OffersNowActivityController {
             call.enqueue(new Callback<ZeroCodeApiModelResponse>() {
                 @Override
                 public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
-                    CommonUtils.hideDialog();
+//                    CommonUtils.hideDialog();
                     if (response.isSuccessful()) {
                         mCallback.onSuccessMultipartResponse(response.body(), croppedBitmap, file);
                     } else {
-                        mCallback.onFailureMessage("Response not successful");
+//                        mCallback.onFailureMessage("Response not successful");
+                        CommonUtils.hideDialog();
+
                     }
                 }
 
@@ -176,7 +178,7 @@ public class OffersNowActivityController {
 
     public void zeroCodeApiCallWithoutName(File image, Bitmap bitmap) {
         if (NetworkUtils.isNetworkConnected(mContext)) {
-            CommonUtils.showDialog(mContext, "Please wait...");
+//            CommonUtils.showDialog(mContext, "Please wait...");
 
             // Create RequestBody for the image file
             @SuppressLint("ResourceType") RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), image);
@@ -193,7 +195,7 @@ public class OffersNowActivityController {
             call.enqueue(new Callback<ZeroCodeApiModelResponse>() {
                 @Override
                 public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
-                    CommonUtils.hideDialog();
+//                    CommonUtils.hideDialog();
                     if (response.isSuccessful()) {
                         mCallback.onSuccessMultipartResponse(response.body(), bitmap, image);
                     } else {

@@ -41,7 +41,8 @@
         </activity>
         <activity
             android:name=".ui.offersnow.OffersNowActivity"
-            android:exported="false" />
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".ui.whyscanprescription.WhyScanPrescriptionActivity"
             android:screenOrientation="landscape"
