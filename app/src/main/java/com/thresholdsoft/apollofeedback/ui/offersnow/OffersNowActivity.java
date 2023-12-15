@@ -172,7 +172,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
-            String cameraId = manager.getCameraIdList()[0];
+            String cameraId = manager.getCameraIdList()[1];
             CameraCharacteristics characteristics = null;
             try {
                 characteristics = manager.getCameraCharacteristics(cameraId);
@@ -198,11 +198,10 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //                    if(!isFaceDetected){
                          image = null;
                         try {
-                            image = reader.acquireNextImage();
+                            image = reader.acquireLatestImage();
                             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
                             byte[] bytes = new byte[buffer.capacity()];
                             buffer.get(bytes);
-                            image.close();
                             Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
 
                             detectFaces(bitmapImage); // Assuming you have a detectFaces method for processing
@@ -380,7 +379,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                                     Toast.makeText(this, "Face detected", Toast.LENGTH_SHORT).show();
                                     showDialogs(this, "Please Wait...");
 
-//                                    stopBackgroundThread();
+                                   stopBackgroundThread();
 //                                    closeCamera();
                                     getController().zeroCodeApiCallWithoutName(outputFile, bitmap);
 
@@ -444,10 +443,11 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         feedBackbinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_success_face_recog, null, false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().getDecorView().setPadding(0, 0, 0, 0);
         dialog.setContentView(feedBackbinding.getRoot());
         dialog.setCancelable(false);
 //            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setCancelable(true);
 
         if ((responses.getMessage().equals("Image match found")) || (responses.getMessage().equals("Image, Added to traning data"))) {
             feedBackbinding.nameF.setVisibility(View.GONE);
@@ -737,18 +737,18 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private void closeCamera() {
 //        clearSurfaceView();
         try {
-//            if (null != cameraCaptureSession) {
-//                cameraCaptureSession.close();
-//                cameraCaptureSession = null;
-//            }
-//            if (null != cameraDevice) {
-//                cameraDevice.close();
-//                cameraDevice = null;
-//            }
-//            if (null != imageReader) {
-//                imageReader.close();
-//                imageReader = null;
-//            }
+            if (null != cameraCaptureSession) {
+                cameraCaptureSession.close();
+                cameraCaptureSession = null;
+            }
+            if (null != cameraDevice) {
+                cameraDevice.close();
+                cameraDevice = null;
+            }
+            if (null != imageReader) {
+                imageReader.close();
+                imageReader = null;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
