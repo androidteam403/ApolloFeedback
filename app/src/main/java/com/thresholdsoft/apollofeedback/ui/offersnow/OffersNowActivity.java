@@ -216,7 +216,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             // Here, you should choose the camera ID (front or back)
-            String cameraIds = manager.getCameraIdList()[0];
+            String cameraIds = manager.getCameraIdList()[1];
             for (String cameraId : manager.getCameraIdList()) {
                 CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
                 StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
