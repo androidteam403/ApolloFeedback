@@ -30,6 +30,11 @@ public class SessionManager {
     private static final String PREF_KEY_DC_CODE = "PREF_KEY_DC_CODE";
     private static final String PREF_KEY_STORE_NAME = "PREF_KEY_STORE_NAME";
     private static final String PREF_KEY_SCANNED_PRESCRIPTIONS_LIST_PATH = "PREF_KEY_SCANNED_PRESCRIPTIONS_LIST_PATH";
+    private static final String PREF_KEY_POOR = "PREF_KEY_POOR";
+    private static final String PREF_KEY_FAIR = "PREF_KEY_FAIR";
+    private static final String PREF_KEY_AVERAGE = "PREF_KEY_AVERAGE";
+    private static final String PREF_KEY_HAPPY = "PREF_KEY_HAPPY";
+    private static final String PREF_KEY_EXCELLENT = "PREF_KEY_EXCELLENT";
 
 
     public SessionManager(Context context) {
@@ -124,4 +129,45 @@ public class SessionManager {
             return scannedPrescriptionsPathListEmpty;
         }
     }
+
+    public void setPoorKey(String poorKey) {
+        preferences.edit().putString(PREF_KEY_POOR, poorKey).apply();
+    }
+
+    public String getPoorKey() {
+        return preferences.getString(PREF_KEY_POOR, "");
+    }
+
+    public void setFairKey(String fairKey) {
+        preferences.edit().putString(PREF_KEY_FAIR, fairKey).apply();
+    }
+
+    public String getFairKey() {
+        return preferences.getString(PREF_KEY_FAIR, "");
+    }
+
+    public void setAverageKey(String averageKey) {
+        preferences.edit().putString(PREF_KEY_AVERAGE, averageKey).apply();
+    }
+
+    public String getAverageKey() {
+        return preferences.getString(PREF_KEY_AVERAGE, "");
+    }
+
+    public void setHappyKey(String happyKey) {
+        preferences.edit().putString(PREF_KEY_HAPPY, happyKey).apply();
+    }
+
+    public String getHappyKey() {
+        return preferences.getString(PREF_KEY_HAPPY, "");
+    }
+
+    public void setExcellentKey(String excellentKey) {
+        preferences.edit().putString(PREF_KEY_EXCELLENT, excellentKey).apply();
+    }
+
+    public String getExcellentKey() {
+        return preferences.getString(PREF_KEY_EXCELLENT, "");
+    }
+
 }

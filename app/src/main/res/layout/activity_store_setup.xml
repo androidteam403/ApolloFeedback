@@ -19,6 +19,14 @@
         <variable
             name="storemodel"
             type="com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreSetupModel" />
+
+        <variable
+            name="isFeddbackCalibrated"
+            type="Boolean" />
+
+        <variable
+            name="view"
+            type="View" />
     </data>
 
     <LinearLayout
@@ -304,17 +312,18 @@
                         android:layout_marginTop="@dimen/dimen15sp"
                         android:layout_marginBottom="@dimen/dimen15sp"
                         android:background="@color/customer_doctor_divider" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginStart="@dimen/dimen5dp"
                             android:layout_marginEnd="@dimen/dimen5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_height="wrap_content"
                             android:background="@drawable/bg_calibration_btn"
                             android:backgroundTint="@color/colorPrimary"
                             android:fontFamily="@font/roboto_bold"
@@ -323,28 +332,29 @@
                             android:text="Feedback Calibration"
                             android:textColor="@color/white"
                             tools:ignore="RtlCompat" />
+
                         <TextView
-                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginStart="@dimen/dimen5dp"
                             android:layout_marginEnd="@dimen/dimen5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_height="wrap_content"
                             android:background="@drawable/bg_calibration_btn"
                             android:backgroundTint="@color/colorPrimary"
                             android:fontFamily="@font/roboto_bold"
                             android:gravity="center"
                             android:onClick="@{()-> callback.onClickFeedbackTest()}"
-                            android:text="Test"
+                            android:text="@string/label_test"
                             android:textColor="@color/white"
+                            android:visibility="@{isFeddbackCalibrated ? view.VISIBLE : view.GONE}"
                             tools:ignore="RtlCompat" />
                     </LinearLayout>
 
                     <TextView
-                        android:layout_marginTop="@dimen/dimen5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen5dp"
                         android:layout_marginBottom="@dimen/ten_sp"
                         android:fontFamily="@font/roboto_bold"
                         android:text="Site Registration"
@@ -453,6 +463,7 @@
                                     android:singleLine="true"
                                     android:textSize="@dimen/dimen15sp" />
                             </com.google.android.material.textfield.TextInputLayout>
+
                             <com.google.android.material.textfield.TextInputLayout
                                 style="@style/EditTextInputLayoutStyle"
                                 android:layout_width="match_parent"
