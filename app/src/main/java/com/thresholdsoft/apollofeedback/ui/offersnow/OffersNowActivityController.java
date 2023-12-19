@@ -199,14 +199,14 @@ public class OffersNowActivityController {
                     if (response.isSuccessful()) {
                         mCallback.onSuccessMultipartResponse(response.body(), bitmap, image);
                     } else {
-                        mCallback.onFailureMessage("Response not successful");
+                        mCallback.onFailureMultipartResponse(response.body().getMessage());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ZeroCodeApiModelResponse> call, Throwable t) {
-                    CommonUtils.hideDialog();
-                    mCallback.onFailureMessage(t.getMessage());
+                    mCallback.onFailureMultipartResponse(t.getMessage());
+//                    mCallback.onFailureMessage();
                 }
             });
         } else {

@@ -31,4 +31,6 @@ public interface OffersNowActivityCallback {
     void onClickCapture();
 
     void onSuccessMultipartResponse(ZeroCodeApiModelResponse zeroCodeApiModelResponse, Bitmap image, File file);
+
+    void onFailureMultipartResponse(String message);
 }
