@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
-        android:id="@+id/parentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/app_bg"
         tools:context=".ui.offersnow.OffersNowActivity">
 
-        <LinearLayout
-            android:visibility="gone"
+        <RelativeLayout
+            android:visibility="visible"
             android:id="@+id/textureView_layout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -22,6 +20,11 @@
                 android:layout_height="match_parent"
                 android:id="@+id/surfaceView"/>
 
+            <View
+                android:background="@drawable/app_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
             <!--            <TextureView-->
             <!--                android:id="@+id/textureView"-->
             <!--                android:layout_marginTop="@dimen/dimen20dp"-->
@@ -29,288 +32,310 @@
             <!--                android:layout_width="@dimen/dimen350dp"-->
             <!--                android:layout_height="@dimen/dimen350dp"-->
             <!--                android:layout_gravity="center" />-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen70dp"
-                    android:src="@drawable/face" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Face Recognition Secure Access"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <!--                    <TextView-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:text="Click on below button to continue"-->
-                    <!--                        android:textColor="#176772"-->
-                    <!--                        android:textSize="@dimen/dimen16sp"-->
-                    <!--                        android:textStyle="bold" />-->
-
-                    <!--                    <TextView-->
-                    <!--                        android:padding="@dimen/dimen5dp"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_below="@id/banners_layout"-->
-                    <!--                        android:layout_centerInParent="true"-->
-                    <!--                        android:layout_gravity="center"-->
-                    <!--                        android:layout_marginStart="@dimen/dimen5dp"-->
-                    <!--                        android:layout_marginTop="@dimen/dimen5dp"-->
-                    <!--                        android:layout_marginEnd="@dimen/dimen5dp"-->
-                    <!--                        android:background="@drawable/ripple_button_continue"-->
-                    <!--                        android:fontFamily="@font/roboto_bold"-->
-                    <!--                        android:gravity="center"-->
-                    <!--                        android:onClick="@{()-> callback.onClickCapture()}"-->
-                    <!--                        android:text="Capture"-->
-                    <!--                        android:textColor="@color/white"-->
-                    <!--                        android:visibility="visible"-->
-                    <!--                        tools:ignore="RtlCompat" />-->
-                </LinearLayout>
-
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/offers_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen30dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen50dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dimen50dp"
-                    android:layout_marginRight="@dimen/dimen50dp"
-                    android:contentDescription="@string/app_name"
-                    android:onClick="@{()-> callback.onClickRefreshIcon()}"
-                    android:src="@drawable/ic_refresh" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/dimen100dp"
-                        android:layout_height="@dimen/dimen100dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_apollo_circle_logo" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen10dp"
-                        android:layout_marginLeft="@dimen/dimen10dp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@{storeName}"
-                        android:textAllCaps="true"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen40sp" />
-                </LinearLayout>
-            </RelativeLayout>
-            <LinearLayout
-                android:id="@+id/banners_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen40dp"
-                    android:layout_marginTop="@dimen/dimen10dp"
-                    android:gravity="center_horizontal"
-                    android:layout_marginEnd="@dimen/dimen40dp"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/imagesRcv"
-                        android:layout_width="1080dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:itemCount="4"
-                        tools:listitem="@layout/layout_image_slider" />
-
-                    <!-- <ImageView
-                         android:id="@+id/offers_now_one"
-                         android:layout_width="@dimen/dimen0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="3dp"
-                         android:layout_weight=".25"
-                         android:contentDescription="@string/app_name"
-                         android:scaleType="fitXY" />
-
-                     <ImageView
-                         android:id="@+id/offers_now_two"
-                         android:layout_width="@dimen/dimen0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="3dp"
-                         android:layout_weight=".25"
-                         android:contentDescription="@string/app_name"
-                         android:scaleType="fitXY" />
-
-                     <ImageView
-                         android:id="@+id/offers_now_three"
-                         android:layout_width="@dimen/dimen0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="3dp"
-                         android:layout_weight=".25"
-                         android:contentDescription="@string/app_name"
-                         android:scaleType="fitXY" />
-
-                     <ImageView
-                         android:id="@+id/offers_now_four"
-                         android:layout_width="@dimen/dimen0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="3dp"
-                         android:layout_weight=".25"
-                         android:contentDescription="@string/app_name"
-                         android:scaleType="fitXY" />-->
-
-                </LinearLayout>
-
-
-                <ImageView
-                    android:id="@+id/skipButton"
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen35dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/dimen15dp"
-                    android:layout_marginEnd="@dimen/dimen40dp"
-                    android:contentDescription="@string/app_name"
-                    android:onClick="@{()-> callback.onClickSkip()}"
-                    android:src="@drawable/ic_skip"
-                    android:visibility="gone" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/image_capture_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/banners_layout"
-                android:layout_marginTop="@dimen/dimen10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen70dp"
-                    android:src="@drawable/face" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Face Recognition Secure Access"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Click on below button to continue"
-                        android:textColor="#176772"
-                        android:textSize="@dimen/dimen16sp"
-                        android:textStyle="bold" />
-                    <LinearLayout
-                        android:onClick="@{()-> callback.onClickCapture()}"
-                        android:id="@+id/onClickContinue_f"
-                        android:layout_width="@dimen/dimen100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dimen10dp"
-                        android:background="@drawable/ripple_button_continue"
-                        android:padding="@dimen/four4_dp">
-
-                        <TextView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="4dp"
-                            android:text="Continue"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dimen18sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!--                    <TextView-->
-                    <!--                        android:padding="@dimen/dimen5dp"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_below="@id/banners_layout"-->
-                    <!--                        android:layout_centerInParent="true"-->
-                    <!--                        android:layout_gravity="center"-->
-                    <!--                        android:layout_marginStart="@dimen/dimen5dp"-->
-                    <!--                        android:layout_marginTop="@dimen/dimen5dp"-->
-                    <!--                        android:layout_marginEnd="@dimen/dimen5dp"-->
-                    <!--                        android:background="@drawable/ripple_button_continue"-->
-                    <!--                        android:fontFamily="@font/roboto_bold"-->
-                    <!--                        android:gravity="center"-->
-                    <!--                        android:onClick="@{()-> callback.onClickCapture()}"-->
-                    <!--                        android:text="Capture"-->
-                    <!--                        android:textColor="@color/white"-->
-                    <!--                        android:visibility="visible"-->
-                    <!--                        tools:ignore="RtlCompat" />-->
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/settings"
-                android:layout_width="@dimen/dimen70dp"
-                android:layout_height="@dimen/dimen70dp"
-                android:layout_margin="@dimen/dimen20dp"
-                android:contentDescription="@string/app_name"
-                android:onClick="@{()-> callback.onClickSettingIcon()}"
-                android:src="@drawable/ic_setting"
-                android:visibility="@{isConfigurationAvailable ? view.VISIBLE : view.GONE}" />
         </RelativeLayout>
 
+<!--        <SurfaceView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/surfaceView"/>-->
+
+<!--        <LinearLayout-->
+<!--            android:visibility="gone"-->
+<!--            android:id="@+id/textureView_layout"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--      -->
+
+<!--            &lt;!&ndash;            <TextureView&ndash;&gt;-->
+<!--            &lt;!&ndash;                android:id="@+id/textureView"&ndash;&gt;-->
+<!--            &lt;!&ndash;                android:layout_marginTop="@dimen/dimen20dp"&ndash;&gt;-->
+<!--            &lt;!&ndash;                android:visibility="visible"&ndash;&gt;-->
+<!--            &lt;!&ndash;                android:layout_width="@dimen/dimen350dp"&ndash;&gt;-->
+<!--            &lt;!&ndash;                android:layout_height="@dimen/dimen350dp"&ndash;&gt;-->
+<!--            &lt;!&ndash;                android:layout_gravity="center" />&ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/dimen10dp"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/dimen70dp"-->
+<!--                    android:layout_height="@dimen/dimen70dp"-->
+<!--                    android:src="@drawable/face" />-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Face Recognition Secure Access"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:textStyle="bold" />-->
+
+<!--                    &lt;!&ndash;                    <TextView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:text="Click on below button to continue"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:textColor="#176772"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:textSize="@dimen/dimen16sp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:textStyle="bold" />&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;                    <TextView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:gravity="center"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:text="Capture"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        android:visibility="visible"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;-->
+<!--                </LinearLayout>-->
+
+
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+
+    <RelativeLayout
+        android:id="@+id/offers_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen30dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen50dp"
+                android:layout_height="@dimen/dimen50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen50dp"
+                android:layout_marginRight="@dimen/dimen50dp"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onClickRefreshIcon()}"
+                android:src="@drawable/ic_refresh" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen100dp"
+                    android:layout_height="@dimen/dimen100dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_apollo_circle_logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginLeft="@dimen/dimen10dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@{storeName}"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/dimen40sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
 
 
+        <LinearLayout
+            android:id="@+id/banners_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen40dp"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:gravity="center_horizontal"
+                android:layout_marginEnd="@dimen/dimen40dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/imagesRcv"
+                    android:layout_width="1080dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/layout_image_slider" />
+
+                <!-- <ImageView
+                     android:id="@+id/offers_now_one"
+                     android:layout_width="@dimen/dimen0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="3dp"
+                     android:layout_weight=".25"
+                     android:contentDescription="@string/app_name"
+                     android:scaleType="fitXY" />
+
+                 <ImageView
+                     android:id="@+id/offers_now_two"
+                     android:layout_width="@dimen/dimen0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="3dp"
+                     android:layout_weight=".25"
+                     android:contentDescription="@string/app_name"
+                     android:scaleType="fitXY" />
+
+                 <ImageView
+                     android:id="@+id/offers_now_three"
+                     android:layout_width="@dimen/dimen0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="3dp"
+                     android:layout_weight=".25"
+                     android:contentDescription="@string/app_name"
+                     android:scaleType="fitXY" />
+
+                 <ImageView
+                     android:id="@+id/offers_now_four"
+                     android:layout_width="@dimen/dimen0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="3dp"
+                     android:layout_weight=".25"
+                     android:contentDescription="@string/app_name"
+                     android:scaleType="fitXY" />-->
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/skipButton"
+                android:layout_width="@dimen/dimen70dp"
+                android:layout_height="@dimen/dimen35dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/dimen15dp"
+                android:layout_marginEnd="@dimen/dimen40dp"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onClickSkip()}"
+                android:src="@drawable/ic_skip"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/image_capture_btn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/banners_layout"-->
+<!--            android:layout_marginTop="@dimen/dimen10dp"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="@dimen/dimen70dp"-->
+<!--                android:layout_height="@dimen/dimen70dp"-->
+<!--                android:src="@drawable/face" />-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Face Recognition Secure Access"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Click on below button to continue"-->
+<!--                    android:textColor="#176772"-->
+<!--                    android:textSize="@dimen/dimen16sp"-->
+<!--                    android:textStyle="bold" />-->
+<!--                <LinearLayout-->
+<!--                    android:onClick="@{()-> callback.onClickCapture()}"-->
+<!--                    android:id="@+id/onClickContinue_f"-->
+<!--                    android:layout_width="@dimen/dimen100dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="@dimen/dimen10dp"-->
+<!--                    android:background="@drawable/ripple_button_continue"-->
+<!--                    android:padding="@dimen/four4_dp">-->
+
+<!--                    <TextView-->
+
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_margin="4dp"-->
+<!--                        android:text="Continue"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="@dimen/dimen18sp"-->
+<!--                        android:textStyle="bold" />-->
+<!--                </LinearLayout>-->
+
+<!--                &lt;!&ndash;                    <TextView&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:gravity="center"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:text="Capture"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:visibility="visible"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;-->
+<!--            </LinearLayout>-->
+
+
+<!--        </LinearLayout>-->
+
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="@dimen/dimen70dp"
+            android:layout_height="@dimen/dimen70dp"
+            android:layout_margin="@dimen/dimen20dp"
+            android:contentDescription="@string/app_name"
+            android:onClick="@{()-> callback.onClickSettingIcon()}"
+            android:src="@drawable/ic_setting"
+            android:visibility="@{isConfigurationAvailable ? view.VISIBLE : view.GONE}" />
     </RelativeLayout>
 
     <data>
@@ -332,310 +357,3 @@
             type="android.view.View" />
     </data>
 </layout>
-
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/app_bg"
-        tools:context=".ui.offersnow.OffersNowActivity">
-
-        <LinearLayout
-            android:id="@+id/textureView_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen15dp"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextureView
-                android:id="@+id/textureView"
-                android:layout_width="@dimen/dimen350dp"
-                android:layout_height="@dimen/dimen350dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dimen20dp"
-                android:visibility="visible" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen70dp"
-                    android:src="@drawable/face" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Face Recognition Secure Access"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    &lt;!&ndash;                    <TextView&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;
-                    &lt;!&ndash;                        android:text="Click on below button to continue"&ndash;&gt;
-                    &lt;!&ndash;                        android:textColor="#176772"&ndash;&gt;
-                    &lt;!&ndash;                        android:textSize="@dimen/dimen16sp"&ndash;&gt;
-                    &lt;!&ndash;                        android:textStyle="bold" />&ndash;&gt;
-
-                    &lt;!&ndash;                    <TextView&ndash;&gt;
-                    &lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;
-                    &lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;
-                    &lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;
-                    &lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;
-                    &lt;!&ndash;                        android:gravity="center"&ndash;&gt;
-                    &lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;
-                    &lt;!&ndash;                        android:text="Capture"&ndash;&gt;
-                    &lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;
-                    &lt;!&ndash;                        android:visibility="visible"&ndash;&gt;
-                    &lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;
-                </LinearLayout>
-
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/offers_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen30dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen50dp"
-                    android:layout_height="@dimen/dimen50dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dimen50dp"
-                    android:layout_marginRight="@dimen/dimen50dp"
-                    android:contentDescription="@string/app_name"
-                    android:onClick="@{()-> callback.onClickRefreshIcon()}"
-                    android:src="@drawable/ic_refresh" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/dimen100dp"
-                        android:layout_height="@dimen/dimen100dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_apollo_circle_logo" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen10dp"
-                        android:layout_marginLeft="@dimen/dimen10dp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@{storeName}"
-                        android:textAllCaps="true"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen40sp" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/banners_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen40dp"
-                    android:layout_marginTop="@dimen/dimen10dp"
-                    android:layout_marginEnd="@dimen/dimen40dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/imagesRcv"
-                        android:layout_width="1080dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:itemCount="4"
-                        tools:listitem="@layout/layout_image_slider" />
-
-                    &lt;!&ndash; <ImageView
-                         android:id="@+id/offers_now_one"
-                         android:layout_width="@dimen/dimen0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="3dp"
-                         android:layout_weight=".25"
-                         android:contentDescription="@string/app_name"
-                         android:scaleType="fitXY" />
-
-                     <ImageView
-                         android:id="@+id/offers_now_two"
-                         android:layout_width="@dimen/dimen0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="3dp"
-                         android:layout_weight=".25"
-                         android:contentDescription="@string/app_name"
-                         android:scaleType="fitXY" />
-
-                     <ImageView
-                         android:id="@+id/offers_now_three"
-                         android:layout_width="@dimen/dimen0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="3dp"
-                         android:layout_weight=".25"
-                         android:contentDescription="@string/app_name"
-                         android:scaleType="fitXY" />
-
-                     <ImageView
-                         android:id="@+id/offers_now_four"
-                         android:layout_width="@dimen/dimen0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_margin="3dp"
-                         android:layout_weight=".25"
-                         android:contentDescription="@string/app_name"
-                         android:scaleType="fitXY" />&ndash;&gt;
-
-                </LinearLayout>
-
-
-                <ImageView
-                    android:id="@+id/skipButton"
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen35dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/dimen15dp"
-                    android:layout_marginEnd="@dimen/dimen40dp"
-                    android:contentDescription="@string/app_name"
-                    android:onClick="@{()-> callback.onClickSkip()}"
-                    android:src="@drawable/ic_skip"
-                    android:visibility="gone" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/image_capture_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/banners_layout"
-                android:layout_marginTop="@dimen/dimen10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen70dp"
-                    android:layout_height="@dimen/dimen70dp"
-                    android:src="@drawable/face" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Face Recognition Secure Access"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Click on below button to continue"
-                        android:textColor="#176772"
-                        android:textSize="@dimen/dimen16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/banners_layout"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/dimen5dp"
-                        android:layout_marginTop="@dimen/dimen5dp"
-                        android:layout_marginEnd="@dimen/dimen5dp"
-                        android:background="@drawable/ripple_button_continue"
-                        android:fontFamily="@font/roboto_bold"
-                        android:gravity="center"
-                        android:onClick="@{()-> callback.onClickCapture()}"
-                        android:padding="@dimen/dimen5dp"
-                        android:text="Capture"
-                        android:textColor="@color/white"
-                        android:visibility="visible"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/settings"
-                android:layout_width="@dimen/dimen70dp"
-                android:layout_height="@dimen/dimen70dp"
-                android:layout_margin="@dimen/dimen20dp"
-                android:contentDescription="@string/app_name"
-                android:onClick="@{()-> callback.onClickSettingIcon()}"
-                android:src="@drawable/ic_setting"
-                android:visibility="@{isConfigurationAvailable ? view.VISIBLE : view.GONE}" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <data>
-
-        <variable
-            name="callback"
-            type="com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivityCallback" />
-
-        <variable
-            name="isConfigurationAvailable"
-            type="Boolean" />
-
-        <variable
-            name="storeName"
-            type="String" />
-
-        <variable
-            name="view"
-            type="android.view.View" />
-    </data>
-</layout>-->

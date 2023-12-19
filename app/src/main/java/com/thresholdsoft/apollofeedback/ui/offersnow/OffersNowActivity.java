@@ -138,6 +138,20 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             }
         });
         offersNowBinding.setCallback(this);
+        startBackgroundThread();
+        isFaceDetected = false;
+        offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
+        offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
+
+
+        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+            openCamera();
+        } else {
+
+            offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+
+        }
+
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
             offersNowBinding.setIsConfigurationAvailable(true);
             onClickSettingIcon();
@@ -480,7 +494,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 speechMessage = "Hi" + input + " " + CommonUtils.getTimeFromAndroid() + "Welcome to apollo pharmacy.";
                 textToSpeech.speak(speechMessage, TextToSpeech.QUEUE_FLUSH, null, null);
             }
-        } else {
+
+        }
+        else {
             feedBackbinding.nameF.setVisibility(View.VISIBLE);
             feedBackbinding.phoneNoF.setVisibility(View.VISIBLE);
             feedBackbinding.userName.setVisibility(View.GONE);
@@ -496,19 +512,32 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             @Override
             public void onClick(View view) {
                 stopBackgroundThread();
-                offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
+//                offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
                 //                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
 //                        Canvas canvas = offersNowBinding.surfaceView.getHolder().lockCanvas();
 //                        canvas.drawColor(Color.BLACK); // or any other color
 //                        offersNowBinding.surfaceView.getHolder().unlockCanvasAndPost(canvas);
 //                    }
                 closeCamera();
-                offersNowBinding.textureViewLayout.setVisibility(View.GONE);
-                offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
-                offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
-                offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
+//                offersNowBinding.textureViewLayout.setVisibility(View.GONE);
+//                offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
+//                offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
+//                offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
 
                 dialog.dismiss();
+                startBackgroundThread();
+                isFaceDetected = false;
+//        offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
+//        offersNowBinding.offersLayout.setVisibility(View.GONE);
+
+
+                if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+                    openCamera();
+                } else {
+
+                    offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+
+                }
             }
 
         });
@@ -534,21 +563,35 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //                        cameraDevice = null;
 //                    }
                     stopBackgroundThread();
-                    offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
+//                    offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
 //                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
 //                        Canvas canvas = offersNowBinding.surfaceView.getHolder().lockCanvas();
 //                        canvas.drawColor(Color.BLACK); // or any other color
 //                        offersNowBinding.surfaceView.getHolder().unlockCanvasAndPost(canvas);
 //                    }
                     closeCamera();
-                    offersNowBinding.textureViewLayout.setVisibility(View.GONE);
-                    offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
-                    offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
-                    offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
+//                    offersNowBinding.textureViewLayout.setVisibility(View.GONE);
+//                    offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
+//                    offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
+//                    offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
 
                     dialog.dismiss();
+                    startBackgroundThread();
+                    isFaceDetected = false;
+//        offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
+//        offersNowBinding.offersLayout.setVisibility(View.GONE);
+
+
+                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+                        openCamera();
+                    } else {
+
+                        offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+
+                    }
 //                    isFaceDetected=false;
-                } else {
+                }
+                else {
                     if (feedBackbinding.phoneNoF.getText().toString().isEmpty() || feedBackbinding.nameF.getText().toString().isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
                     } else {
@@ -977,19 +1020,19 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     @Override
     public void onClickCapture() {
-        startBackgroundThread();
-        isFaceDetected = false;
-        offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
-        offersNowBinding.offersLayout.setVisibility(View.GONE);
-
-
-        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-            openCamera();
-        } else {
-
-            offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
-
-        }
+//        startBackgroundThread();
+//        isFaceDetected=false;
+////        offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
+////        offersNowBinding.offersLayout.setVisibility(View.GONE);
+//
+//
+//        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+//            openCamera();
+//        } else {
+//
+//                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+//
+//        }
 
 //        if (!checkPermission()) {
 //            askPermissions(777);
@@ -1015,6 +1058,12 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
         }
 
+    }
+
+    @Override
+    public void onFailureMultipartResponse(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        hideDialogs();
     }
 
     @Override

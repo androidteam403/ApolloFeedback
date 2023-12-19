@@ -7,23 +7,80 @@
         android:layout_height="match_parent"
         android:background="#27c1c8">
 
+        <LinearLayout
+            android:id="@+id/apollo_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/settings"
-            android:layout_width="@dimen/dimen40dp"
-            android:layout_height="@dimen/dimen40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/dimen10dp"
-            android:layout_marginTop="@dimen/dimen10dp"
-            android:layout_marginEnd="@dimen/dimen10dp"
-            android:layout_marginBottom="@dimen/dimen10dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/cross_mark" />
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="@dimen/dimen30dp"
+                android:layout_height="@dimen/dimen30dp"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:layout_marginBottom="@dimen/dimen10dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_apollo_circle_logo" />
+
+            <LinearLayout
+                android:gravity="end"
+                android:layout_marginTop="@dimen/dimen10dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/settings"
+                    android:layout_width="@dimen/dimen30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen10dp"
+                    android:layout_marginEnd="@dimen/dimen10dp"
+                    android:layout_marginBottom="@dimen/dimen10dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/cross_mark" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!--    <LinearLayout-->
+        <!--        android:layout_marginTop="@dimen/dimen10dp"-->
+        <!--        android:gravity="end"-->
+        <!--        android:id="@+id/apollo_close"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content">-->
+
+        <!--        <ImageView-->
+        <!--            android:layout_width="@dimen/dimen30dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/dimen10dp"-->
+        <!--            android:layout_marginTop="@dimen/dimen10dp"-->
+        <!--            android:layout_marginEnd="@dimen/dimen10dp"-->
+        <!--            android:layout_marginBottom="@dimen/dimen10dp"-->
+        <!--            android:contentDescription="@string/app_name"-->
+        <!--            android:src="@drawable/apollo_circle_logo" />-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/settings"-->
+        <!--            android:layout_width="@dimen/dimen30dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="end"-->
+        <!--            android:layout_marginStart="@dimen/dimen10dp"-->
+        <!--            android:layout_marginTop="@dimen/dimen10dp"-->
+        <!--            android:layout_marginEnd="@dimen/dimen10dp"-->
+        <!--            android:layout_marginBottom="@dimen/dimen10dp"-->
+        <!--            android:contentDescription="@string/app_name"-->
+        <!--            android:src="@drawable/cross_mark" />-->
+        <!--    </LinearLayout>-->
 
 
         <LinearLayout
             android:layout_width="325dp"
             android:layout_height="@dimen/dimen300dp"
+            android:layout_below="@id/apollo_close"
             android:layout_centerInParent="true"
             android:background="@drawable/pink_bg_recog">
 
