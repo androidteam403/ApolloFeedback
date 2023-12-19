@@ -29,10 +29,43 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
     }
 
     Handler feedbackEditboxHandler = new Handler();
-    Runnable feedbackEditboxRunnable = new Runnable() {
+    final Runnable feedbackEditboxRunnable = new Runnable() {
         @Override
         public void run() {
-            switch (feedbackRatingFromPhysical) {
+            String poor = getDataManager().getPoorKey();
+            String fair = getDataManager().getFairKey();
+            String average = getDataManager().getAverageKey();
+            String happy = getDataManager().getHappyKey();
+            String excellent = getDataManager().getExcellentKey();
+            if (poor.equals(feedbackRatingFromPhysical)) {
+                feedbackRatingFromPhysical = "";
+                feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("1", 1);
+                poor();
+            } else if (fair.equals(feedbackRatingFromPhysical)) {
+                feedbackRatingFromPhysical = "";
+                feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("2", 1);
+                fair();
+            } else if (average.equals(feedbackRatingFromPhysical)) {
+                feedbackRatingFromPhysical = "";
+                feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("3", 1);
+                average();
+            } else if (happy.equals(feedbackRatingFromPhysical)) {
+                feedbackRatingFromPhysical = "";
+                feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("4", 1);
+                happy();
+            } else if (excellent.equals(feedbackRatingFromPhysical)) {
+                feedbackRatingFromPhysical = "";
+                feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+//                    getController().feedbakSystemApiCall("5", 1);
+                excellent();
+            }
+
+
+            /*switch (feedbackRatingFromPhysical) {
                 case "7":
                     feedbackRatingFromPhysical = "";
                     feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
@@ -59,7 +92,7 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                     break;
                 default:
 
-            }
+            }*/
         }
     };
     private String feedbackRatingFromPhysical = "";

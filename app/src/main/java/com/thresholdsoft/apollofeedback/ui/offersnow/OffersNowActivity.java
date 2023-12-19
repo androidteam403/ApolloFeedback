@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
@@ -28,6 +27,7 @@ import android.media.ImageReader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.speech.tts.TextToSpeech;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -52,10 +52,8 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
-import com.thresholdsoft.apollofeedback.databinding.DialogDetailsNotFoundBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogSuccessFaceRecogBinding;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
-import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.adapter.ImageSlideAdapter;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
@@ -94,7 +92,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private ImageReader imageReader;
     private Handler backgroundHandler;
     private HandlerThread backgroundThread;
-
+    private TextToSpeech textToSpeech;
     private com.google.mlkit.vision.face.FaceDetector faceDetector;
 
     public static Intent getStartIntent(Context mContext) {
@@ -133,6 +131,12 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     private void setUp() {
+        textToSpeech = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                textToSpeech.setLanguage(Locale.ENGLISH);
+                textToSpeech.setSpeechRate(0.8f);
+            }
+        });
         offersNowBinding.setCallback(this);
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
             offersNowBinding.setIsConfigurationAvailable(true);
@@ -149,7 +153,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         SurfaceHolder surfaceHolder = offersNowBinding.surfaceView.getHolder();
 
 
-
         setupFaceDetector();
     }
 
@@ -163,7 +166,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
         faceDetector = FaceDetection.getClient(options);
     }
+
     Image image;
+
     private void openCamera() {
         if (imageReader != null) {
             imageReader.close();
@@ -196,20 +201,20 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 @Override
                 public void onImageAvailable(ImageReader reader) {
 //                    if(!isFaceDetected){
-                         image = null;
-                        try {
-                            image = reader.acquireLatestImage();
-                            ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                            byte[] bytes = new byte[buffer.capacity()];
-                            buffer.get(bytes);
-                            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
+                    image = null;
+                    try {
+                        image = reader.acquireLatestImage();
+                        ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                        byte[] bytes = new byte[buffer.capacity()];
+                        buffer.get(bytes);
+                        Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
 
-                            detectFaces(bitmapImage); // Assuming you have a detectFaces method for processing
-                        } finally {
-                            if (image != null) {
-                                image.close();
-                            }
+                        detectFaces(bitmapImage); // Assuming you have a detectFaces method for processing
+                    } finally {
+                        if (image != null) {
+                            image.close();
                         }
+                    }
 //                    }
 
                 }
@@ -236,7 +241,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
                 @Override
                 public void onError(@NonNull CameraDevice camera, int error) {
-                     camera.close(); // handle camera error
+                    camera.close(); // handle camera error
                     closeCamera();
                 }
             }, backgroundHandler);
@@ -287,7 +292,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     private void stopBackgroundThread() {
-        if(backgroundThread!=null){
+        if (backgroundThread != null) {
             backgroundThread.quitSafely();
             try {
                 backgroundThread.join();
@@ -322,8 +327,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     Handler faceDetectionHandler;
+
     private void startFaceDetection() {
-          faceDetectionHandler = new Handler();
+        faceDetectionHandler = new Handler();
         Runnable faceDetectionRunnable = new Runnable() {
             @Override
             public void run() {
@@ -333,7 +339,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 // Schedule the next check after a short delay
                 if (!isFaceDetected) {
                     faceDetectionHandler.postDelayed(this, 6000);
-                }else{
+                } else {
                     stopFrameCapture();
                 }
                 // Adjust time delay as needed
@@ -359,46 +365,45 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                             Rect boundingBox = face.getBoundingBox();
 //                            Bitmap croppedBitmap = cropBitmap(bitmap, boundingBox);
 //                            runOnUiThread(() -> {
-                                ; // Initialize your bitmap
+                            ; // Initialize your bitmap
 
 // Specify the output file path. Example for internal storage:
 
 
+                            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                            String filename = "JPEG_" + timeStamp + ".jpg";
+                            File outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
 
-                                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                                String filename = "JPEG_" + timeStamp + ".jpg";
-                                File outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
+                            FileOutputStream out = null;
+                            try {
+                                out = new FileOutputStream(outputFile);
 
-                                FileOutputStream out = null;
-                                try {
-                                    out = new FileOutputStream(outputFile);
+                                // Compress the bitmap to JPEG format and write it to the output stream
+                                // Quality is set to 100 (highest)
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                                Toast.makeText(this, "Face detected", Toast.LENGTH_SHORT).show();
+                                showDialogs(this, "Please Wait...");
 
-                                    // Compress the bitmap to JPEG format and write it to the output stream
-                                    // Quality is set to 100 (highest)
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                                    Toast.makeText(this, "Face detected", Toast.LENGTH_SHORT).show();
-                                    showDialogs(this, "Please Wait...");
-
-                                   stopBackgroundThread();
+                                stopBackgroundThread();
 //                                    closeCamera();
-                                    getController().zeroCodeApiCallWithoutName(outputFile, bitmap);
+                                getController().zeroCodeApiCallWithoutName(outputFile, bitmap);
 
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                } finally {
-                                    try {
-                                        if (out != null) {
-                                            out.close();
-                                        }
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                try {
+                                    if (out != null) {
+                                        out.close();
                                     }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
+                            }
 
                             stopFrameCapture();
 
 
-                                // Assuming you have an ImageView with the ID imageView
+                            // Assuming you have an ImageView with the ID imageView
 //                            openDialogBox(croppedBitmap);
 
 
@@ -407,7 +412,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                             // Handle detected faces
                             // You can crop the bitmap around the face.getBoundingBox() if needed
                         }
-
 
 
                     } else {
@@ -429,14 +433,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //        finish();
     }
 
-   Dialog dialog;
-//    Dialog detailsNotFound;
+    Dialog dialog;
+    //    Dialog detailsNotFound;
     DialogSuccessFaceRecogBinding feedBackbinding;
 //    DialogDetailsNotFoundBinding dialogDetailsNotFoundBinding;
 
 
     public void openDialogBox(Bitmap image, ZeroCodeApiModelResponse responses, File file, ZeroCodeApiModelResponse response) {
-        if(dialog!=null){
+        if (dialog != null) {
             dialog.dismiss();
         }
 
@@ -459,6 +463,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             feedBackbinding.warningImage.setVisibility(View.GONE);
             feedBackbinding.verifiedYourDetails.setVisibility(View.VISIBLE);
             feedBackbinding.fillYourDetailsText.setVisibility(View.GONE);
+
+            String speechMessage = "";
+
             String input = responses.getName();
             if (input.contains("-")) {
                 String[] parts = input.split("-");
@@ -466,12 +473,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 String number = parts[1];
                 feedBackbinding.userName.setText(name);
                 feedBackbinding.userPhoneNo.setText(number);
+                speechMessage = "Hi" + name + " " + CommonUtils.getTimeFromAndroid() + "Welcome to apollo pharmacy.";
+                textToSpeech.speak(speechMessage, TextToSpeech.QUEUE_FLUSH, null, null);
             } else {
                 feedBackbinding.userName.setText(input);
+                speechMessage = "Hi" + input + " " + CommonUtils.getTimeFromAndroid() + "Welcome to apollo pharmacy.";
+                textToSpeech.speak(speechMessage, TextToSpeech.QUEUE_FLUSH, null, null);
             }
-
-        }
-        else {
+        } else {
             feedBackbinding.nameF.setVisibility(View.VISIBLE);
             feedBackbinding.phoneNoF.setVisibility(View.VISIBLE);
             feedBackbinding.userName.setVisibility(View.GONE);
@@ -502,10 +511,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 dialog.dismiss();
             }
 
-            });
-
-
-
+        });
 
 
 //            feedBackbinding.closeWhiteRating.setOnClickListener(new View.OnClickListener() {
@@ -522,19 +528,19 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             @Override
             public void onClick(View view) {
                 if ((responses.getMessage().equals("Image match found")) || (responses.getMessage().equals("Image, Added to training data"))
-                || (responses.getMessage().equals("Image, Added to traning data"))) {
+                        || (responses.getMessage().equals("Image, Added to traning data"))) {
 //                    if (null != cameraDevice) {
 //                        cameraDevice.close();
 //                        cameraDevice = null;
 //                    }
-                   stopBackgroundThread();
+                    stopBackgroundThread();
                     offersNowBinding.parentView.removeView(offersNowBinding.surfaceView);
 //                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
 //                        Canvas canvas = offersNowBinding.surfaceView.getHolder().lockCanvas();
 //                        canvas.drawColor(Color.BLACK); // or any other color
 //                        offersNowBinding.surfaceView.getHolder().unlockCanvasAndPost(canvas);
 //                    }
-                   closeCamera();
+                    closeCamera();
                     offersNowBinding.textureViewLayout.setVisibility(View.GONE);
                     offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
                     offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
@@ -542,8 +548,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
                     dialog.dismiss();
 //                    isFaceDetected=false;
-                }
-                else {
+                } else {
                     if (feedBackbinding.phoneNoF.getText().toString().isEmpty() || feedBackbinding.nameF.getText().toString().isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
                     } else {
@@ -778,14 +783,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         getController().feedbakSystemApiCall();
 
         super.onResume();
-        isFaceDetected=false;
+        isFaceDetected = false;
 //        resetSurfaceView();
         startBackgroundThread();
         if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
             openCamera();
         } else {
 
-                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+            offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
 
 
         }
@@ -958,6 +963,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     public void onFailureDcOffersNowApi() {
 
     }
+
     private void resetSurfaceView() {
         SurfaceHolder holder = offersNowBinding.surfaceView.getHolder();
         if (holder != null) {
@@ -972,7 +978,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     @Override
     public void onClickCapture() {
         startBackgroundThread();
-        isFaceDetected=false;
+        isFaceDetected = false;
         offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
         offersNowBinding.offersLayout.setVisibility(View.GONE);
 
@@ -981,7 +987,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             openCamera();
         } else {
 
-                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+            offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
 
         }
 
@@ -994,16 +1000,18 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
 
     }
+
     ZeroCodeApiModelResponse responses;
+
     @Override
     public void onSuccessMultipartResponse(ZeroCodeApiModelResponse response, Bitmap image, File file) {
         if (response != null) {
-            responses=response;
+            responses = response;
             Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
             Toast.makeText(this, response.getName(), Toast.LENGTH_SHORT).show();
 
 //            if((response.equals("Image match found")) || (response.equals("Image, Added to training data"))){
-                openDialogBox(image, response, file, response);
+            openDialogBox(image, response, file, response);
 
         }
 
@@ -1016,9 +1024,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     @Override
     public void onBackPressed() {
-        if(dialog!=null && dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()) {
 //            dialog.dismiss();
-        }else{
+        } else {
             super.onBackPressed();
         }
 
@@ -1032,9 +1040,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //            offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
 //            offersNowBinding.imageCaptureBtn.setVisibility(View.VISIBLE);
 //            offersNowBinding.imagesRcv.setVisibility(View.VISIBLE);
-        }
-
-
+    }
 
 
     @Override
@@ -1056,7 +1062,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private OffersNowActivityController getController() {
         return new OffersNowActivityController(this, this);
     }
+
     private static SpotsDialog spotsDialog;
+
     public static void showDialogs(Context mContext, String strMessage) {
         try {
             if (spotsDialog != null) {

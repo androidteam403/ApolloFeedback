@@ -386,6 +386,11 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
                 && !getDataManager().getExcellentKey().isEmpty()) {
             feedBackbinding.ratingConfigSuggestMsg.setText("Feedback has been configured");
             feedBackbinding.editFeedbackConfiguration.setVisibility(View.VISIBLE);
+            feedBackbinding.poorIcTick.setVisibility(View.VISIBLE);
+            feedBackbinding.fairIcTick.setVisibility(View.VISIBLE);
+            feedBackbinding.averageIcTick.setVisibility(View.VISIBLE);
+            feedBackbinding.happyIcTick.setVisibility(View.VISIBLE);
+            feedBackbinding.excellentIcTick.setVisibility(View.VISIBLE);
         } else {
             feedBackbinding.ratingConfigSuggestMsg.setText("Please configure Poor");
             feedBackbinding.editFeedbackConfiguration.setVisibility(View.GONE);
@@ -416,18 +421,23 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 
         feedBackbinding.poor.setVisibility(View.GONE);
         feedBackbinding.poorTick.setVisibility(View.VISIBLE);
+        feedBackbinding.poorIcTick.setVisibility(View.GONE);
 
         feedBackbinding.fairtick.setVisibility(View.GONE);
         feedBackbinding.fair.setVisibility(View.VISIBLE);
+        feedBackbinding.fairIcTick.setVisibility(View.GONE);
 
         feedBackbinding.averagetick.setVisibility(View.GONE);
         feedBackbinding.average.setVisibility(View.VISIBLE);
+        feedBackbinding.averageIcTick.setVisibility(View.GONE);
 
         feedBackbinding.happytick.setVisibility(View.GONE);
         feedBackbinding.happy.setVisibility(View.VISIBLE);
+        feedBackbinding.happyIcTick.setVisibility(View.GONE);
 
         feedBackbinding.excellenttick.setVisibility(View.GONE);
         feedBackbinding.excellent.setVisibility(View.VISIBLE);
+        feedBackbinding.excellentIcTick.setVisibility(View.GONE);
     }
 
     private void setRatingConfiguration(int ratingStatus, String ratingKey) {
@@ -439,6 +449,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
                 //getDataManager().setPoorKey(feedbackRatingFromPhysical);
                 feedBackbinding.poorTick.setVisibility(View.GONE);
                 feedBackbinding.poor.setVisibility(View.VISIBLE);
+                feedBackbinding.poorIcTick.setVisibility(View.VISIBLE);
                 feedBackbinding.fair.setVisibility(View.GONE);
                 feedBackbinding.fairtick.setVisibility(View.VISIBLE);
                 break;
@@ -449,6 +460,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
                 //getDataManager().setFairKey(feedbackRatingFromPhysical);
                 feedBackbinding.fairtick.setVisibility(View.GONE);
                 feedBackbinding.fair.setVisibility(View.VISIBLE);
+                feedBackbinding.fairIcTick.setVisibility(View.VISIBLE);
                 feedBackbinding.average.setVisibility(View.GONE);
                 feedBackbinding.averagetick.setVisibility(View.VISIBLE);
                 break;
@@ -459,6 +471,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
                 //getDataManager().setAverageKey(feedbackRatingFromPhysical);
                 feedBackbinding.averagetick.setVisibility(View.GONE);
                 feedBackbinding.average.setVisibility(View.VISIBLE);
+                feedBackbinding.averageIcTick.setVisibility(View.VISIBLE);
                 feedBackbinding.happy.setVisibility(View.GONE);
                 feedBackbinding.happytick.setVisibility(View.VISIBLE);
                 break;
@@ -469,6 +482,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
                 //getDataManager().setHappyKey(feedbackRatingFromPhysical);
                 feedBackbinding.happytick.setVisibility(View.GONE);
                 feedBackbinding.happy.setVisibility(View.VISIBLE);
+                feedBackbinding.happyIcTick.setVisibility(View.VISIBLE);
                 feedBackbinding.excellent.setVisibility(View.GONE);
                 feedBackbinding.excellenttick.setVisibility(View.VISIBLE);
                 break;
@@ -479,6 +493,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
                 //getDataManager().setExcellentKey(feedbackRatingFromPhysical);
                 feedBackbinding.excellenttick.setVisibility(View.GONE);
                 feedBackbinding.excellent.setVisibility(View.VISIBLE);
+                feedBackbinding.excellentIcTick.setVisibility(View.VISIBLE);
                 feedBackbinding.editFeedbackConfiguration.setVisibility(View.VISIBLE);
                 calibrationDialog.dismiss();
                 Toast.makeText(this, "Feedback has been configured", Toast.LENGTH_SHORT).show();

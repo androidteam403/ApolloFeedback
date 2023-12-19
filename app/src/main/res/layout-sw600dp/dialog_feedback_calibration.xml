@@ -79,13 +79,28 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/poor_ic"
+                        <RelativeLayout
                             android:layout_width="@dimen/dimen120dp"
-                            android:layout_height="@dimen/dimen120dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/poor_round"
-                            android:visibility="visible" />
+                            android:layout_height="@dimen/dimen120dp">
+
+                            <ImageView
+                                android:id="@+id/poor_ic"
+                                android:layout_width="@dimen/dimen120dp"
+                                android:layout_height="@dimen/dimen120dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/poor_round"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/poor_ic_tick"
+                                android:layout_width="@dimen/dimen30dp"
+                                android:layout_height="@dimen/dimen30dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/tickmark"
+                                android:visibility="gone" />
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -144,13 +159,29 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/fair_ic"
+                        <RelativeLayout
                             android:layout_width="@dimen/dimen120dp"
-                            android:layout_height="@dimen/dimen120dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/fair_round"
-                            android:visibility="visible" />
+                            android:layout_height="@dimen/dimen120dp">
+
+                            <ImageView
+                                android:id="@+id/fair_ic"
+                                android:layout_width="@dimen/dimen120dp"
+                                android:layout_height="@dimen/dimen120dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/fair_round"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/fair_ic_tick"
+                                android:layout_width="@dimen/dimen30dp"
+                                android:layout_height="@dimen/dimen30dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/tickmark"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -210,13 +241,29 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/average_ic"
+                        <RelativeLayout
                             android:layout_width="@dimen/dimen120dp"
-                            android:layout_height="@dimen/dimen120dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/average_round"
-                            android:visibility="visible" />
+                            android:layout_height="@dimen/dimen120dp">
+
+                            <ImageView
+                                android:id="@+id/average_ic"
+                                android:layout_width="@dimen/dimen120dp"
+                                android:layout_height="@dimen/dimen120dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/average_round"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/average_ic_tick"
+                                android:layout_width="@dimen/dimen30dp"
+                                android:layout_height="@dimen/dimen30dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/tickmark"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -275,13 +322,29 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/happy_ic"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dimen120dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/happy_round"
-                            android:visibility="visible" />
+                        <RelativeLayout
+                            android:layout_width="@dimen/dimen120dp"
+                            android:layout_height="@dimen/dimen120dp">
+
+                            <ImageView
+                                android:id="@+id/happy_ic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/dimen120dp"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/happy_round"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/happy_ic_tick"
+                                android:layout_width="@dimen/dimen30dp"
+                                android:layout_height="@dimen/dimen30dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/tickmark"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -341,13 +404,29 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/excellent_ic"
+                        <RelativeLayout
                             android:layout_width="@dimen/dimen120dp"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/excellent_round"
-                            android:visibility="visible" />
+                            android:layout_height="@dimen/dimen120dp">
+
+                            <ImageView
+                                android:id="@+id/excellent_ic"
+                                android:layout_width="@dimen/dimen120dp"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/excellent_round"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/excellent_ic_tick"
+                                android:layout_width="@dimen/dimen30dp"
+                                android:layout_height="@dimen/dimen30dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/tickmark"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"

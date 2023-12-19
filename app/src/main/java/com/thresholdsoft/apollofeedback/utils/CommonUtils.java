@@ -8,6 +8,7 @@ import com.thresholdsoft.apollofeedback.R;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -76,4 +77,24 @@ public class CommonUtils {
             return null;
         }
     }
+
+    public static String getTimeFromAndroid() {
+        Date dt = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        int hours = c.get(Calendar.HOUR_OF_DAY);
+        int min = c.get(Calendar.MINUTE);
+
+        if (hours >= 1 && hours <= 12) {
+            return "Good Morning ";
+        } else if (hours >= 12 && hours <= 16) {
+            return "Good Afternoon ";
+        } else if (hours >= 16 && hours <= 21) {
+            return "Good Evening ";
+        } else if (hours >= 21 && hours <= 24) {
+            return "Good Night ";
+        }
+        return "";
+    }
+
 }
