@@ -20,7 +20,9 @@
             android:layout_width=".1dp"
             android:layout_height=".1dp"
             android:focusable="true"
-            android:importantForAutofill="no" />
+            android:cursorVisible="true"
+            android:importantForAutofill="no"
+            android:inputType="text" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -479,6 +481,38 @@
                     android:visibility="gone" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen20dp"
+                android:background="@drawable/test_btn_bg"
+                android:paddingStart="@dimen/dimen20dp"
+                android:paddingTop="@dimen/dimen10dp"
+                android:paddingEnd="@dimen/dimen20dp"
+                android:paddingBottom="@dimen/dimen10dp"
+                android:text="@string/label_preview"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="@dimen/dimen18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen20dp"
+                android:background="@drawable/test_btn_bg"
+                android:paddingStart="@dimen/dimen20dp"
+                android:paddingTop="@dimen/dimen10dp"
+                android:paddingEnd="@dimen/dimen20dp"
+                android:paddingBottom="@dimen/dimen10dp"
+                android:text="@string/label_test"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen18sp"
+                android:visibility="gone" />
+
         </LinearLayout>
         <!--<LinearLayout
             android:layout_width="match_parent"

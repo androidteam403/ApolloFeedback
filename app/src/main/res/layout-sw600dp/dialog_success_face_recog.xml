@@ -11,7 +11,7 @@
         <ImageView
             android:layout_width="@dimen/dimen70dp"
             android:layout_height="@dimen/dimen70dp"
-            android:layout_margin="@dimen/dimen70dp"
+            android:layout_margin="@dimen/dimen10dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/apollo_circle_logo" />
 
@@ -31,7 +31,7 @@
             android:layout_width="@dimen/dimen450dp"
             android:layout_height="@dimen/dimen400dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/pink_bg_recog"
+            android:background="@drawable/stroke_orange_solid_white_square"
             android:gravity="center">
 
             <LinearLayout
@@ -105,12 +105,21 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/person_image"
-                        android:layout_width="@dimen/dimen120dp"
-                        android:layout_height="@dimen/dimen120dp"
-                        android:background="@color/grey"
-                        android:src="@drawable/boy" />
+                    <RelativeLayout
+                        android:layout_width="@dimen/dimen123dp"
+                        android:layout_height="@dimen/dimen123dp"
+                        android:background="@drawable/circle_image_bg"
+                        android:gravity="center">
+
+                        <com.thresholdsoft.apollofeedback.utils.CircularImageView
+                            android:id="@+id/person_image"
+                            android:layout_width="@dimen/dimen120dp"
+                            android:layout_height="@dimen/dimen120dp"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/boy" />
+
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -167,6 +176,33 @@
                             android:textSize="@dimen/dimen18sp"
                             android:textStyle="bold" />
 
+                        <LinearLayout
+                            android:id="@+id/available_credits_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_light"
+                                android:text="Available points: "
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/available_points"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen5dp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -269,7 +305,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="#f7941d"
-                        android:padding="@dimen/four4_dp">
+                        android:padding="@dimen/four4_dp"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"

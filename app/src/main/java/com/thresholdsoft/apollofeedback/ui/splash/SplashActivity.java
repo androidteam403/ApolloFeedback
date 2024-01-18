@@ -13,6 +13,8 @@ import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivitySplashBinding;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
+import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
+import com.thresholdsoft.apollofeedback.utils.AppConstants;
 
 public class SplashActivity extends BaseActivity implements SplashActivityCallback {
     private AccessKeyDialog accesskeyDialog;
@@ -40,11 +42,35 @@ public class SplashActivity extends BaseActivity implements SplashActivityCallba
 //                });
 //                accesskeyDialog.show();
 //            } else {
-            startActivity(OffersNowActivity.getStartIntent(SplashActivity.this));
+            if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
+                onClickSettingIcon();
+
+            } else {
+                startActivity(OffersNowActivity.getStartIntent(SplashActivity.this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
+            }
+
+            /*startActivity(OffersNowActivity.getStartIntent(SplashActivity.this));
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-            finish();
+            finish();*/
 //            }
         }, 1500);
+    }
+
+    public void onClickSettingIcon() {
+        AccessKeyDialog accesskeyDialog = new AccessKeyDialog(this);
+        accesskeyDialog.setSplashCallback(this);
+        accesskeyDialog.onClickSubmit(v1 -> {
+            accesskeyDialog.listener();
+            if (accesskeyDialog.validate()) {
+                startActivityForResult(StoreSetupActivity.getStartIntent(this), AppConstants.STORE_SETUP_ACTIVITY_CODE);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                accesskeyDialog.dismiss();
+                finish();
+            }
+        });
+        accesskeyDialog.show();
     }
 
     @Override

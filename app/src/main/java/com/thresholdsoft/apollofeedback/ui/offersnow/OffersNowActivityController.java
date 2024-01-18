@@ -12,10 +12,11 @@ import com.thresholdsoft.apollofeedback.network.ApiInterface;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowRequest;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.OneApolloAPITransactionRequest;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.OneApolloAPITransactionResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.ZeroCodeApiModelResponse;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 import com.thresholdsoft.apollofeedback.utils.NetworkUtils;
-
 
 import java.io.File;
 
@@ -196,10 +197,14 @@ public class OffersNowActivityController {
                 @Override
                 public void onResponse(Call<ZeroCodeApiModelResponse> call, Response<ZeroCodeApiModelResponse> response) {
 //                    CommonUtils.hideDialog();
-                    if (response.isSuccessful()) {
-                        mCallback.onSuccessMultipartResponse(response.body(), bitmap, image);
-                    } else {
-                        mCallback.onFailureMultipartResponse(response.body().getMessage());
+                    if (response.body() != null) {
+                        if (response.isSuccessful()) {
+                            mCallback.onSuccessMultipartResponse(response.body(), bitmap, image);
+                        } else {
+                            if (response.body().getMessage() != null) {
+                                mCallback.onFailureMultipartResponse(response.body().getMessage());
+                            }
+                        }
                     }
                 }
 
@@ -215,9 +220,6 @@ public class OffersNowActivityController {
     }
 
 
-
-
-
     public void feedbakSystemApiCall() {
         if (NetworkUtils.isNetworkConnected(mContext)) {
             FeedbackSystemRequest feedbackSystemRequest = new FeedbackSystemRequest();
@@ -226,7 +228,8 @@ public class OffersNowActivityController {
             feedbackSystemRequest.setISFeedback(0);
             feedbackSystemRequest.setFeedbackRate("0");
             ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
-            Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
+            Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL();
+//            Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
             call.enqueue(new Callback<FeedbackSystemResponse>() {
                 @Override
                 public void onResponse(Call<FeedbackSystemResponse> call, Response<FeedbackSystemResponse> response) {
@@ -264,10 +267,10 @@ public class OffersNowActivityController {
         call.enqueue(new Callback<DcOffersNowResponse>() {
             @Override
             public void onResponse(Call<DcOffersNowResponse> call, Response<DcOffersNowResponse> response) {
-                if (response.isSuccessful() && response.body() !=null && response.body().getSuccess()) {
+                if (response.isSuccessful() && response.body() != null && response.body().getSuccess()) {
                     CommonUtils.hideDialog();
                     mCallback.onSuccesDcOffersNowApi(response.body());
-                }else{
+                } else {
                     mCallback.onFailureDcOffersNowApi();
                 }
 
@@ -276,10 +279,59 @@ public class OffersNowActivityController {
 
             @Override
             public void onFailure(Call<DcOffersNowResponse> call, Throwable t) {
-            CommonUtils.hideDialog();
-            mCallback.onFailureMessage(t.getMessage());
+                CommonUtils.hideDialog();
+                mCallback.onFailureMessage(t.getMessage());
             }
         });
+    }
+
+    public void oneApolloApiTransaction(Bitmap image, File file, String mobileNumber) {
+        if (NetworkUtils.isNetworkConnected(mContext)) {
+            CommonUtils.showDialog(mContext, "Loading…");
+            OneApolloAPITransactionRequest oneApolloAPITransactionRequest = new OneApolloAPITransactionRequest();
+            OneApolloAPITransactionRequest.RequestData requestData = new OneApolloAPITransactionRequest.RequestData();
+            requestData.setAction("BALANCECHECK");
+            requestData.setCoupon("");
+            requestData.setCustomerID("");
+            requestData.setDocNum("123");
+            requestData.setMobileNum(mobileNumber);
+            requestData.setOtp("");
+            requestData.setPoints("");
+            requestData.setReqBy("M");
+            requestData.setRrno("");
+            requestData.setStoreId("16001");
+            requestData.setType("");
+            requestData.setUrl("http://10.4.14.4:8044/oauat/OneApolloService.svc/ONEAPOLLOTRANS");
+            oneApolloAPITransactionRequest.setRequestData(requestData);
+            ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
+            Call<OneApolloAPITransactionResponse> call = apiInterface.ONE_APOLLO_API_TRANSACTION_CALL(oneApolloAPITransactionRequest);
+            call.enqueue(new Callback<OneApolloAPITransactionResponse>() {
+                @Override
+                public void onResponse(Call<OneApolloAPITransactionResponse> call, Response<OneApolloAPITransactionResponse> response) {
+                    CommonUtils.hideDialog();
+                    if (response.isSuccessful() && response.code() == 200) {
+//                        Toast.makeText(mContext, "IsPamentScreen=================="+response.body().getIspaymentScreen(), Toast.LENGTH_SHORT).show();
+                        if (mCallback != null) {
+                            mCallback.onSuccessOneApolloApiTransaction(response.body(), image, file);
+                        }
+                    } else {
+                        mCallback.onFailureOneApolloApiTransaction("", image, file);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<OneApolloAPITransactionResponse> call, Throwable t) {
+                    CommonUtils.hideDialog();
+                    if (mCallback != null) {
+                        mCallback.onFailureOneApolloApiTransaction(t.getMessage(), image, file);
+                    }
+                }
+            });
+        } else {
+            if (mCallback != null) {
+                mCallback.onFailureMessage("Something went wrong.");
+            }
+        }
     }
 
 }

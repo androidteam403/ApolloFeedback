@@ -10,20 +10,20 @@
         tools:context=".ui.offersnow.OffersNowActivity">
 
         <RelativeLayout
-            android:visibility="visible"
             android:id="@+id/textureView_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="visible">
 
             <SurfaceView
+                android:id="@+id/surfaceView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/surfaceView"/>
+                android:layout_height="match_parent" />
 
             <View
-                android:background="@drawable/app_bg"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:background="@drawable/app_bg" />
 
             <!--            <TextureView-->
             <!--                android:id="@+id/textureView"-->
@@ -34,135 +34,134 @@
             <!--                android:layout_gravity="center" />-->
         </RelativeLayout>
 
-<!--        <SurfaceView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:id="@+id/surfaceView"/>-->
+        <!--        <SurfaceView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:id="@+id/surfaceView"/>-->
 
-<!--        <LinearLayout-->
-<!--            android:visibility="gone"-->
-<!--            android:id="@+id/textureView_layout"-->
-<!--            android:orientation="vertical"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
+        <!--        <LinearLayout-->
+        <!--            android:visibility="gone"-->
+        <!--            android:id="@+id/textureView_layout"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content">-->
 
-<!--      -->
+        <!--      -->
 
-<!--            &lt;!&ndash;            <TextureView&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:id="@+id/textureView"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:layout_marginTop="@dimen/dimen20dp"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:visibility="visible"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:layout_width="@dimen/dimen350dp"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:layout_height="@dimen/dimen350dp"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:layout_gravity="center" />&ndash;&gt;-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/dimen10dp"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="horizontal">-->
+        <!--            &lt;!&ndash;            <TextureView&ndash;&gt;-->
+        <!--            &lt;!&ndash;                android:id="@+id/textureView"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                android:layout_marginTop="@dimen/dimen20dp"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                android:visibility="visible"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                android:layout_width="@dimen/dimen350dp"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                android:layout_height="@dimen/dimen350dp"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                android:layout_gravity="center" />&ndash;&gt;-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginTop="@dimen/dimen10dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:orientation="horizontal">-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="@dimen/dimen70dp"-->
-<!--                    android:layout_height="@dimen/dimen70dp"-->
-<!--                    android:src="@drawable/face" />-->
+        <!--                <ImageView-->
+        <!--                    android:layout_width="@dimen/dimen70dp"-->
+        <!--                    android:layout_height="@dimen/dimen70dp"-->
+        <!--                    android:src="@drawable/face" />-->
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:orientation="vertical">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Face Recognition Secure Access"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="18sp"-->
-<!--                        android:textStyle="bold" />-->
+        <!--                    <TextView-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Face Recognition Secure Access"-->
+        <!--                        android:textColor="@color/white"-->
+        <!--                        android:textSize="18sp"-->
+        <!--                        android:textStyle="bold" />-->
 
-<!--                    &lt;!&ndash;                    <TextView&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:text="Click on below button to continue"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:textColor="#176772"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:textSize="@dimen/dimen16sp"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:textStyle="bold" />&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                    <TextView&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:text="Click on below button to continue"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:textColor="#176772"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:textSize="@dimen/dimen16sp"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:textStyle="bold" />&ndash;&gt;-->
 
-<!--                    &lt;!&ndash;                    <TextView&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:gravity="center"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:text="Capture"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        android:visibility="visible"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;-->
-<!--                </LinearLayout>-->
+        <!--                    &lt;!&ndash;                    <TextView&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:gravity="center"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:text="Capture"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        android:visibility="visible"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;-->
+        <!--                </LinearLayout>-->
 
 
-<!--            </LinearLayout>-->
-<!--        </LinearLayout>-->
-
-    <RelativeLayout
-        android:id="@+id/offers_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible">
+        <!--            </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
         <RelativeLayout
+            android:id="@+id/offers_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen30dp"
-            android:gravity="center_vertical">
+            android:visibility="visible">
 
-            <ImageView
-                android:layout_width="@dimen/dimen50dp"
-                android:layout_height="@dimen/dimen50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/dimen50dp"
-                android:layout_marginRight="@dimen/dimen50dp"
-                android:contentDescription="@string/app_name"
-                android:onClick="@{()-> callback.onClickRefreshIcon()}"
-                android:src="@drawable/ic_refresh" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/dimen30dp"
+                android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="@dimen/dimen100dp"
-                    android:layout_height="@dimen/dimen100dp"
+                    android:layout_width="@dimen/dimen50dp"
+                    android:layout_height="@dimen/dimen50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dimen50dp"
+                    android:layout_marginRight="@dimen/dimen50dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_apollo_circle_logo" />
+                    android:onClick="@{()-> callback.onClickRefreshIcon()}"
+                    android:src="@drawable/ic_refresh" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginLeft="@dimen/dimen10dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@{storeName}"
-                    android:textAllCaps="true"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/dimen40sp" />
-            </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="@dimen/dimen100dp"
+                        android:layout_height="@dimen/dimen100dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_apollo_circle_logo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen10dp"
+                        android:layout_marginLeft="@dimen/dimen10dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@{storeName}"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/dimen40sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
 
 
         <LinearLayout
@@ -179,8 +178,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen40dp"
                 android:layout_marginTop="@dimen/dimen10dp"
-                android:gravity="center_horizontal"
                 android:layout_marginEnd="@dimen/dimen40dp"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -247,85 +246,85 @@
 
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/image_capture_btn"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/banners_layout"-->
-<!--            android:layout_marginTop="@dimen/dimen10dp"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/image_capture_btn"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/banners_layout"-->
+        <!--            android:layout_marginTop="@dimen/dimen10dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:orientation="horizontal">-->
 
-<!--            <ImageView-->
-<!--                android:layout_width="@dimen/dimen70dp"-->
-<!--                android:layout_height="@dimen/dimen70dp"-->
-<!--                android:src="@drawable/face" />-->
+        <!--            <ImageView-->
+        <!--                android:layout_width="@dimen/dimen70dp"-->
+        <!--                android:layout_height="@dimen/dimen70dp"-->
+        <!--                android:src="@drawable/face" />-->
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="vertical">-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:orientation="vertical">-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Face Recognition Secure Access"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="18sp"-->
-<!--                    android:textStyle="bold" />-->
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:text="Face Recognition Secure Access"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="18sp"-->
+        <!--                    android:textStyle="bold" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Click on below button to continue"-->
-<!--                    android:textColor="#176772"-->
-<!--                    android:textSize="@dimen/dimen16sp"-->
-<!--                    android:textStyle="bold" />-->
-<!--                <LinearLayout-->
-<!--                    android:onClick="@{()-> callback.onClickCapture()}"-->
-<!--                    android:id="@+id/onClickContinue_f"-->
-<!--                    android:layout_width="@dimen/dimen100dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginTop="@dimen/dimen10dp"-->
-<!--                    android:background="@drawable/ripple_button_continue"-->
-<!--                    android:padding="@dimen/four4_dp">-->
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:text="Click on below button to continue"-->
+        <!--                    android:textColor="#176772"-->
+        <!--                    android:textSize="@dimen/dimen16sp"-->
+        <!--                    android:textStyle="bold" />-->
+        <!--                <LinearLayout-->
+        <!--                    android:onClick="@{()-> callback.onClickCapture()}"-->
+        <!--                    android:id="@+id/onClickContinue_f"-->
+        <!--                    android:layout_width="@dimen/dimen100dp"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_gravity="center"-->
+        <!--                    android:layout_marginTop="@dimen/dimen10dp"-->
+        <!--                    android:background="@drawable/ripple_button_continue"-->
+        <!--                    android:padding="@dimen/four4_dp">-->
 
-<!--                    <TextView-->
+        <!--                    <TextView-->
 
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_margin="4dp"-->
-<!--                        android:text="Continue"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="@dimen/dimen18sp"-->
-<!--                        android:textStyle="bold" />-->
-<!--                </LinearLayout>-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_gravity="center"-->
+        <!--                        android:layout_margin="4dp"-->
+        <!--                        android:text="Continue"-->
+        <!--                        android:textAlignment="center"-->
+        <!--                        android:textColor="@color/white"-->
+        <!--                        android:textSize="@dimen/dimen18sp"-->
+        <!--                        android:textStyle="bold" />-->
+        <!--                </LinearLayout>-->
 
-<!--                &lt;!&ndash;                    <TextView&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:gravity="center"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:text="Capture"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        android:visibility="visible"&ndash;&gt;-->
-<!--                &lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;-->
-<!--            </LinearLayout>-->
+        <!--                &lt;!&ndash;                    <TextView&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:gravity="center"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:text="Capture"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        android:visibility="visible"&ndash;&gt;-->
+        <!--                &lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;-->
+        <!--            </LinearLayout>-->
 
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
         <ImageView
             android:id="@+id/settings"
@@ -336,6 +335,43 @@
             android:onClick="@{()-> callback.onClickSettingIcon()}"
             android:src="@drawable/ic_setting"
             android:visibility="@{isConfigurationAvailable ? view.VISIBLE : view.GONE}" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dimen10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/start_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onCLickStartRecord()}"
+                android:src="@drawable/record_icon" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/start_record_gif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onCLickStartRecord()}"
+                android:src="@drawable/audio_wave"
+                android:visibility="gone" />
+
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onClickPlayorStop()}"
+                android:src="@drawable/play_icon" />
+
+        </LinearLayout>
     </RelativeLayout>
 
     <data>

@@ -16,4 +16,8 @@ public interface ItemsPaymentActivityCallback {
     void onClickRefreshIcon();
 
     void onSucessCrossShell(CrossShellResponse crossShellResponse);
+
+    void onCLickStartRecord();
+
+    void onClickPlayorStop();
 }

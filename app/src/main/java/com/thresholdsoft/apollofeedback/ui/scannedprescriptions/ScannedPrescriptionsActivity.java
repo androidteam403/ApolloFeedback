@@ -1,14 +1,18 @@
 package com.thresholdsoft.apollofeedback.ui.scannedprescriptions;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,9 +20,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +50,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -62,9 +70,18 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
     private boolean isFeedbackScreen = false;
     private boolean isPrescriptionsUploaded = false;
     private boolean isOnClickUploadPrescriptions = false;
-    public static Intent getStartActivity(Context context, String filePath) {
+    private static final String BITMAP_IMAGE = "BITMAP_IMAGE";
+    private String bitmapImage;
+    private static final String IS_TRAINED = "IS_TRAINED";
+    private boolean isTrained = false;
+    private static final String FILE_NAME = "FILE_NAME";
+
+    public static Intent getStartActivity(Context context, String filePath, String bitmapImage, boolean isTrained, String fileName) {
         Intent intent = new Intent(context, ScannedPrescriptionsActivity.class);
         intent.putExtra("FILE_PATH", filePath);
+        intent.putExtra(IS_TRAINED, isTrained);
+        intent.putExtra(BITMAP_IMAGE, bitmapImage);
+        intent.putExtra(FILE_NAME, fileName);
         return intent;
     }
 
@@ -93,6 +110,19 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
         }
         scannedPrescriptionsBinding.setIsScanAgain(scannedPrescriptionsPathList.size() <= 6);
         prescriptionListAdapter();
+
+        if (getIntent() != null) {
+            bitmapImage = (String) getIntent().getStringExtra(BITMAP_IMAGE);
+            isTrained = (boolean) getIntent().getBooleanExtra(IS_TRAINED, false);
+            fileName = (String) getIntent().getStringExtra(FILE_NAME);
+            try {
+                Bitmap src = BitmapFactory.decodeStream(openFileInput("customer.jpg"));
+                scannedPrescriptionsBinding.customerImage.setImageBitmap(src);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void prescriptionListAdapter() {
@@ -178,7 +208,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
                                 if (scannedPrescriptionsPathList != null && scannedPrescriptionsPathList.size() > 0) {
                                     onClickUploadPrescriptions();
                                 } else {
-                                    startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+                                    startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse, bitmapImage, isTrained));
                                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                                     finish();
                                 }
@@ -212,7 +242,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
                     if (scannedPrescriptionsPathList != null && scannedPrescriptionsPathList.size() > 0) {
                         onClickUploadPrescriptions();
                     } else {
-                        startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+                        startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse, bitmapImage, isTrained));
                         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                         finish();
                     }
@@ -313,7 +343,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
 
     @Override
     public void onClickScanAgain() {
-        startActivity(EpsonScanActivity.getStartActivity(this, true));
+        startActivity(EpsonScanActivity.getStartActivity(this, true, bitmapImage, isTrained, fileName));
         finish();
     }
 
@@ -370,7 +400,7 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
                 if (isFeedbackScreen) {
                     List<String> scannedPrescriptionsPathList = new ArrayList<>();
                     getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
-                    startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse));
+                    startActivity(FeedBackActivity.getStartIntent(ScannedPrescriptionsActivity.this, feedbackSystemResponse, bitmapImage, isTrained));
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                     finish();
                 }
@@ -414,7 +444,6 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
         return encImage;
 
     }
-
 
 
     @Override
@@ -472,6 +501,148 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
                     getController().kioskSelfCheckOutTransactionApiCAll(kioskSelfCheckOutTransactionRequest, 0);
                 }
             }
+        }
+    }
+
+    //..............................................................................................
+    private MediaRecorder recorder = null;
+    private MediaPlayer player = null;
+    boolean mStartPlaying = true;
+    private static String fileName = null;
+    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private boolean isRecording = false;
+
+    private void startRecording() {
+
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(fileName);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            isRecording = true;
+            scannedPrescriptionsBinding.startRecord.setVisibility(View.GONE);
+            scannedPrescriptionsBinding.startRecordGif.setVisibility(View.VISIBLE);
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "prepare() failed");
+        }
+
+        recorder.start();
+//        startRecord.setText("Recording is inprogress...");
+    }
+
+    private void stopRecording() {
+        isRecording = false;
+        scannedPrescriptionsBinding.startRecordGif.setVisibility(View.GONE);
+        scannedPrescriptionsBinding.startRecord.setVisibility(View.VISIBLE);
+        recorder.stop();
+        recorder.release();
+        recorder = null;
+//        startRecord.setText("Start Record");
+    }
+
+    private void startPlaying() {
+        player = new MediaPlayer();
+        try {
+            player.setDataSource(fileName);
+            player.prepare();
+            player.start();
+
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    onPlay(mStartPlaying);
+                    if (mStartPlaying) {
+//                        startPlay.setText("Stop playing");
+                    } else {
+//                        startPlay.setText("Start playing");
+                    }
+                    mStartPlaying = !mStartPlaying;
+                }
+
+            });
+        } catch (IOException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "prepare() failed");
+        }
+    }
+
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+            stopPlayingHandler.removeCallbacks(stopPlayingRunnable);
+            stopPlayingHandler.postDelayed(stopPlayingRunnable, 30000);
+        } else {
+            stopPlaying();
+        }
+    }
+
+    private void stopPlaying() {
+        player.release();
+        player = null;
+    }
+
+    @Override
+    public void onCLickStartRecord() {
+        if (!isRecording) {
+            // Record to the external cache directory for visibility
+            fileName = getExternalCacheDir().getAbsolutePath();
+            fileName += "/audiorecordtest.3gp";
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                startRecording();
+                stopRecordHandler.removeCallbacks(stopRecordRunnable);
+                stopRecordHandler.postDelayed(stopRecordRunnable, 30000);
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+            }
+        }
+    }
+
+    @Override
+    public void onClickPlayorStop() {
+        onPlay(mStartPlaying);
+        if (mStartPlaying) {
+            scannedPrescriptionsBinding.play.setImageResource(R.drawable.stop_icon);
+        } else {
+            scannedPrescriptionsBinding.play.setImageResource(R.drawable.play_icon);
+        }
+        mStartPlaying = !mStartPlaying;
+    }
+
+
+    Handler stopRecordHandler = new Handler();
+    Runnable stopRecordRunnable = new Runnable() {
+        @Override
+        public void run() {
+            stopRecording();
+        }
+    };
+
+    Handler stopPlayingHandler = new Handler();
+    Runnable stopPlayingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mStartPlaying = true;
+            scannedPrescriptionsBinding.play.setImageResource(R.drawable.play_icon);
+            stopPlaying();
+        }
+    };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (recorder != null) {
+            recorder.release();
+            recorder = null;
+        }
+
+        if (player != null) {
+            player.release();
+            player = null;
         }
     }
 }

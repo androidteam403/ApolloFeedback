@@ -80,4 +80,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:18.2.1'
     implementation 'com.google.firebase:firebase-analytics:18.0.2'
 
+    // Gif image view
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
+
 }

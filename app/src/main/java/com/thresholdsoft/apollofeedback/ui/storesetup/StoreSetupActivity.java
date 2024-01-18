@@ -25,6 +25,7 @@ import com.thresholdsoft.apollofeedback.databinding.ActivityStoreSetupBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogFeedbackCalibrationBinding;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.model.UserAddress;
+import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.ui.storesetup.dialog.GetStoresDialog;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreListResponseModel;
 import com.thresholdsoft.apollofeedback.ui.storesetup.model.StoreSetupModel;
@@ -54,7 +55,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     private StoreListResponseModel.StoreListObj selectedStoreContactNum = null;
     StoreSetupModel storeSetupModel;
     StoreSetupActivityCallback storeSetupActivityCallback;
-    String eposUrl = "http://online.apollopharmacy.org:51/EPOS/";
+    String eposUrl = "http://online.apollopharmacy.org:51/MPOS/";
 
     private int ratingStatus = 1;
 
@@ -105,8 +106,6 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 //            activityStoreSetupBinding.lattitude.setText(String.valueOf((int) storeSetupModel.getStoreLatitude()));
 //            activityStoreSetupBinding.longitude.setText(String.valueOf((int) storeSetupModel.getStoreLongitude()));
             activityStoreSetupBinding.baseUrl.setText(eposUrl);
-
-
         }
 
         if (getDataManager().getTerminalId() != null && getDataManager().getEposUrl() != null) {
@@ -337,8 +336,10 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 //            Toast.makeText(this, "" + deviceRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
 //            startActivity(OffersNowActivity.getStartIntent(StoreSetupActivity.this));
 //            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-            Intent intent = new Intent();
-            setResult(Activity.RESULT_OK, intent);
+            /*Intent intent = new Intent();
+            setResult(Activity.RESULT_OK, intent);*/
+            startActivity(OffersNowActivity.getStartIntent(this));
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             finish();
 
         }
@@ -391,11 +392,17 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
             feedBackbinding.averageIcTick.setVisibility(View.VISIBLE);
             feedBackbinding.happyIcTick.setVisibility(View.VISIBLE);
             feedBackbinding.excellentIcTick.setVisibility(View.VISIBLE);
+
+            feedBackbinding.test.setVisibility(View.VISIBLE);
+            feedBackbinding.preview.setVisibility(View.GONE);
         } else {
             feedBackbinding.ratingConfigSuggestMsg.setText("Please configure Poor");
             feedBackbinding.editFeedbackConfiguration.setVisibility(View.GONE);
             feedBackbinding.poor.setVisibility(View.GONE);
             feedBackbinding.poorTick.setVisibility(View.VISIBLE);
+
+            feedBackbinding.test.setVisibility(View.GONE);
+            feedBackbinding.preview.setVisibility(View.GONE);
         }
         feedBackbinding.poorTick.setOnClickListener(v -> setRatingConfiguration(ratingStatus, "1"));
         feedBackbinding.fairtick.setOnClickListener(v -> setRatingConfiguration(ratingStatus, "2"));
@@ -404,11 +411,126 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
         feedBackbinding.excellenttick.setOnClickListener(v -> setRatingConfiguration(ratingStatus, "5"));
         feedBackbinding.closeWhiteRating.setOnClickListener(v -> calibrationDialog.dismiss());
         feedBackbinding.editFeedbackConfiguration.setOnClickListener(v -> resetFeedbackCofiguration());
+
+        onFeedbackSecreteEditboxListener();
+
+        feedBackbinding.test.setOnClickListener(v -> {
+            feedBackbinding.ratingConfigSuggestMsg.setText("Review Feedback");
+
+            feedBackbinding.test.setVisibility(View.GONE);
+            feedBackbinding.preview.setVisibility(View.VISIBLE);
+
+            feedBackbinding.poorIcTick.setVisibility(View.GONE);
+            feedBackbinding.fairIcTick.setVisibility(View.GONE);
+            feedBackbinding.averageIcTick.setVisibility(View.GONE);
+            feedBackbinding.happyIcTick.setVisibility(View.GONE);
+            feedBackbinding.excellentIcTick.setVisibility(View.GONE);
+        });
+
+        feedBackbinding.preview.setOnClickListener(v -> {
+            feedBackbinding.ratingConfigSuggestMsg.setText("Feedback has been configured");
+
+            feedBackbinding.test.setVisibility(View.VISIBLE);
+            feedBackbinding.preview.setVisibility(View.GONE);
+
+            feedBackbinding.poorIcTick.setVisibility(View.VISIBLE);
+            feedBackbinding.fairIcTick.setVisibility(View.VISIBLE);
+            feedBackbinding.averageIcTick.setVisibility(View.VISIBLE);
+            feedBackbinding.happyIcTick.setVisibility(View.VISIBLE);
+            feedBackbinding.excellentIcTick.setVisibility(View.VISIBLE);
+
+            feedBackbinding.poor.setVisibility(View.VISIBLE);
+            feedBackbinding.fair.setVisibility(View.VISIBLE);
+            feedBackbinding.average.setVisibility(View.VISIBLE);
+            feedBackbinding.happy.setVisibility(View.VISIBLE);
+            feedBackbinding.excellent.setVisibility(View.VISIBLE);
+
+            feedBackbinding.poorTick.setVisibility(View.GONE);
+            feedBackbinding.fairtick.setVisibility(View.GONE);
+            feedBackbinding.averagetick.setVisibility(View.GONE);
+            feedBackbinding.happytick.setVisibility(View.GONE);
+            feedBackbinding.excellenttick.setVisibility(View.GONE);
+
+        });
+        feedBackbinding.poor.setOnClickListener(v -> {
+            if (!getDataManager().getPoorKey().isEmpty()
+                    && !getDataManager().getFairKey().isEmpty()
+                    && !getDataManager().getAverageKey().isEmpty()
+                    && !getDataManager().getHappyKey().isEmpty()
+                    && !getDataManager().getExcellentKey().isEmpty()) {
+                if (feedBackbinding.preview.getVisibility() == View.VISIBLE) {
+                    feedbackRatingFromPhysical = "1";
+                    feedBackbinding.feedbackSecretEditbox.setText("");
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    feedbackEditboxHandler.postDelayed(feedbackEditboxRunnable, 1000);
+                }
+            }
+        });
+        feedBackbinding.fair.setOnClickListener(v -> {
+            if (!getDataManager().getPoorKey().isEmpty()
+                    && !getDataManager().getFairKey().isEmpty()
+                    && !getDataManager().getAverageKey().isEmpty()
+                    && !getDataManager().getHappyKey().isEmpty()
+                    && !getDataManager().getExcellentKey().isEmpty()) {
+                if (feedBackbinding.preview.getVisibility() == View.VISIBLE) {
+                    feedbackRatingFromPhysical = "2";
+                    feedBackbinding.feedbackSecretEditbox.setText("");
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    feedbackEditboxHandler.postDelayed(feedbackEditboxRunnable, 1000);
+                }
+            }
+        });
+        feedBackbinding.average.setOnClickListener(v -> {
+            if (!getDataManager().getPoorKey().isEmpty()
+                    && !getDataManager().getFairKey().isEmpty()
+                    && !getDataManager().getAverageKey().isEmpty()
+                    && !getDataManager().getHappyKey().isEmpty()
+                    && !getDataManager().getExcellentKey().isEmpty()) {
+                if (feedBackbinding.preview.getVisibility() == View.VISIBLE) {
+                    feedbackRatingFromPhysical = "3";
+                    feedBackbinding.feedbackSecretEditbox.setText("");
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    feedbackEditboxHandler.postDelayed(feedbackEditboxRunnable, 1000);
+                }
+            }
+        });
+        feedBackbinding.happy.setOnClickListener(v -> {
+            if (!getDataManager().getPoorKey().isEmpty()
+                    && !getDataManager().getFairKey().isEmpty()
+                    && !getDataManager().getAverageKey().isEmpty()
+                    && !getDataManager().getHappyKey().isEmpty()
+                    && !getDataManager().getExcellentKey().isEmpty()) {
+                if (feedBackbinding.preview.getVisibility() == View.VISIBLE) {
+                    feedbackRatingFromPhysical = "4";
+                    feedBackbinding.feedbackSecretEditbox.setText("");
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    feedbackEditboxHandler.postDelayed(feedbackEditboxRunnable, 1000);
+                }
+            }
+        });
+        feedBackbinding.excellent.setOnClickListener(v -> {
+            if (!getDataManager().getPoorKey().isEmpty()
+                    && !getDataManager().getFairKey().isEmpty()
+                    && !getDataManager().getAverageKey().isEmpty()
+                    && !getDataManager().getHappyKey().isEmpty()
+                    && !getDataManager().getExcellentKey().isEmpty()) {
+                if (feedBackbinding.preview.getVisibility() == View.VISIBLE) {
+                    feedbackRatingFromPhysical = "5";
+                    feedBackbinding.feedbackSecretEditbox.setText("");
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    feedbackEditboxHandler.postDelayed(feedbackEditboxRunnable, 1000);
+                }
+            }
+        });
+        feedBackbinding.closeWhiteRating.setOnClickListener(v -> calibrationDialog.dismiss());
         calibrationDialog.show();
     }
 
     private void resetFeedbackCofiguration() {
         this.ratingStatus = 1;
+
+        feedBackbinding.test.setVisibility(View.GONE);
+        feedBackbinding.preview.setVisibility(View.GONE);
 
         getDataManager().setPoorKey("");
         getDataManager().setFairKey("");
@@ -507,10 +629,110 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
         @Override
         public void run() {
             feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+            if (!getDataManager().getPoorKey().isEmpty()
+                    && !getDataManager().getFairKey().isEmpty()
+                    && !getDataManager().getAverageKey().isEmpty()
+                    && !getDataManager().getHappyKey().isEmpty()
+                    && !getDataManager().getExcellentKey().isEmpty()) {
+                String poor = getDataManager().getPoorKey();
+                String fair = getDataManager().getFairKey();
+                String average = getDataManager().getAverageKey();
+                String happy = getDataManager().getHappyKey();
+                String excellent = getDataManager().getExcellentKey();
+                if (poor.equals(feedbackRatingFromPhysical)) {
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    poor();
+                } else if (fair.equals(feedbackRatingFromPhysical)) {
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    fair();
+                } else if (average.equals(feedbackRatingFromPhysical)) {
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    average();
+                } else if (happy.equals(feedbackRatingFromPhysical)) {
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    happy();
+                } else if (excellent.equals(feedbackRatingFromPhysical)) {
+                    feedbackRatingFromPhysical = "";
+                    feedbackEditboxHandler.removeCallbacks(feedbackEditboxRunnable);
+                    excellent();
+                }
+            } else {
+                setRatingConfiguration(ratingStatus, feedbackRatingFromPhysical);
+            }
         }
     };
 
+    private void poor() {
+        feedBackbinding.fairtick.setVisibility(View.GONE);
+        feedBackbinding.fair.setVisibility(View.VISIBLE);
+        feedBackbinding.averagetick.setVisibility(View.GONE);
+        feedBackbinding.average.setVisibility(View.VISIBLE);
+        feedBackbinding.happytick.setVisibility(View.GONE);
+        feedBackbinding.happy.setVisibility(View.VISIBLE);
+        feedBackbinding.excellenttick.setVisibility(View.GONE);
+        feedBackbinding.excellent.setVisibility(View.VISIBLE);
+        feedBackbinding.poorTick.setVisibility(View.VISIBLE);
+        feedBackbinding.poor.setVisibility(View.GONE);
+    }
+
+    private void fair() {
+        feedBackbinding.poorTick.setVisibility(View.GONE);
+        feedBackbinding.poor.setVisibility(View.VISIBLE);
+        feedBackbinding.averagetick.setVisibility(View.GONE);
+        feedBackbinding.average.setVisibility(View.VISIBLE);
+        feedBackbinding.happytick.setVisibility(View.GONE);
+        feedBackbinding.happy.setVisibility(View.VISIBLE);
+        feedBackbinding.excellenttick.setVisibility(View.GONE);
+        feedBackbinding.excellent.setVisibility(View.VISIBLE);
+        feedBackbinding.fairtick.setVisibility(View.VISIBLE);
+        feedBackbinding.fair.setVisibility(View.GONE);
+    }
+
+    private void average() {
+        feedBackbinding.poorTick.setVisibility(View.GONE);
+        feedBackbinding.poor.setVisibility(View.VISIBLE);
+        feedBackbinding.fairtick.setVisibility(View.GONE);
+        feedBackbinding.fair.setVisibility(View.VISIBLE);
+        feedBackbinding.happytick.setVisibility(View.GONE);
+        feedBackbinding.happy.setVisibility(View.VISIBLE);
+        feedBackbinding.excellenttick.setVisibility(View.GONE);
+        feedBackbinding.excellent.setVisibility(View.VISIBLE);
+        feedBackbinding.averagetick.setVisibility(View.VISIBLE);
+        feedBackbinding.average.setVisibility(View.GONE);
+    }
+
+    private void happy() {
+        feedBackbinding.poorTick.setVisibility(View.GONE);
+        feedBackbinding.poor.setVisibility(View.VISIBLE);
+        feedBackbinding.fairtick.setVisibility(View.GONE);
+        feedBackbinding.fair.setVisibility(View.VISIBLE);
+        feedBackbinding.averagetick.setVisibility(View.GONE);
+        feedBackbinding.average.setVisibility(View.VISIBLE);
+        feedBackbinding.excellenttick.setVisibility(View.GONE);
+        feedBackbinding.excellent.setVisibility(View.VISIBLE);
+        feedBackbinding.happytick.setVisibility(View.VISIBLE);
+        feedBackbinding.happy.setVisibility(View.GONE);
+    }
+
+    private void excellent() {
+        feedBackbinding.poorTick.setVisibility(View.GONE);
+        feedBackbinding.poor.setVisibility(View.VISIBLE);
+        feedBackbinding.fairtick.setVisibility(View.GONE);
+        feedBackbinding.fair.setVisibility(View.VISIBLE);
+        feedBackbinding.averagetick.setVisibility(View.GONE);
+        feedBackbinding.average.setVisibility(View.VISIBLE);
+        feedBackbinding.happytick.setVisibility(View.GONE);
+        feedBackbinding.happy.setVisibility(View.VISIBLE);
+        feedBackbinding.excellenttick.setVisibility(View.VISIBLE);
+        feedBackbinding.excellent.setVisibility(View.GONE);
+    }
+
     private void onFeedbackSecreteEditboxListener() {
+        feedBackbinding.feedbackSecretEditbox.requestFocus();
         feedBackbinding.feedbackSecretEditbox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

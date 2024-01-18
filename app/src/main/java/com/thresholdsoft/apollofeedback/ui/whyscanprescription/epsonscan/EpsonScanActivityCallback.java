@@ -6,4 +6,8 @@ public interface EpsonScanActivityCallback {
     void onSuccessFeedbackSystemApiCall(FeedbackSystemResponse feedbackSystemResponse);
 
     void onFailureMessage(String message);
+
+    void onCLickStartRecord();
+
+    void onClickPlayorStop();
 }

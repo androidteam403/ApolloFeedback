@@ -10,6 +10,8 @@ import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowRequest;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.OneApolloAPITransactionRequest;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.OneApolloAPITransactionResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.ZeroCodeApiModelResponse;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionRequest;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.model.KioskSelfCheckOutTransactionResponse;
@@ -18,14 +20,10 @@ import com.thresholdsoft.apollofeedback.utils.fileupload.FileDownloadRequest;
 import com.thresholdsoft.apollofeedback.utils.fileupload.FileDownloadResponse;
 import com.thresholdsoft.apollofeedback.utils.fileupload.FileUploadResponse;
 
-import java.util.Map;
-
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -38,9 +36,14 @@ import retrofit2.http.Url;
  * Author : NAVEEN.M
  */
 public interface ApiInterface {
-    @POST("SalesTransactionService.svc/FeedbackSystemV2API")
-    Call<FeedbackSystemResponse> FEEDBACK_SYSTEM_API_CALL(@Body FeedbackSystemRequest feedbackSystemRequest);
+    /*@POST("SalesTransactionService.svc/FeedbackSystemV2API")
+    Call<FeedbackSystemResponse> FEEDBACK_SYSTEM_API_CALL(@Body FeedbackSystemRequest feedbackSystemRequest);*/
 
+    @GET("https://jsonblob.com/api/jsonBlob/1192055082119454720")
+    Call<FeedbackSystemResponse> FEEDBACK_SYSTEM_API_CALL();
+
+
+    //https://jsonblob.com/1192055082119454720
     @GET("http://dev.thresholdsoft.com/apollo_feedback_assets/offers.json")
     Call<GetOffersNowResponse> GET_OFFERS_NOW_API_CALL();
 
@@ -62,7 +65,7 @@ public interface ApiInterface {
     Call<CrossShellResponse> Get_CROSSSHELL_API(@Body CrossShellRequest crossShellRequest);
 
     @POST("SalesTransactionService.svc/KioskSelfCheckOutTransaction")
-    Call<KioskSelfCheckOutTransactionResponse> KIOSK_SELF_CHECK_OUT_TRANSACTION_API_CALL(@Header ("Content-Type") String contentType, @Body KioskSelfCheckOutTransactionRequest kioskSelfCheckOutTransactionRequest);
+    Call<KioskSelfCheckOutTransactionResponse> KIOSK_SELF_CHECK_OUT_TRANSACTION_API_CALL(@Header("Content-Type") String contentType, @Body KioskSelfCheckOutTransactionRequest kioskSelfCheckOutTransactionRequest);
 
 
     @Multipart
@@ -91,6 +94,9 @@ public interface ApiInterface {
     @Multipart
     @POST("http://20.197.55.11:5000/file-upload")
     Call<ZeroCodeApiModelResponse> ZERO_CODE_FILE_UPLOADS_WITHOUT_NAME(@Part MultipartBody.Part file);
+
+    @POST("WalletService.svc/OneApolloAPITransaction")
+    Call<OneApolloAPITransactionResponse> ONE_APOLLO_API_TRANSACTION_CALL(@Body OneApolloAPITransactionRequest oneApolloAPITransactionRequest);
 
 
 }

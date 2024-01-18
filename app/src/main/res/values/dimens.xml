@@ -81,5 +81,9 @@
     <dimen name="dimen135dp">135dp</dimen>
     <dimen name="dimen270dp">270dp</dimen>
     <dimen name="dimen450dp">450dp</dimen>
+    <dimen name="dimen123dp">123dp</dimen>
+    <dimen name="dimen72dp">72dp</dimen>
+    <dimen name="dimen98dp">98dp</dimen>
+    <dimen name="dimen53dp">53dp</dimen>
 
 </resources>

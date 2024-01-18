@@ -86,13 +86,13 @@ public class CommonUtils {
         int min = c.get(Calendar.MINUTE);
 
         if (hours >= 1 && hours <= 12) {
-            return "Good Morning ";
+            return "Good Morning, ";
         } else if (hours >= 12 && hours <= 16) {
-            return "Good Afternoon ";
+            return "Good Afternoon, ";
         } else if (hours >= 16 && hours <= 21) {
-            return "Good Evening ";
+            return "Good Evening, ";
         } else if (hours >= 21 && hours <= 24) {
-            return "Good Night ";
+            return "Good Evening, ";//Good Night
         }
         return "";
     }

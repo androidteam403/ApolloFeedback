@@ -10,30 +10,29 @@
         tools:context=".ui.offersnow.OffersNowActivity">
 
         <RelativeLayout
-            android:visibility="visible"
             android:id="@+id/textureView_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="visible">
 
             <SurfaceView
+                android:id="@+id/surfaceView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/surfaceView"/>
+                android:layout_height="match_parent" />
 
             <View
-                android:background="@drawable/app_bg"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:background="@drawable/app_bg" />
 
-<!--            <TextureView-->
-<!--                android:id="@+id/textureView"-->
-<!--                android:layout_marginTop="@dimen/dimen20dp"-->
-<!--                android:visibility="visible"-->
-<!--                android:layout_width="@dimen/dimen350dp"-->
-<!--                android:layout_height="@dimen/dimen350dp"-->
-<!--                android:layout_gravity="center" />-->
+            <!--            <TextureView-->
+            <!--                android:id="@+id/textureView"-->
+            <!--                android:layout_marginTop="@dimen/dimen20dp"-->
+            <!--                android:visibility="visible"-->
+            <!--                android:layout_width="@dimen/dimen350dp"-->
+            <!--                android:layout_height="@dimen/dimen350dp"-->
+            <!--                android:layout_gravity="center" />-->
         </RelativeLayout>
-
 
 
         <RelativeLayout
@@ -168,85 +167,85 @@
 
             </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/image_capture_btn"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/banners_layout"-->
-<!--                android:layout_marginTop="@dimen/dimen10dp"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="horizontal">-->
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/image_capture_btn"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_below="@id/banners_layout"-->
+            <!--                android:layout_marginTop="@dimen/dimen10dp"-->
+            <!--                android:gravity="center"-->
+            <!--                android:orientation="horizontal">-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="@dimen/dimen70dp"-->
-<!--                    android:layout_height="@dimen/dimen70dp"-->
-<!--                    android:src="@drawable/face" />-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="@dimen/dimen70dp"-->
+            <!--                    android:layout_height="@dimen/dimen70dp"-->
+            <!--                    android:src="@drawable/face" />-->
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="vertical">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Face Recognition Secure Access"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="18sp"-->
-<!--                        android:textStyle="bold" />-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="Face Recognition Secure Access"-->
+            <!--                        android:textColor="@color/white"-->
+            <!--                        android:textSize="18sp"-->
+            <!--                        android:textStyle="bold" />-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Click on below button to continue"-->
-<!--                        android:textColor="#176772"-->
-<!--                        android:textSize="@dimen/dimen16sp"-->
-<!--                        android:textStyle="bold" />-->
-<!--                    <LinearLayout-->
-<!--                        android:onClick="@{()-> callback.onClickCapture()}"-->
-<!--                        android:id="@+id/onClickContinue_f"-->
-<!--                        android:layout_width="@dimen/dimen100dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_marginTop="@dimen/dimen10dp"-->
-<!--                        android:background="@drawable/ripple_button_continue"-->
-<!--                        android:padding="@dimen/four4_dp">-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="Click on below button to continue"-->
+            <!--                        android:textColor="#176772"-->
+            <!--                        android:textSize="@dimen/dimen16sp"-->
+            <!--                        android:textStyle="bold" />-->
+            <!--                    <LinearLayout-->
+            <!--                        android:onClick="@{()-> callback.onClickCapture()}"-->
+            <!--                        android:id="@+id/onClickContinue_f"-->
+            <!--                        android:layout_width="@dimen/dimen100dp"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_gravity="center"-->
+            <!--                        android:layout_marginTop="@dimen/dimen10dp"-->
+            <!--                        android:background="@drawable/ripple_button_continue"-->
+            <!--                        android:padding="@dimen/four4_dp">-->
 
-<!--                        <TextView-->
+            <!--                        <TextView-->
 
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center"-->
-<!--                            android:layout_margin="4dp"-->
-<!--                            android:text="Continue"-->
-<!--                            android:textAlignment="center"-->
-<!--                            android:textColor="@color/white"-->
-<!--                            android:textSize="@dimen/dimen18sp"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center"-->
+            <!--                            android:layout_margin="4dp"-->
+            <!--                            android:text="Continue"-->
+            <!--                            android:textAlignment="center"-->
+            <!--                            android:textColor="@color/white"-->
+            <!--                            android:textSize="@dimen/dimen18sp"-->
+            <!--                            android:textStyle="bold" />-->
+            <!--                    </LinearLayout>-->
 
-<!--&lt;!&ndash;                    <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:gravity="center"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:text="Capture"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;-->
-<!--&lt;!&ndash;                        android:visibility="visible"&ndash;&gt;-->
-<!--&lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;-->
-<!--                </LinearLayout>-->
+            <!--&lt;!&ndash;                    <TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:padding="@dimen/dimen5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:layout_below="@id/banners_layout"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:layout_centerInParent="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:layout_gravity="center"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:layout_marginStart="@dimen/dimen5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:layout_marginTop="@dimen/dimen5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:layout_marginEnd="@dimen/dimen5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:background="@drawable/ripple_button_continue"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:fontFamily="@font/roboto_bold"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:gravity="center"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:onClick="@{()-> callback.onClickCapture()}"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:text="Capture"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:textColor="@color/white"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        android:visibility="visible"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        tools:ignore="RtlCompat" />&ndash;&gt;-->
+            <!--                </LinearLayout>-->
 
 
-<!--            </LinearLayout>-->
+            <!--            </LinearLayout>-->
 
             <ImageView
                 android:id="@+id/settings"
@@ -262,38 +261,63 @@
                 android:visibility="gone" />
 
 
-
         </RelativeLayout>
 
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dimen10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/start_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onCLickStartRecord()}"
+                android:src="@drawable/record_icon" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/start_record_gif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onCLickStartRecord()}"
+                android:src="@drawable/audio_wave"
+                android:visibility="gone" />
 
 
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:contentDescription="@string/app_name"
+                android:onClick="@{()-> callback.onClickPlayorStop()}"
+                android:src="@drawable/play_icon" />
 
-                    </RelativeLayout>
+        </LinearLayout>
 
 
+    </RelativeLayout>
 
 
+    <data>
 
+        <variable
+            name="callback"
+            type="com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivityCallback" />
 
+        <variable
+            name="mContext"
+            type="android.content.Context" />
 
+        <variable
+            name="view"
+            type="android.view.View" />
 
-
-
-
-                <data>
-
-                    <variable
-                        name="callback"
-                        type="com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivityCallback" />
-
-                    <variable
-                        name="mContext"
-                        type="android.content.Context" />
-
-                    <variable
-                        name="view"
-                        type="android.view.View" />
-
-                </data>
-            </layout>
+    </data>
+</layout>

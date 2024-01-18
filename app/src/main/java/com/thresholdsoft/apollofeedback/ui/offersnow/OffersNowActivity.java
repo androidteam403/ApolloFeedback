@@ -24,10 +24,14 @@ import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
 import android.media.Image;
 import android.media.ImageReader;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -41,6 +45,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -54,15 +59,18 @@ import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogSuccessFaceRecogBinding;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
+import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.adapter.ImageSlideAdapter;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.OneApolloAPITransactionResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.ZeroCodeApiModelResponse;
 import com.thresholdsoft.apollofeedback.ui.storesetup.StoreSetupActivity;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -94,6 +102,8 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private HandlerThread backgroundThread;
     private TextToSpeech textToSpeech;
     private com.google.mlkit.vision.face.FaceDetector faceDetector;
+
+    private boolean isTrained = false;
 
     public static Intent getStartIntent(Context mContext) {
         Intent intent = new Intent(mContext, OffersNowActivity.class);
@@ -127,14 +137,61 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         offersNowBinding = DataBindingUtil.setContentView(this, R.layout.activity_offers_now);
-        setUp();
+        checkReadWritePermissions();
+    }
+
+    //if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//                return;
+//            }
+    private void checkReadWritePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                setUp();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.CAMERA}, 1);
+            }
+        } else {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                setUp();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 2);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[2] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[3] == PackageManager.PERMISSION_GRANTED) {
+                    setUp();
+                }
+            }
+        } else if (requestCode == 2) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                    setUp();
+                }
+            }
+        }
     }
 
     private void setUp() {
         textToSpeech = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
                 textToSpeech.setLanguage(Locale.ENGLISH);
-                textToSpeech.setSpeechRate(0.8f);
+                textToSpeech.setSpeechRate(.9f);
             }
         });
         offersNowBinding.setCallback(this);
@@ -147,9 +204,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
             openCamera();
         } else {
-
             offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
-
         }
 
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
@@ -163,13 +218,21 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //        getController().getOffersNowApiCall();
 //        getController().feedbakSystemApiCall();
         getController().getDcOffersNowApi(getDataManager().getDcCode());
-
         SurfaceHolder surfaceHolder = offersNowBinding.surfaceView.getHolder();
-
-
         setupFaceDetector();
     }
 
+
+    Handler faceDetectionforDelayingHandler = new Handler();
+    Runnable faceDetectionforDelayingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            openCameraDelayed();
+            /*showDialogs(OffersNowActivity.this, "Please Wait...");
+            stopBackgroundThread();
+            getController().zeroCodeApiCallWithoutName(outputFile, bitmapTemp);*/
+        }
+    };
 
     private void setupFaceDetector() {
         FaceDetectorOptions options = new FaceDetectorOptions.Builder()
@@ -184,14 +247,21 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     Image image;
 
     private void openCamera() {
+        faceDetectionforDelayingHandler.removeCallbacks(faceDetectionforDelayingRunnable);
+        faceDetectionforDelayingHandler.postDelayed(faceDetectionforDelayingRunnable, 5000);
+    }
+
+    private final static int FRONT_CAMERA = 1;
+    private final static int BACK_CAMERA = 0;
+
+    private void openCameraDelayed() {
         if (imageReader != null) {
             imageReader.close();
             imageReader = null;
         }
-
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
-            String cameraId = manager.getCameraIdList()[1];
+            String cameraId = manager.getCameraIdList()[FRONT_CAMERA];
             CameraCharacteristics characteristics = null;
             try {
                 characteristics = manager.getCameraCharacteristics(cameraId);
@@ -210,7 +280,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             }
 
             imageReader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1);
-
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
@@ -264,7 +333,29 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
     }
 
+    /*private void createCameraPreview() {
+        try {
+            Surface surface = offersNowBinding.surfaceView.getHolder().getSurface();
+            captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            captureRequestBuilder.addTarget(surface);
 
+            cameraDevice.createCaptureSession(Arrays.asList(surface, imageReader.getSurface()), new CameraCaptureSession.StateCallback() {
+                @Override
+                public void onConfigured(@NonNull CameraCaptureSession session) {
+                    if (cameraDevice == null) return;
+                    cameraCaptureSession = session;
+                    updatePreview();
+                    startFaceDetection();
+                }
+
+                @Override
+                public void onConfigureFailed(@NonNull CameraCaptureSession session) {
+                }
+            }, backgroundHandler);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }*/
     private void createCameraPreview() {
         try {
             Surface surface = offersNowBinding.surfaceView.getHolder().getSurface();
@@ -288,7 +379,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             e.printStackTrace();
         }
     }
-
     private void updatePreview() {
         if (cameraDevice == null) return;
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
@@ -368,6 +458,8 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
     }
 
+    File outputFile;
+    Bitmap bitmapTemp;
 
     private void detectFaces(Bitmap bitmap) {
         InputImage image = InputImage.fromBitmap(bitmap, 0);
@@ -386,7 +478,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
                             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                             String filename = "JPEG_" + timeStamp + ".jpg";
-                            File outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
+                            outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
 
                             FileOutputStream out = null;
                             try {
@@ -395,11 +487,13 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                                 // Compress the bitmap to JPEG format and write it to the output stream
                                 // Quality is set to 100 (highest)
                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                                Toast.makeText(this, "Face detected", Toast.LENGTH_SHORT).show();
+                                bitmapTemp = bitmap;
+//                                Toast.makeText(this, "Face detected", Toast.LENGTH_SHORT).show();
+                                /*faceDetectionforDelayingHandler.removeCallbacks(faceDetectionforDelayingRunnable);
+                                faceDetectionforDelayingHandler.postDelayed(faceDetectionforDelayingRunnable, 10000);*/
                                 showDialogs(this, "Please Wait...");
-
                                 stopBackgroundThread();
-//                                    closeCamera();
+                                closeCamera();
                                 getController().zeroCodeApiCallWithoutName(outputFile, bitmap);
 
                             } catch (Exception e) {
@@ -452,12 +546,36 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     DialogSuccessFaceRecogBinding feedBackbinding;
 //    DialogDetailsNotFoundBinding dialogDetailsNotFoundBinding;
 
+    private Bitmap bitmapImage = null;
+    private boolean isImageDetected = false;
+    Handler imageDetectedTimeOutHandler = new Handler();
+    Runnable imageDetectedTimeOutRunnable = new Runnable() {
+        @Override
+        public void run() {
+            isImageDetected = false;
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            stopBackgroundThread();
+            closeCamera();
+            startBackgroundThread();
+            isFaceDetected = false;
+            if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+                openCamera();
+            } else {
+                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+            }
+        }
+    };
 
-    public void openDialogBox(Bitmap image, ZeroCodeApiModelResponse responses, File file, ZeroCodeApiModelResponse response) {
+    public void openDialogBox(Bitmap image, ZeroCodeApiModelResponse responses, File file, ZeroCodeApiModelResponse response, OneApolloAPITransactionResponse oneApolloAPITransactionResponse) {
+        isImageDetected = true;
+        imageDetectedTimeOutHandler.removeCallbacks(imageDetectedTimeOutRunnable);
+        imageDetectedTimeOutHandler.postDelayed(imageDetectedTimeOutRunnable, 20000);
         if (dialog != null) {
             dialog.dismiss();
         }
-
+        this.bitmapImage = image;
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         feedBackbinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_success_face_recog, null, false);
@@ -466,8 +584,16 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         dialog.setContentView(feedBackbinding.getRoot());
         dialog.setCancelable(false);
 //            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
+        if (oneApolloAPITransactionResponse != null
+                && oneApolloAPITransactionResponse.getRequestStatus() == 0
+                && oneApolloAPITransactionResponse.getOneApolloProcessResult() != null) {
+            feedBackbinding.availableCreditsLayout.setVisibility(View.VISIBLE);
+            feedBackbinding.availablePoints.setText(oneApolloAPITransactionResponse.getOneApolloProcessResult().getAvailablePoints());
+        } else {
+            feedBackbinding.availableCreditsLayout.setVisibility(View.GONE);
+        }
         if ((responses.getMessage().equals("Image match found")) || (responses.getMessage().equals("Image, Added to traning data"))) {
+            isTrained = true;
             feedBackbinding.nameF.setVisibility(View.GONE);
             feedBackbinding.phoneNoF.setVisibility(View.GONE);
             feedBackbinding.userName.setVisibility(View.VISIBLE);
@@ -487,25 +613,27 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 String number = parts[1];
                 feedBackbinding.userName.setText(name);
                 feedBackbinding.userPhoneNo.setText(number);
-                speechMessage = "Hi" + name + " " + CommonUtils.getTimeFromAndroid() + "Welcome to apollo pharmacy.";
+                speechMessage = "Hi " + name + ", " + CommonUtils.getTimeFromAndroid() + "Welcome to apollo pharmacy.";
                 textToSpeech.speak(speechMessage, TextToSpeech.QUEUE_FLUSH, null, null);
             } else {
                 feedBackbinding.userName.setText(input);
-                speechMessage = "Hi" + input + " " + CommonUtils.getTimeFromAndroid() + "Welcome to apollo pharmacy.";
+                speechMessage = "Hi " + input + ", " + CommonUtils.getTimeFromAndroid() + "Welcome to apollo pharmacy.";
                 textToSpeech.speak(speechMessage, TextToSpeech.QUEUE_FLUSH, null, null);
             }
+            dialog.show();
+        } else {
+            isTrained = false;
+            /*feedBackbinding.nameF.setVisibility(View.VISIBLE);
+            feedBackbinding.phoneNoF.setVisibility(View.VISIBLE);*/
 
-        }
-        else {
-            feedBackbinding.nameF.setVisibility(View.VISIBLE);
-            feedBackbinding.phoneNoF.setVisibility(View.VISIBLE);
-            feedBackbinding.userName.setVisibility(View.GONE);
+            /*..................................................*/
+            /*feedBackbinding.userName.setVisibility(View.GONE);
             feedBackbinding.userPhoneNo.setVisibility(View.GONE);
             feedBackbinding.warningImage.setVisibility(View.VISIBLE);
             feedBackbinding.yourDetailsNotFound.setVisibility(View.VISIBLE);
             feedBackbinding.warningImage.setVisibility(View.VISIBLE);
             feedBackbinding.verifiedYourDetails.setVisibility(View.GONE);
-            feedBackbinding.fillYourDetailsText.setVisibility(View.VISIBLE);
+            feedBackbinding.fillYourDetailsText.setVisibility(View.VISIBLE);*/
         }
 
         feedBackbinding.settings.setOnClickListener(new View.OnClickListener() {
@@ -534,9 +662,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
                     openCamera();
                 } else {
-
                     offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
-
                 }
             }
 
@@ -585,13 +711,10 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                     if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
                         openCamera();
                     } else {
-
                         offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
-
                     }
 //                    isFaceDetected=false;
-                }
-                else {
+                } else {
                     if (feedBackbinding.phoneNoF.getText().toString().isEmpty() || feedBackbinding.nameF.getText().toString().isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
                     } else {
@@ -612,7 +735,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
             window.setAttributes(layoutParams);
         }
-        dialog.show();
         hideDialogs();
 
     }
@@ -747,9 +869,19 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 this.mobileNumber = feedbackSystemResponse.getCustomerScreen().getBillNumber();
             }
             if (Objects.requireNonNull(feedbackSystemResponse).getIspaymentScreen()) {
-//                startActivity(ItemsPaymentActivity.getStartIntent(this, mobileNumber));
-//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                finish();
+                /*if (dialog != null && dialog.isShowing()) {*/
+                if (bitmapImage != null && isImageDetected) {
+                    startActivity(ItemsPaymentActivity.getStartIntent(this, mobileNumber, saveBitmap(bitmapImage), isTrained, fileName));
+                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    finish();
+                } else {
+                    feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                    feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
+                }
+                /*} else {
+                    feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
+                    feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
+                }*/
             } else {
 //                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
                 feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
@@ -757,6 +889,23 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             }
         }
     }
+
+    public String saveBitmap(Bitmap bitmap) {
+        String fileName = "customer.jpg";//no .png or .jpg needed
+        try {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            FileOutputStream fo = openFileOutput(fileName, Context.MODE_PRIVATE);
+            fo.write(bytes.toByteArray());
+            // remember close file output
+            fo.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileName = null;
+        }
+        return fileName;
+    }
+
 
     Handler feedbakSystemApiCallHandler = new Handler();
     Runnable feedbakSystemApiCallRunnable = new Runnable() {
@@ -776,9 +925,16 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     protected void onPause() {
         recyclerViewScrollerHandler.removeCallbacks(recyclerViewScrollerRunnable);
         feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
-
+        faceDetectionforDelayingHandler.removeCallbacks(faceDetectionforDelayingRunnable);
+        imageDetectedTimeOutHandler.removeCallbacks(imageDetectedTimeOutRunnable);
         closeCamera();
         stopBackgroundThread();
+
+        //Audio record
+        mStartPlaying = true;
+        isRecording = false;
+        stopRecordHandler.removeCallbacks(stopRecordRunnable);
+        stopPlayingHandler.removeCallbacks(stopPlayingRunnable);
         super.onPause();
     }
 
@@ -828,14 +984,20 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         super.onResume();
         isFaceDetected = false;
 //        resetSurfaceView();
-        startBackgroundThread();
-        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-            openCamera();
+        if (dialog != null && dialog.isShowing()) {
+            stopBackgroundThread();
         } else {
+            startBackgroundThread();
+        }
 
+        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+            if (dialog != null && dialog.isShowing()) {
+                closeCamera();
+            } else {
+                openCamera();
+            }
+        } else {
             offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
-
-
         }
     }
 
@@ -1049,21 +1211,41 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     @Override
     public void onSuccessMultipartResponse(ZeroCodeApiModelResponse response, Bitmap image, File file) {
         if (response != null) {
+            stopBackgroundThread();
+            stopFrameCapture();
             responses = response;
-            Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, response.getName(), Toast.LENGTH_SHORT).show();
-
-//            if((response.equals("Image match found")) || (response.equals("Image, Added to training data"))){
-            openDialogBox(image, response, file, response);
-
+            if ((responses.getMessage().equals("Image match found")) || (responses.getMessage().equals("Image, Added to traning data"))) {
+                if (response.getName() != null && !response.getName().isEmpty()) {
+                    if (response.getName().contains("-")) {
+                        String[] splitName = response.getName().split("-");
+                        String phoneNumber = splitName[1];
+                        getController().oneApolloApiTransaction(image, file, phoneNumber);
+                    } else {
+                        openDialogBox(image, response, file, response, null);
+                    }
+                } else {
+                    openDialogBox(image, response, file, response, null);
+                }
+            } else {
+                openDialogBox(image, response, file, response, null);
+            }
         }
-
     }
 
     @Override
     public void onFailureMultipartResponse(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         hideDialogs();
+    }
+
+    @Override
+    public void onSuccessOneApolloApiTransaction(OneApolloAPITransactionResponse oneApolloAPITransactionResponse, Bitmap image, File file) {
+        openDialogBox(image, responses, file, responses, oneApolloAPITransactionResponse);
+    }
+
+    @Override
+    public void onFailureOneApolloApiTransaction(String message, Bitmap image, File file) {
+        openDialogBox(image, responses, file, responses, null);
     }
 
     @Override
@@ -1139,6 +1321,148 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        }
+    }
+
+    //..............................................................................................
+    private MediaRecorder recorder = null;
+    private MediaPlayer player = null;
+    boolean mStartPlaying = true;
+    private static String fileName = null;
+    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private boolean isRecording = false;
+
+    private void startRecording() {
+
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(fileName);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            isRecording = true;
+            offersNowBinding.startRecord.setVisibility(View.GONE);
+            offersNowBinding.startRecordGif.setVisibility(View.VISIBLE);
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "prepare() failed");
+        }
+
+        recorder.start();
+//        startRecord.setText("Recording is inprogress...");
+    }
+
+    private void stopRecording() {
+        isRecording = false;
+        offersNowBinding.startRecordGif.setVisibility(View.GONE);
+        offersNowBinding.startRecord.setVisibility(View.VISIBLE);
+        recorder.stop();
+        recorder.release();
+        recorder = null;
+//        startRecord.setText("Start Record");
+    }
+
+    private void startPlaying() {
+        player = new MediaPlayer();
+        try {
+            player.setDataSource(fileName);
+            player.prepare();
+            player.start();
+
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    onPlay(mStartPlaying);
+                    if (mStartPlaying) {
+//                        startPlay.setText("Stop playing");
+                    } else {
+//                        startPlay.setText("Start playing");
+                    }
+                    mStartPlaying = !mStartPlaying;
+                }
+
+            });
+        } catch (IOException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "prepare() failed");
+        }
+    }
+
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+            stopPlayingHandler.removeCallbacks(stopPlayingRunnable);
+            stopPlayingHandler.postDelayed(stopPlayingRunnable, 30000);
+        } else {
+            stopPlaying();
+        }
+    }
+
+    private void stopPlaying() {
+        player.release();
+        player = null;
+    }
+
+    @Override
+    public void onCLickStartRecord() {
+        if (!isRecording) {
+            // Record to the external cache directory for visibility
+            fileName = getExternalCacheDir().getAbsolutePath();
+            fileName += "/audiorecordtest.3gp";
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                startRecording();
+                stopRecordHandler.removeCallbacks(stopRecordRunnable);
+                stopRecordHandler.postDelayed(stopRecordRunnable, 30000);
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+            }
+        }
+    }
+
+    @Override
+    public void onClickPlayorStop() {
+        onPlay(mStartPlaying);
+        if (mStartPlaying) {
+            offersNowBinding.play.setImageResource(R.drawable.stop_icon);
+        } else {
+            offersNowBinding.play.setImageResource(R.drawable.play_icon);
+        }
+        mStartPlaying = !mStartPlaying;
+    }
+
+
+    Handler stopRecordHandler = new Handler();
+    Runnable stopRecordRunnable = new Runnable() {
+        @Override
+        public void run() {
+            stopRecording();
+        }
+    };
+
+    Handler stopPlayingHandler = new Handler();
+    Runnable stopPlayingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mStartPlaying = true;
+            offersNowBinding.play.setImageResource(R.drawable.play_icon);
+            stopPlaying();
+        }
+    };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (recorder != null) {
+            recorder.release();
+            recorder = null;
+        }
+
+        if (player != null) {
+            player.release();
+            player = null;
         }
     }
 

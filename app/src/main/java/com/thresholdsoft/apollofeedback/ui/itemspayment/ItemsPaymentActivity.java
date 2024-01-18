@@ -1,19 +1,27 @@
 package com.thresholdsoft.apollofeedback.ui.itemspayment;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.zxing.WriterException;
@@ -27,9 +35,12 @@ import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.CrossShellResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.GetAdvertisementResponse;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.model.UpsellCrosssellModel;
+import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.ui.whyscanprescription.WhyScanPrescriptionActivity;
 import com.thresholdsoft.apollofeedback.utils.CommonUtils;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -43,12 +54,22 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
 
     private ActivityItemsPaymentBinding itemsPaymentBinding;
     private static final String MOBILE_NUMBER = "MOBILE_NUMBER";
+    private static final String BITMAP_IMAGE = "BITMAP_IMAGE";
+    private static final String IS_TRAINED = "IS_TRAINED";
+
+    private static final String FILE_NAME = "FILE_NAME";
     private boolean isUpsellCrosssellValid;
     private String mobileNumber = null;
 
-    public static Intent getStartIntent(Context mContext, String mobileNumber) {
+    private String bitmap;
+    private boolean isTrained;
+
+    public static Intent getStartIntent(Context mContext, String mobileNumber, String bitmapImage, boolean isTrained, String fileName) {
         Intent intent = new Intent(mContext, ItemsPaymentActivity.class);
         intent.putExtra(MOBILE_NUMBER, mobileNumber);
+        intent.putExtra(BITMAP_IMAGE, bitmapImage);
+        intent.putExtra(IS_TRAINED, isTrained);
+        intent.putExtra(FILE_NAME, fileName);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         return intent;
     }
@@ -66,6 +87,16 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
         getController().getAdvertisementApiCall();
         if (getIntent() != null) {
             mobileNumber = (String) getIntent().getStringExtra(MOBILE_NUMBER);
+            bitmap = (String) getIntent().getStringExtra(BITMAP_IMAGE);
+            isTrained = (boolean) getIntent().getBooleanExtra(IS_TRAINED, false);
+            fileName = (String) getIntent().getStringExtra(FILE_NAME);
+            try {
+                Bitmap src = BitmapFactory.decodeStream(openFileInput("customer.jpg"));
+                itemsPaymentBinding.customerImage.setImageBitmap(src);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
         }
 //        getController().feedbakSystemApiCall();
         if (mobileNumber != null && !mobileNumber.isEmpty()) {
@@ -152,15 +183,15 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
             }
             this.feedbackSystemResponse = feedbackSystemResponse;//remove this line after testing
             if (feedbackSystemResponse.getIscustomerScreen()) {
-//                startActivity(OffersNowActivity.getStartIntent(ItemsPaymentActivity.this));
-//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                finish();
+                startActivity(OffersNowActivity.getStartIntent(ItemsPaymentActivity.this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
             } else if ((feedbackSystemResponse.getIspaymentScreen())) {
                 itemsPaymentBinding.setModel(feedbackSystemResponse);
                 if (feedbackSystemResponse.getIsPrescriptionScan()) {
                     List<String> scannedPrescriptionsPathList = new ArrayList<>();
                     getDateManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
-                    startActivity(WhyScanPrescriptionActivity.getStartIntent(this));
+                    startActivity(WhyScanPrescriptionActivity.getStartIntent(this, bitmap, isTrained, fileName));
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                     finish();
                 }
@@ -176,7 +207,7 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
                         qrCodeGeneration(feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode(), dialogQrcodeBinding, this);
                         dialogQrcodeBinding.qrCodeImage.setOnClickListener(view -> {
                             qrCodeDialog.dismiss();
-                            startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse));
+                            startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse, bitmap, isTrained));
                             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                             finish();
                         });
@@ -191,7 +222,7 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
                 feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
                 feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
             } else if (feedbackSystemResponse.getIsfeedbackScreen()) {
-                startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse));
+                startActivity(FeedBackActivity.getStartIntent(ItemsPaymentActivity.this, feedbackSystemResponse, bitmap, isTrained));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 finish();
             } else {
@@ -341,5 +372,148 @@ public class ItemsPaymentActivity extends BaseActivity implements ItemsPaymentAc
 
     private SessionManager getDateManager() {
         return new SessionManager(this);
+    }
+
+
+    //..............................................................................................
+    private MediaRecorder recorder = null;
+    private MediaPlayer player = null;
+    boolean mStartPlaying = true;
+    private static String fileName = null;
+    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private boolean isRecording = false;
+
+    private void startRecording() {
+
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(fileName);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            isRecording = true;
+            itemsPaymentBinding.startRecord.setVisibility(View.GONE);
+            itemsPaymentBinding.startRecordGif.setVisibility(View.VISIBLE);
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "prepare() failed");
+        }
+
+        recorder.start();
+//        startRecord.setText("Recording is inprogress...");
+    }
+
+    private void stopRecording() {
+        isRecording = false;
+        itemsPaymentBinding.startRecordGif.setVisibility(View.GONE);
+        itemsPaymentBinding.startRecord.setVisibility(View.VISIBLE);
+        recorder.stop();
+        recorder.release();
+        recorder = null;
+//        startRecord.setText("Start Record");
+    }
+
+    private void startPlaying() {
+        player = new MediaPlayer();
+        try {
+            player.setDataSource(fileName);
+            player.prepare();
+            player.start();
+
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    onPlay(mStartPlaying);
+                    if (mStartPlaying) {
+//                        startPlay.setText("Stop playing");
+                    } else {
+//                        startPlay.setText("Start playing");
+                    }
+                    mStartPlaying = !mStartPlaying;
+                }
+
+            });
+        } catch (IOException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "prepare() failed");
+        }
+    }
+
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+            stopPlayingHandler.removeCallbacks(stopPlayingRunnable);
+            stopPlayingHandler.postDelayed(stopPlayingRunnable, 30000);
+        } else {
+            stopPlaying();
+        }
+    }
+
+    private void stopPlaying() {
+        player.release();
+        player = null;
+    }
+
+    @Override
+    public void onCLickStartRecord() {
+        if (!isRecording) {
+            // Record to the external cache directory for visibility
+            fileName = getExternalCacheDir().getAbsolutePath();
+            fileName += "/audiorecordtest.3gp";
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                startRecording();
+                stopRecordHandler.removeCallbacks(stopRecordRunnable);
+                stopRecordHandler.postDelayed(stopRecordRunnable, 30000);
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+            }
+        }
+    }
+
+    @Override
+    public void onClickPlayorStop() {
+        onPlay(mStartPlaying);
+        if (mStartPlaying) {
+            itemsPaymentBinding.play.setImageResource(R.drawable.stop_icon);
+        } else {
+            itemsPaymentBinding.play.setImageResource(R.drawable.play_icon);
+        }
+        mStartPlaying = !mStartPlaying;
+    }
+
+
+    Handler stopRecordHandler = new Handler();
+    Runnable stopRecordRunnable = new Runnable() {
+        @Override
+        public void run() {
+            stopRecording();
+        }
+    };
+
+    Handler stopPlayingHandler = new Handler();
+    Runnable stopPlayingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mStartPlaying = true;
+            itemsPaymentBinding.play.setImageResource(R.drawable.play_icon);
+            stopPlaying();
+        }
+    };
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (recorder != null) {
+            recorder.release();
+            recorder = null;
+        }
+
+        if (player != null) {
+            player.release();
+            player = null;
+        }
     }
 }

@@ -15,6 +15,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.epson.epsonscansdk.EpsonPDFCreator;
@@ -43,11 +46,15 @@ import com.thresholdsoft.apollofeedback.databinding.DialogScanStatusBinding;
 import com.thresholdsoft.apollofeedback.ui.epsonsdk.FindScannerCallback;
 import com.thresholdsoft.apollofeedback.ui.epsonsdk.FindUsbScannerTask;
 import com.thresholdsoft.apollofeedback.ui.epsonsdk.FolderUtility;
+import com.thresholdsoft.apollofeedback.ui.feedback.FeedBackActivity;
+import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
 import com.thresholdsoft.apollofeedback.ui.scannedprescriptions.ScannedPrescriptionsActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -73,10 +80,18 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
     private BroadcastReceiver receiver;
     private IntentFilter filter;
     private boolean isNewActivity = true;
+    private static final String BITMAP_IMAGE = "BITMAP_IMAGE";
+    private String bitmapImage;
+    private static final String IS_TRAINED = "IS_TRAINED";
+    private boolean isTrained;
+    private static final String FILE_NAME = "FILE_NAME";
 
-    public static Intent getStartActivity(Context context, boolean isCameFromScannedPrescription) {
+    public static Intent getStartActivity(Context context, boolean isCameFromScannedPrescription, String bitmapImage, boolean isTrained, String fileName) {
         Intent intent = new Intent(context, EpsonScanActivity.class);
         intent.putExtra("IS_CAME_FROM_SCANNED_PRESCRIPTION", isCameFromScannedPrescription);
+        intent.putExtra(IS_TRAINED, isTrained);
+        intent.putExtra(BITMAP_IMAGE, bitmapImage);
+        intent.putExtra(FILE_NAME, fileName);
         return intent;
     }
 
@@ -88,8 +103,22 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
     }
 
     private void setUp() {
+        epsonScanBinding.setCallback(this);
         if (getIntent() != null) {
             isCameFromScannedPrescription = (Boolean) getIntent().getBooleanExtra("IS_CAME_FROM_SCANNED_PRESCRIPTION", false);
+            if (getIntent() != null) {
+                bitmapImage = (String) getIntent().getStringExtra(BITMAP_IMAGE);
+                isTrained = (boolean) getIntent().getBooleanExtra(IS_TRAINED, false);
+                fileName = (String) getIntent().getStringExtra(FILE_NAME);
+                try {
+                    Bitmap src = BitmapFactory.decodeStream(openFileInput("customer.jpg"));
+                    epsonScanBinding.customerImage.setImageBitmap(src);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
         }
 //        getController().feedbakSystemApiCall();
         {
@@ -232,7 +261,7 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
             @Override
             public void onClick(View v) {
                 if (isCameFromScannedPrescription) {
-                    startActivity(ScannedPrescriptionsActivity.getStartActivity(EpsonScanActivity.this, null));
+                    startActivity(ScannedPrescriptionsActivity.getStartActivity(EpsonScanActivity.this, null, bitmapImage, isTrained, fileName));
                     finish();
                 } else {
                     finish();
@@ -288,7 +317,7 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
                     //  Convert the KB to MegaBytes (1 MB = 1024 KBytes)
                     long fileSizeInMB = fileSizeInKB / 1024;
 
-                    startActivity(ScannedPrescriptionsActivity.getStartActivity(EpsonScanActivity.this, saveBitmapToFile(filePath).getAbsolutePath()));
+                    startActivity(ScannedPrescriptionsActivity.getStartActivity(EpsonScanActivity.this, saveBitmapToFile(filePath).getAbsolutePath(), bitmapImage, isTrained, fileName));
                     finish();
 //                    Intent intent = new Intent(EpsonScanActivity.this, InsertPrescriptionActivityNew.class);
 //                    intent.putExtra("filePath", filePath);
@@ -374,6 +403,17 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
+        }
+
+        //
+        if (recorder != null) {
+            recorder.release();
+            recorder = null;
+        }
+
+        if (player != null) {
+            player.release();
+            player = null;
         }
         super.onStop();
     }
@@ -472,9 +512,9 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
             }
             this.feedbackSystemResponse = feedbackSystemResponse;//remove this line after testing
             if (feedbackSystemResponse.getIscustomerScreen()) {
-//                startActivity(OffersNowActivity.getStartIntent(EpsonScanActivity.this));
-//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                finish();
+                startActivity(OffersNowActivity.getStartIntent(EpsonScanActivity.this));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
             } else if ((feedbackSystemResponse.getIspaymentScreen())) {
                 epsonScanBinding.setModel(feedbackSystemResponse);
                 if (feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode() != null && !feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode().isEmpty()) {
@@ -489,9 +529,9 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
                         qrCodeGeneration(feedbackSystemResponse.getCustomerScreen().getPayment().getQrCode(), dialogQrcodeBinding, this);
                         dialogQrcodeBinding.qrCodeImage.setOnClickListener(view -> {
                             qrCodeDialog.dismiss();
-//                            startActivity(FeedBackActivity.getStartIntent(EpsonScanActivity.this, feedbackSystemResponse));
-//                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                            finish();
+                            startActivity(FeedBackActivity.getStartIntent(EpsonScanActivity.this, feedbackSystemResponse, bitmapImage, isTrained));
+                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                            finish();
                         });
                         qrCodeDialog.show();
                     }
@@ -500,9 +540,9 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
                 feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
                 feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
             } else if (feedbackSystemResponse.getIsfeedbackScreen()) {
-//                startActivity(FeedBackActivity.getStartIntent(EpsonScanActivity.this, feedbackSystemResponse));
-//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                finish();
+                startActivity(FeedBackActivity.getStartIntent(EpsonScanActivity.this, feedbackSystemResponse, bitmapImage, isTrained));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                finish();
             } else {
 //                new Handler().postDelayed(() -> getController().feedbakSystemApiCall(), 5000);
                 feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
@@ -574,5 +614,135 @@ public class EpsonScanActivity extends BaseActivity implements FindScannerCallba
     public int checkCallingOrSelfPermission(String permission) {
         return super.checkCallingOrSelfPermission(permission);
     }
+
+
+    //..............................................................................................
+    private MediaRecorder recorder = null;
+    private MediaPlayer player = null;
+    boolean mStartPlaying = true;
+    private static String fileName = null;
+    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private boolean isRecording = false;
+
+    private void startRecording() {
+
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(fileName);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            isRecording = true;
+            epsonScanBinding.startRecord.setVisibility(View.GONE);
+            epsonScanBinding.startRecordGif.setVisibility(View.VISIBLE);
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "prepare() failed");
+        }
+
+        recorder.start();
+//        startRecord.setText("Recording is inprogress...");
+    }
+
+    private void stopRecording() {
+        isRecording = false;
+        epsonScanBinding.startRecordGif.setVisibility(View.GONE);
+        epsonScanBinding.startRecord.setVisibility(View.VISIBLE);
+        recorder.stop();
+        recorder.release();
+        recorder = null;
+//        startRecord.setText("Start Record");
+    }
+
+    private void startPlaying() {
+        player = new MediaPlayer();
+        try {
+            player.setDataSource(fileName);
+            player.prepare();
+            player.start();
+
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    onPlay(mStartPlaying);
+                    if (mStartPlaying) {
+//                        startPlay.setText("Stop playing");
+                    } else {
+//                        startPlay.setText("Start playing");
+                    }
+                    mStartPlaying = !mStartPlaying;
+                }
+
+            });
+        } catch (IOException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "prepare() failed");
+        }
+    }
+
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+            stopPlayingHandler.removeCallbacks(stopPlayingRunnable);
+            stopPlayingHandler.postDelayed(stopPlayingRunnable, 30000);
+        } else {
+            stopPlaying();
+        }
+    }
+
+    private void stopPlaying() {
+        player.release();
+        player = null;
+    }
+
+    @Override
+    public void onCLickStartRecord() {
+        if (!isRecording) {
+            // Record to the external cache directory for visibility
+            fileName = getExternalCacheDir().getAbsolutePath();
+            fileName += "/audiorecordtest.3gp";
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                startRecording();
+                stopRecordHandler.removeCallbacks(stopRecordRunnable);
+                stopRecordHandler.postDelayed(stopRecordRunnable, 30000);
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+            }
+        }
+    }
+
+    @Override
+    public void onClickPlayorStop() {
+        onPlay(mStartPlaying);
+        if (mStartPlaying) {
+            epsonScanBinding.play.setImageResource(R.drawable.stop_icon);
+        } else {
+            epsonScanBinding.play.setImageResource(R.drawable.play_icon);
+        }
+        mStartPlaying = !mStartPlaying;
+    }
+
+
+    Handler stopRecordHandler = new Handler();
+    Runnable stopRecordRunnable = new Runnable() {
+        @Override
+        public void run() {
+            stopRecording();
+        }
+    };
+
+    Handler stopPlayingHandler = new Handler();
+    Runnable stopPlayingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mStartPlaying = true;
+            epsonScanBinding.play.setImageResource(R.drawable.play_icon);
+            stopPlaying();
+        }
+    };
+
 
 }

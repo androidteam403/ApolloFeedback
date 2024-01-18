@@ -3,6 +3,8 @@ package com.thresholdsoft.apollofeedback.ui.feedback;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -16,15 +18,33 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityFeedBackBinding;
+import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
+import com.thresholdsoft.apollofeedback.ui.offersnow.model.ZeroCodeApiModelResponse;
 import com.thresholdsoft.apollofeedback.utils.AppConstants;
+import com.thresholdsoft.apollofeedback.utils.CommonUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class FeedBackActivity extends BaseActivity implements FeedBackActivityCallBack {
     private ActivityFeedBackBinding activityFeedBackBinding;
+    private FeedbackSystemResponse feedbackSystemResponse;
+    private static final String BITMAP_IMAGE = "BITMAP_IMAGE";
+    private String bitmapImage;
+    private static final String IS_TRAINED = "IS_TRAINED";
+    private boolean isTrained;
 
-    public static Intent getStartIntent(Context mContext, FeedbackSystemResponse feedbackSystemResponse) {
+    public static Intent getStartIntent(Context mContext, FeedbackSystemResponse feedbackSystemResponse, String bitmapImage, boolean isTrained) {
         Intent intent = new Intent(mContext, FeedBackActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra(AppConstants.FEEDBACK_SYSTEM_RESPONSE, feedbackSystemResponse);
+        intent.putExtra(IS_TRAINED, isTrained);
+        intent.putExtra(BITMAP_IMAGE, bitmapImage);
         return intent;
     }
 
@@ -104,13 +124,26 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         activityFeedBackBinding = DataBindingUtil.setContentView(this, R.layout.activity_feed_back);
         onFeedbackSecreteEditboxListener();
         if (getIntent() != null) {
-            FeedbackSystemResponse feedbackSystemResponse = (FeedbackSystemResponse) getIntent().getSerializableExtra(AppConstants.FEEDBACK_SYSTEM_RESPONSE);
+            feedbackSystemResponse = (FeedbackSystemResponse) getIntent().getSerializableExtra(AppConstants.FEEDBACK_SYSTEM_RESPONSE);
             if (feedbackSystemResponse != null)
                 activityFeedBackBinding.setModel(feedbackSystemResponse);
+            bitmapImage = (String) getIntent().getStringExtra(BITMAP_IMAGE);
+            isTrained = (boolean) getIntent().getBooleanExtra(IS_TRAINED, false);
+            if (!isTrained) {
+                trainImage();
+            }
+            try {
+                Bitmap src = BitmapFactory.decodeStream(openFileInput("customer.jpg"));
+                activityFeedBackBinding.customerImage.setImageBitmap(src);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
-        activityFeedBackBinding.poor.setOnClickListener(v -> {
-            poor();
+        activityFeedBackBinding.poorIc.setOnClickListener(v -> {
+//            poor();
+            String poor = getDataManager().getPoorKey();
+            activityFeedBackBinding.feedbackSecretEditbox.setText(poor);
         });
 
 
@@ -121,8 +154,10 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //        });
 
 
-        activityFeedBackBinding.fair.setOnClickListener(v -> {
-            fair();
+        activityFeedBackBinding.fairIc.setOnClickListener(v -> {
+//            fair();
+            String fair = getDataManager().getFairKey();
+            activityFeedBackBinding.feedbackSecretEditbox.setText(fair);
         });
 //        activityFeedBackBinding.fairtick.setOnClickListener(v -> {
 //            activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -131,8 +166,10 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //            activityFeedBackBinding.feedbackthanku.setVisibility(View.GONE);
 //
 //        });
-        activityFeedBackBinding.average.setOnClickListener(v -> {
-            average();
+        activityFeedBackBinding.averageIc.setOnClickListener(v -> {
+//            average();
+            String average = getDataManager().getAverageKey();
+            activityFeedBackBinding.feedbackSecretEditbox.setText(average);
         });
 //        activityFeedBackBinding.averagetick.setOnClickListener(v -> {
 //            activityFeedBackBinding.payment.setVisibility(View.VISIBLE);
@@ -142,8 +179,10 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //
 //        });
 
-        activityFeedBackBinding.happy.setOnClickListener(v -> {
-            happy();
+        activityFeedBackBinding.happyIc.setOnClickListener(v -> {
+//            happy();
+            String happy = getDataManager().getHappyKey();
+            activityFeedBackBinding.feedbackSecretEditbox.setText(happy);
         });
 
 //        activityFeedBackBinding.happytick.setOnClickListener(v -> {
@@ -153,8 +192,10 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
 //            activityFeedBackBinding.feedbackthanku.setVisibility(View.GONE);
 //
 //        });
-        activityFeedBackBinding.excellent.setOnClickListener(v -> {
-            excellent();
+        activityFeedBackBinding.excellentIc.setOnClickListener(v -> {
+//            excellent();
+            String excellent = getDataManager().getExcellentKey();
+            activityFeedBackBinding.feedbackSecretEditbox.setText(excellent);
         });
 //        activityFeedBackBinding.excellenttick.setOnClickListener(v -> {
 //            activityFeedBackBinding.excellenttick.setVisibility(View.GONE);
@@ -289,9 +330,9 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
         if (feedbackSystemResponse != null) {
             if (feedbackSystemResponse.getStatus()) {
                 new Handler().postDelayed(() -> {
-//                    startActivity(OffersNowActivity.getStartIntent(FeedBackActivity.this));
-//                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-//                    finish();
+                    startActivity(OffersNowActivity.getStartIntent(FeedBackActivity.this));
+                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    finish();
                 }, 3000);
             } else {
                 if (feedbackSystemResponse != null && feedbackSystemResponse.getMessage() != null)
@@ -353,5 +394,57 @@ public class FeedBackActivity extends BaseActivity implements FeedBackActivityCa
                 }
             }
         });
+    }
+
+    File outputFile;
+
+    private void trainImage() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String filename = "JPEG_" + timeStamp + ".jpg";
+        outputFile = new File(getApplicationContext().getFilesDir(), filename); // context is your Activity or Application context
+
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(outputFile);
+
+            // Compress the bitmap to JPEG format and write it to the output stream
+            // Quality is set to 100 (highest)
+            Bitmap bitmap = BitmapFactory.decodeStream(openFileInput("customer.jpg"));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            CommonUtils.showDialog(this, "Please Wait...");
+            getController().zeroCodeApiCall(outputFile, feedbackSystemResponse.getCustomerofferScreen().getCustomerName() + "-" + feedbackSystemResponse.getCustomerScreen().getBillNumber(), bitmap);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void onSuccessMultipartResponse(ZeroCodeApiModelResponse response, Bitmap image, File file) {
+        CommonUtils.hideDialog();
+        Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
+            /*if ((response.getMessage().equals("Image match found")) || (response.getMessage().equals("Image, Added to traning data"))) {
+                if (response.getName() != null && !response.getName().isEmpty()) {
+                    if (response.getName().contains("-")) {
+                        String[] splitName = response.getName().split("-");
+                        String phoneNumber = splitName[1];
+                        getController().oneApolloApiTransaction(image, file, phoneNumber);
+                    } else {
+                        openDialogBox(image, response, file, response, null);
+                    }
+                } else {
+                    openDialogBox(image, response, file, response, null);
+                }
+            } else {
+                openDialogBox(image, response, file, response, null);
+            }*/
     }
 }

@@ -17,4 +17,8 @@ public interface ScannedPrescriptionsActivityCallback {
     void onSuccessKioskSelfCheckOutTransactionApiCAll(KioskSelfCheckOutTransactionResponse kioskSelfCheckOutTransactionResponse, int prescriptionPos);
 
     void onClickUploadPrescriptions();
+
+    void onCLickStartRecord();
+
+    void onClickPlayorStop();
 }

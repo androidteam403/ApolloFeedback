@@ -18,9 +18,18 @@ import java.util.List;
 
 public class WhyScanPrescriptionActivity extends BaseActivity implements WhyScanPrescriptionActivityCallback {
     private ActivityWhyScanPrescriptionBinding whyScanPrescriptionBinding;
+    private String bitmapImage;
+    private boolean isTrained;
+    private static final String BITMAP_IMAGE = "BITMAP_IMAGE";
+    private static final String IS_TRAINED = "IS_TRAINED";
+    private static final String FILE_NAME = "FILE_NAME";
+    private static String fileName = null;
 
-    public static Intent getStartIntent(Context mContext) {
+    public static Intent getStartIntent(Context mContext, String bitmapImage, boolean isTrained, String fileName) {
         Intent intent = new Intent(mContext, WhyScanPrescriptionActivity.class);
+        intent.putExtra(BITMAP_IMAGE, bitmapImage);
+        intent.putExtra(IS_TRAINED, isTrained);
+        intent.putExtra(FILE_NAME, fileName);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         return intent;
     }
@@ -36,6 +45,12 @@ public class WhyScanPrescriptionActivity extends BaseActivity implements WhyScan
     private void setUp() {
         List<String> scannedPrescriptionsPathList = new ArrayList<>();
         getSessionManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
+
+        if (getIntent() != null) {
+            bitmapImage = (String) getIntent().getStringExtra(BITMAP_IMAGE);
+            isTrained = (boolean) getIntent().getBooleanExtra(IS_TRAINED, false);
+            fileName = (String) getIntent().getStringExtra(FILE_NAME);
+        }
     }
 
     Handler navigatePrescriptionHandler = new Handler();
@@ -60,6 +75,6 @@ public class WhyScanPrescriptionActivity extends BaseActivity implements WhyScan
 
     @Override
     public void onClickScanPrescription() {
-        startActivity(EpsonScanActivity.getStartActivity(this, false));
+        startActivity(EpsonScanActivity.getStartActivity(this, false, bitmapImage, isTrained, fileName));
     }
 }

@@ -13,75 +13,134 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen15dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen55dp"
-                    android:layout_height="@dimen/dimen55dp"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_apollo_circle_logo" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen10dp"
-                    android:layout_marginLeft="@dimen/dimen10dp"
-                    android:orientation="vertical">
+                    android:layout_margin="@dimen/dimen15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/label_items_payment"
-                        android:textAllCaps="true"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/dimen20sp" />
+                    <RelativeLayout
+                        android:layout_width="@dimen/dimen55dp"
+                        android:layout_height="@dimen/dimen55dp"
+                        android:background="@drawable/circle_image_bg"
+                        android:gravity="center">
+
+                        <com.thresholdsoft.apollofeedback.utils.CircularImageView
+                            android:id="@+id/customer_image"
+                            android:layout_width="@dimen/dimen53dp"
+                            android:layout_height="@dimen/dimen53dp"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/apollo_circle_logo" />
+
+                    </RelativeLayout>
+
+                    <!--<ImageView
+                        android:id="@+id/customer_image"
+                        android:layout_width="@dimen/dimen55dp"
+                        android:layout_height="@dimen/dimen55dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_apollo_circle_logo" />-->
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="@dimen/dimen10dp"
+                        android:layout_marginLeft="@dimen/dimen10dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="@{model.customerofferScreen.customerName}"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/label_items_payment"
+                            android:textAllCaps="true"
                             android:textColor="@color/color_white"
-                            android:textSize="@dimen/dimen16sp" />
+                            android:textSize="@dimen/dimen20sp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen10dp"
-                            android:layout_marginLeft="@dimen/dimen10dp"
-                            android:layout_marginTop="@dimen/dimen3dp"
-                            android:background="@drawable/black_curves_bg"
-                            android:paddingStart="@dimen/dimen7dp"
-                            android:paddingTop="@dimen/dimen2dp"
-                            android:paddingEnd="@dimen/dimen7dp"
-                            android:paddingBottom="@dimen/dimen2dp"
-                            android:visibility="@{model.customerofferScreen.customerType != null &amp;&amp; !model.customerofferScreen.customerType.isEmpty ? view.VISIBLE : view.GONE}">
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="@{model.customerofferScreen.customerType}"
-                                android:textAllCaps="true"
+                                android:text="@{model.customerofferScreen.customerName}"
                                 android:textColor="@color/color_white"
-                                android:textSize="@dimen/dimen14sp" />
+                                android:textSize="@dimen/dimen16sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen10dp"
+                                android:layout_marginLeft="@dimen/dimen10dp"
+                                android:layout_marginTop="@dimen/dimen3dp"
+                                android:background="@drawable/black_curves_bg"
+                                android:paddingStart="@dimen/dimen7dp"
+                                android:paddingTop="@dimen/dimen2dp"
+                                android:paddingEnd="@dimen/dimen7dp"
+                                android:paddingBottom="@dimen/dimen2dp"
+                                android:visibility="@{model.customerofferScreen.customerType != null &amp;&amp; !model.customerofferScreen.customerType.isEmpty ? view.VISIBLE : view.GONE}">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:text="@{model.customerofferScreen.customerType}"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="@dimen/dimen14sp" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/dimen30dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/start_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:onClick="@{()-> callback.onCLickStartRecord()}"
+                        android:src="@drawable/record_icon" />
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/start_record_gif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:onClick="@{()-> callback.onCLickStartRecord()}"
+                        android:src="@drawable/audio_wave"
+                        android:visibility="gone" />
+
+
+                    <ImageView
+                        android:id="@+id/play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen10dp"
+                        android:contentDescription="@string/app_name"
+                        android:onClick="@{()-> callback.onClickPlayorStop()}"
+                        android:src="@drawable/play_icon" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
