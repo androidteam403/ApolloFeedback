@@ -1,6 +1,7 @@
 package com.thresholdsoft.apollofeedback.ui.offersnow;
 
 import android.graphics.Bitmap;
+import android.hardware.usb.UsbDevice;
 
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
@@ -42,4 +43,6 @@ public interface OffersNowActivityCallback {
     void onCLickStartRecord();
 
     void onClickPlayorStop();
+
+    void onSelectWebCam(UsbDevice usbDevice);
 }

@@ -12,7 +12,7 @@ android {
     }
     defaultConfig {
         applicationId "com.thresholdsoft.apollofeedback"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 33
         versionCode 1
         versionName "1.0.2"
@@ -82,5 +82,8 @@ dependencies {
 
     // Gif image view
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
+
+    //USB camera
+    implementation project(':libuvccamera')
 
 }

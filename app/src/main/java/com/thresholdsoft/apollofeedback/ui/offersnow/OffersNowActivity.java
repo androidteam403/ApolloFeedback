@@ -22,12 +22,14 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
+import android.hardware.usb.UsbDevice;
 import android.media.Image;
 import android.media.ImageReader;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.speech.tts.TextToSpeech;
@@ -52,15 +54,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
+import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
+import com.herohan.uvcapp.CameraHelper;
+import com.herohan.uvcapp.ICameraHelper;
+import com.herohan.uvcapp.ImageCapture;
+import com.serenegiant.utils.FileUtils;
 import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogSuccessFaceRecogBinding;
+import com.thresholdsoft.apollofeedback.databinding.DialogUsbListBinding;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.adapter.ImageSlideAdapter;
+import com.thresholdsoft.apollofeedback.ui.offersnow.adapter.UsbWebcamAdapter;
 import com.thresholdsoft.apollofeedback.ui.offersnow.dialog.AccessKeyDialog;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.DcOffersNowResponse;
 import com.thresholdsoft.apollofeedback.ui.offersnow.model.GetOffersNowResponse;
@@ -79,9 +88,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import dmax.dialog.SpotsDialog;
 
@@ -101,9 +112,11 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private Handler backgroundHandler;
     private HandlerThread backgroundThread;
     private TextToSpeech textToSpeech;
-    private com.google.mlkit.vision.face.FaceDetector faceDetector;
+    private FaceDetector faceDetector;
 
     private boolean isTrained = false;
+
+    private boolean iswebCam = true;
 
     public static Intent getStartIntent(Context mContext) {
         Intent intent = new Intent(mContext, OffersNowActivity.class);
@@ -195,16 +208,21 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             }
         });
         offersNowBinding.setCallback(this);
+        offersNowBinding.setIsWebCam(iswebCam);
         startBackgroundThread();
         isFaceDetected = false;
         offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
         offersNowBinding.offersLayout.setVisibility(View.VISIBLE);
-
-
-        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-            openCamera();
+        if (!iswebCam) {
+            if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+                openCamera();
+            } else {
+                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+            }
+            setupFaceDetector();
         } else {
-            offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+            initWebCamViews();
+            setupFaceDetectorFromWebCam();
         }
 
         if (getDataManager().getSiteId().equalsIgnoreCase("") && getDataManager().getTerminalId().equalsIgnoreCase("")) {
@@ -219,7 +237,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //        getController().feedbakSystemApiCall();
         getController().getDcOffersNowApi(getDataManager().getDcCode());
         SurfaceHolder surfaceHolder = offersNowBinding.surfaceView.getHolder();
-        setupFaceDetector();
+
     }
 
 
@@ -259,6 +277,8 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             imageReader.close();
             imageReader = null;
         }
+
+
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             String cameraId = manager.getCameraIdList()[FRONT_CAMERA];
@@ -379,6 +399,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             e.printStackTrace();
         }
     }
+
     private void updatePreview() {
         if (cameraDevice == null) return;
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
@@ -552,18 +573,20 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     Runnable imageDetectedTimeOutRunnable = new Runnable() {
         @Override
         public void run() {
-            isImageDetected = false;
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
-            }
-            stopBackgroundThread();
-            closeCamera();
-            startBackgroundThread();
-            isFaceDetected = false;
-            if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-                openCamera();
-            } else {
-                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+            if (!iswebCam) {
+                isImageDetected = false;
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                stopBackgroundThread();
+                closeCamera();
+                startBackgroundThread();
+                isFaceDetected = false;
+                if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+                    openCamera();
+                } else {
+                    offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+                }
             }
         }
     };
@@ -659,10 +682,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //        offersNowBinding.offersLayout.setVisibility(View.GONE);
 
 
-                if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-                    openCamera();
+                if (!iswebCam) {
+                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+                        openCamera();
+                    } else {
+                        offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+                    }
                 } else {
-                    offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+                    initCameraHelper();
                 }
             }
 
@@ -707,11 +734,12 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 //        offersNowBinding.textureViewLayout.setVisibility(View.VISIBLE);
 //        offersNowBinding.offersLayout.setVisibility(View.GONE);
 
-
-                    if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-                        openCamera();
-                    } else {
-                        offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+                    if (!iswebCam) {
+                        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+                            openCamera();
+                        } else {
+                            offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
+                        }
                     }
 //                    isFaceDetected=false;
                 } else {
@@ -990,14 +1018,16 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             startBackgroundThread();
         }
 
-        if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
-            if (dialog != null && dialog.isShowing()) {
-                closeCamera();
+        if (!iswebCam) {
+            if (offersNowBinding.surfaceView.getHolder().getSurface().isValid()) {
+                if (dialog != null && dialog.isShowing()) {
+                    closeCamera();
+                } else {
+                    openCamera();
+                }
             } else {
-                openCamera();
+                offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
             }
-        } else {
-            offersNowBinding.surfaceView.getHolder().addCallback(surfaceHolderCallbacks);
         }
     }
 
@@ -1433,6 +1463,12 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         mStartPlaying = !mStartPlaying;
     }
 
+    @Override
+    public void onSelectWebCam(UsbDevice usbDevice) {
+        webCamUsbDeviceDialog.dismiss();
+        selectDevice(usbDevice);
+    }
+
 
     Handler stopRecordHandler = new Handler();
     Runnable stopRecordRunnable = new Runnable() {
@@ -1455,6 +1491,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     @Override
     public void onStop() {
         super.onStop();
+
+        clearCameraHelper();
+
         if (recorder != null) {
             recorder.release();
             recorder = null;
@@ -1466,4 +1505,222 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
     }
 
+
+    /*................................web cam.....................................*/
+    private static final boolean DEBUG = true;
+    private static final String TAG = OffersNowActivity.class.getSimpleName();
+    private static final int DEFAULT_WIDTH = 640;
+    private static final int DEFAULT_HEIGHT = 480;
+    private ICameraHelper mCameraHelper;
+    private File webCamFile;
+
+    private void initWebCamViews() {
+//        mCameraViewMain = findViewById(R.id.svCameraViewMain);
+        offersNowBinding.svCameraViewMain.setAspectRatio(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        offersNowBinding.svCameraViewMain.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(@NonNull SurfaceHolder holder) {
+                if (mCameraHelper != null) {
+                    mCameraHelper.addSurface(holder.getSurface(), false);
+                }
+            }
+
+            @Override
+            public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+                if (mCameraHelper != null) {
+                    mCameraHelper.removeSurface(holder.getSurface());
+                }
+            }
+        });
+
+    }
+
+    private void setupFaceDetectorFromWebCam() {
+        FaceDetectorOptions options = new FaceDetectorOptions.Builder()
+                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
+                .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+                .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
+                .build();
+
+        faceDetector = FaceDetection.getClient(options);
+    }
+
+    public void initCameraHelper() {
+        if (DEBUG) Log.d(TAG, "initCameraHelper:");
+        if (mCameraHelper == null) {
+            mCameraHelper = new CameraHelper();
+            mCameraHelper.setStateCallback(mStateListener);
+        }
+        takePictureWebCamHandler.removeCallbacks(takePictureWebCamRunnable);
+        takePictureWebCamHandler.postDelayed(takePictureWebCamRunnable, 5000);
+    }
+
+    private void clearCameraHelper() {
+        if (DEBUG) Log.d(TAG, "clearCameraHelper:");
+        if (mCameraHelper != null) {
+            mCameraHelper.release();
+            mCameraHelper = null;
+        }
+        takePictureWebCamHandler.removeCallbacks(takePictureWebCamRunnable);
+    }
+
+    private void selectDevice(final UsbDevice device) {
+        if (DEBUG) Log.v(TAG, "selectDevice:device=" + device.getDeviceName());
+        mCameraHelper.selectDevice(device);
+    }
+
+    private final ICameraHelper.StateCallback mStateListener = new ICameraHelper.StateCallback() {
+        @Override
+        public void onAttach(UsbDevice device) {
+            if (DEBUG) Log.v(TAG, "onAttach:");
+            selectDevice(device);
+        }
+
+        @Override
+        public void onAttach(HashSet<UsbDevice> needNotifyDevices) {
+            List<UsbDevice> needNotifyDevicesList
+                    = (List<UsbDevice>) needNotifyDevices.stream()
+                    .collect(Collectors.toList());
+            showUsbDevicesDialog(needNotifyDevicesList);
+        }
+
+        @Override
+        public void onDeviceOpen(UsbDevice device, boolean isFirstOpen) {
+            if (DEBUG) Log.v(TAG, "onDeviceOpen:");
+            mCameraHelper.openCamera();
+        }
+
+        @Override
+        public void onCameraOpen(UsbDevice device) {
+            if (DEBUG) Log.v(TAG, "onCameraOpen:");
+
+            mCameraHelper.startPreview();
+
+            com.serenegiant.usb.Size size = mCameraHelper.getPreviewSize();
+            if (size != null) {
+                int width = size.width;
+                int height = size.height;
+                //auto aspect ratio
+                offersNowBinding.svCameraViewMain.setAspectRatio(width, height);
+            }
+
+            mCameraHelper.addSurface(offersNowBinding.svCameraViewMain.getHolder().getSurface(), false);
+            takePictureWebCamHandler.removeCallbacks(takePictureWebCamRunnable);
+            takePictureWebCamHandler.postDelayed(takePictureWebCamRunnable, 5000);
+        }
+
+        @Override
+        public void onCameraClose(UsbDevice device) {
+            if (DEBUG) Log.v(TAG, "onCameraClose:");
+
+            if (mCameraHelper != null) {
+                mCameraHelper.removeSurface(offersNowBinding.svCameraViewMain.getHolder().getSurface());
+            }
+
+            takePictureWebCamHandler.removeCallbacks(takePictureWebCamRunnable);
+        }
+
+        @Override
+        public void onDeviceClose(UsbDevice device) {
+            if (DEBUG) Log.v(TAG, "onDeviceClose:");
+        }
+
+        @Override
+        public void onDetach(UsbDevice device) {
+            if (DEBUG) Log.v(TAG, "onDetach:");
+        }
+
+        @Override
+        public void onCancel(UsbDevice device) {
+            if (DEBUG) Log.v(TAG, "onCancel:");
+        }
+
+    };
+    private Dialog webCamUsbDeviceDialog;
+
+    private void showUsbDevicesDialog(List<UsbDevice> usbDevicesList) {
+        webCamUsbDeviceDialog = new Dialog(this);
+        DialogUsbListBinding dialogUsbListBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_usb_list, null, false);
+        webCamUsbDeviceDialog.setContentView(dialogUsbListBinding.getRoot());
+        webCamUsbDeviceDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        UsbWebcamAdapter usbWebcamAdapter = new UsbWebcamAdapter(this, usbDevicesList, this);
+        LinearLayoutManager mManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        dialogUsbListBinding.usbCamRecyclerview.setLayoutManager(mManager);
+        dialogUsbListBinding.usbCamRecyclerview.setAdapter(usbWebcamAdapter);
+
+        webCamUsbDeviceDialog.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initCameraHelper();
+    }
+
+    private void detectFacesFromWebCam(Bitmap bitmap) {
+        InputImage image = InputImage.fromBitmap(bitmap, 0);
+        faceDetector.process(image)
+                .addOnSuccessListener(faces -> {
+                    if (!faces.isEmpty()) {
+                        showDialogs(this, "Please Wait...");
+                        clearCameraHelper();
+                        getController().zeroCodeApiCallWithoutName(webCamFile, bitmap);
+                       /* for (Face face : faces) {
+                            Toast.makeText(this, "face detected", Toast.LENGTH_SHORT).show();
+                        }*/
+                    } else {
+                        /*Toast.makeText(this, "Face not detected", Toast.LENGTH_SHORT).show();*/
+                        takePictureWebCamHandler.removeCallbacks(takePictureWebCamRunnable);
+                        takePictureWebCamHandler.postDelayed(takePictureWebCamRunnable, 5000);
+
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "ERROR!", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    Handler takePictureWebCamHandler = new Handler();
+    Runnable takePictureWebCamRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mCameraHelper != null) {
+
+                webCamFile = FileUtils.getCaptureFile(OffersNowActivity.this, Environment.DIRECTORY_DCIM, ".jpg");
+                ImageCapture.OutputFileOptions options =
+                        new ImageCapture.OutputFileOptions.Builder(webCamFile).build();
+
+//                ContentValues contentValues = new ContentValues();
+//                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "NEW_IMAGE");
+//                contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
+//
+//                ImageCapture.OutputFileOptions options = new ImageCapture.OutputFileOptions.Builder(
+//                        getContentResolver(),
+//                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                        contentValues).build();
+
+//                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                ImageCapture.OutputFileOptions options = new ImageCapture.OutputFileOptions.Builder(outputStream).build();
+
+                mCameraHelper.takePicture(options, new ImageCapture.OnImageCaptureCallback() {
+                    @Override
+                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(webCamFile.getAbsolutePath());
+                        detectFacesFromWebCam(bitmap);
+                    }
+
+                    @Override
+                    public void onError(int imageCaptureError, @NonNull String message, @Nullable Throwable cause) {
+                        Toast.makeText(OffersNowActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+    };
 }

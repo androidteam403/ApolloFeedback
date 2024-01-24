@@ -2,3 +2,4 @@ include ':cusotmloader'
 include ':app'
 rootProject.name = "Apollo Feedback"
 include ':epsonscansdk-release'
+include ':libuvccamera'

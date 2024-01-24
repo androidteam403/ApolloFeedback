@@ -18,7 +18,15 @@
             <SurfaceView
                 android:id="@+id/surfaceView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:visibility="@{!isWebCam ? view.VISIBLE : view.GONE}" />
+
+            <com.serenegiant.widget.AspectRatioSurfaceView
+                android:id="@+id/svCameraViewMain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:visibility="@{isWebCam ? view.VISIBLE : view.GONE}" />
 
             <View
                 android:layout_width="match_parent"
@@ -318,6 +326,10 @@
         <variable
             name="view"
             type="android.view.View" />
+
+        <variable
+            name="isWebCam"
+            type="Boolean" />
 
     </data>
 </layout>
