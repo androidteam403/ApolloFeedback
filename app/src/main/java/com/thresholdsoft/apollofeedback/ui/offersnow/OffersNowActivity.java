@@ -64,6 +64,7 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.commonmodels.FeedbackSystemResponse;
 import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
+import com.thresholdsoft.apollofeedback.databinding.DialogAudioRecordingBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogSuccessFaceRecogBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogUsbListBinding;
 import com.thresholdsoft.apollofeedback.db.SessionManager;
@@ -95,6 +96,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import dmax.dialog.SpotsDialog;
+import pl.droidsonroids.gif.GifDrawable;
 
 public class OffersNowActivity extends BaseActivity implements OffersNowActivityCallback {
     int currentIndex = 0;
@@ -104,6 +106,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private FeedbackSystemResponse feedbackSystemResponse;
     Button b;
     private CameraDevice cameraDevice;
+
 
     private boolean isFaceDetected = false;
     private CameraCaptureSession cameraCaptureSession;
@@ -117,6 +120,15 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private boolean isTrained = false;
 
     private final boolean iswebCam = false;
+    private int secondsRemainingSecond = 30;
+    private int secondsRemainingFourth = 30;
+    private MediaRecorder mediaRecorder;
+    private MediaPlayer mediaPlayer;
+    private int lengthinSec;
+    private boolean audioPlayed = false;
+    private Dialog recordDialog;
+
+    private int pauseLength;
 
     public static Intent getStartIntent(Context mContext) {
         Intent intent = new Intent(mContext, OffersNowActivity.class);
@@ -151,8 +163,287 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         super.onCreate(savedInstanceState);
         offersNowBinding = DataBindingUtil.setContentView(this, R.layout.activity_offers_now);
         checkReadWritePermissions();
+        offersNowBinding.audioRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordingDialog();
+            }
+        });
+        offersNowBinding.audioRecording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordingDialog();
+            }
+        });
     }
 
+
+    /*.............................................Audio Recording................................................................*/
+
+    private Handler handler = new Handler();
+    private DialogAudioRecordingBinding dialogAudioRecordingBinding;
+    private GifDrawable gifDrawable;
+
+    public void recordingDialog() {
+        recordDialog = new Dialog(this);
+        mStartPlaying = false;
+        audioPlayed = false;
+        dialogAudioRecordingBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_audio_recording, null, false);
+        recordDialog.setContentView(dialogAudioRecordingBinding.getRoot());
+        recordDialog.setCancelable(false);
+        recordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialogAudioRecordingBinding.setCallback(OffersNowActivity.this);
+        dialogAudioRecordingBinding.progressBar.setProgress(0);
+        secondsRemainingFirst = 9;
+        readytoRecordDelayedHandler.postDelayed(readytoRecordDelayedRunnable, 1000);
+        try {
+            gifDrawable = new GifDrawable(getResources(), R.drawable.sound_animation);
+            dialogAudioRecordingBinding.imageGif.setImageDrawable(gifDrawable);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        dialogAudioRecordingBinding.close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readytoRecordDelayedHandler.removeCallbacks(readytoRecordDelayedRunnable);
+                recordDialog.dismiss();
+            }
+        });
+        dialogAudioRecordingBinding.close2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordDialog.dismiss();
+                stopRecording();
+                handler.removeCallbacks(secondCircleRunnable);
+            }
+        });
+        dialogAudioRecordingBinding.close3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordDialog.dismiss();
+            }
+        });
+        dialogAudioRecordingBinding.close4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordDialog.dismiss();
+                stopPlaying();
+                stopAudioPlaying();
+                handler.removeCallbacks(fourthCircleRunnable);
+            }
+        });
+        //  int durationInSec = Math.min(lengthinSec, 30 * 60);
+        //String formattedTime = String.format("%02d:%02d", durationInSec / 60, durationInSec % 60);
+        // dialogAudioRecordingBinding.recordingTime.setText(formattedTime);
+        dialogAudioRecordingBinding.listen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer != null) {
+                    dialogAudioRecordingBinding.listen.setVisibility(View.GONE);
+                    dialogAudioRecordingBinding.listen2.setVisibility(View.VISIBLE);
+                    mediaPlayer.pause();
+                    pauseLength = mediaPlayer.getCurrentPosition();
+                    handler.removeCallbacks(fourthCircleRunnable);
+                    pauseGif();
+                }
+            }
+        });
+        dialogAudioRecordingBinding.listen2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogAudioRecordingBinding.listen.setVisibility(View.VISIBLE);
+                dialogAudioRecordingBinding.listen2.setVisibility(View.GONE);
+                mediaPlayer.seekTo(pauseLength);
+                mediaPlayer.start();
+                handler.post(fourthCircleRunnable);
+                resumeGif();
+            }
+        });
+        recordDialog.show();
+    }
+
+    private void pauseGif() {
+        // dialogAudioRecordingBinding.imageGif.setFreezesAnimation(true);
+        if (gifDrawable != null && gifDrawable.isPlaying()) {
+            gifDrawable.pause();
+        }
+    }
+
+    private void resumeGif() {
+        //dialogAudioRecordingBinding.imageGif.setFreezesAnimation(false);
+        if (gifDrawable != null && !gifDrawable.isPlaying()) {
+            gifDrawable.start();
+        }
+    }
+
+
+    private int secondsRemainingFirst = 9;
+
+    private Handler readytoRecordDelayedHandler = new Handler();
+    Runnable readytoRecordDelayedRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (secondsRemainingFirst >= 0) {
+                dialogAudioRecordingBinding.audioSec.setText(String.valueOf(secondsRemainingFirst));
+                int progress = (int) (((float) (10 - secondsRemainingFirst) / 10) * 100);
+                dialogAudioRecordingBinding.progressBar.setProgress(progress);
+
+                if (secondsRemainingFirst > 0) {
+                    secondsRemainingFirst--;
+                    readytoRecordDelayedHandler.removeCallbacks(readytoRecordDelayedRunnable);
+                    readytoRecordDelayedHandler.postDelayed(readytoRecordDelayedRunnable, 1000);
+                } else {
+                    readytoRecordDelayedHandler.removeCallbacks(readytoRecordDelayedRunnable);
+                    dialogAudioRecordingBinding.progressLayout.setVisibility(View.GONE);
+                    dialogAudioRecordingBinding.recordingLayout.setVisibility(View.VISIBLE);
+                    /*startAudioRecording();*/
+                    onCLickStartRecord();
+                    mStartPlaying = false;
+                    audioPlayed = false;
+                    secondsRemainingSecond = 30;
+                    handler.post(secondCircleRunnable);
+                }
+            }
+        }
+    };
+
+    @Override
+    public void onClickAudioPlayorStop() {
+        mStartPlaying = true;
+        onAudioPlay(mStartPlaying);
+        if (mStartPlaying) {
+            dialogAudioRecordingBinding.submitRecLayout.setVisibility(View.GONE);
+            dialogAudioRecordingBinding.listeningRecLayout.setVisibility(View.VISIBLE);
+            secondsRemainingFourth = 30;
+            handler.post(fourthCircleRunnable);
+        } else {
+            dialogAudioRecordingBinding.submitRecLayout.setVisibility(View.VISIBLE);
+        }
+        mStartPlaying = !mStartPlaying;
+    }
+
+    private void startAudioPlaying() {
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                lengthinSec = Math.min(mediaPlayer.getDuration() / 1000, 30);
+                // dialogAudioRecordingBinding.recordingTime.setText(String.valueOf(lengthinSec));
+                if (fileName!=null) {
+                    File audioFile = new File(fileName);
+                    long fileSizeInBytes = audioFile.length();
+                    long fileSizeInKB = fileSizeInBytes / 1024;
+
+                    long fileSizeInMB = fileSizeInKB / 1024;
+                    Log.d("AudioFileSize", "File size: " + fileSizeInKB + " MB");
+                    showToast("File size: " + fileSizeInKB + " MB");
+                }
+            }
+        });
+        try {
+            mediaPlayer.setDataSource(fileName);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if (!audioPlayed) {
+                        mStartPlaying = false;
+                        onAudioPlay(mStartPlaying);
+                        audioPlayed = true;
+                    }
+                }
+            });
+        } catch (IOException | IllegalStateException e) {
+            e.printStackTrace();
+            Log.e("OFFERS_NOW_ACTIVITY", "Error initializing MediaPlayer: " + e.getMessage());
+            showToast("Error initializing audio playback");
+        }
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void onAudioPlay(boolean start) {
+        if (start) {
+            startAudioPlaying();
+            stopPlayingHandler.removeCallbacks(stopPlayingRunnable);
+            stopPlayingHandler.postDelayed(stopPlayingRunnable, 30000);
+        } else {
+            stopAudioPlaying();
+        }
+    }
+
+    private void stopAudioPlaying() {
+        if (mediaPlayer != null) {
+            mediaPlayer.setOnCompletionListener(null);
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        audioPlayed = false;
+    }
+
+
+    final Runnable secondCircleRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (secondsRemainingSecond >= 0) {
+                dialogAudioRecordingBinding.sec.setText(String.valueOf(secondsRemainingSecond));
+
+                int progress = (int) (((float) (30 - secondsRemainingSecond) / 30) * 100);
+                dialogAudioRecordingBinding.secProgress.setProgress(progress);
+                dialogAudioRecordingBinding.fourthProgress.setProgress(progress);
+                if (secondsRemainingSecond > 0) {
+                    secondsRemainingSecond--;
+                    handler.postDelayed(this, 1000);
+                } else {
+                    handler.removeCallbacks(secondCircleRunnable);
+                    dialogAudioRecordingBinding.recordingLayout.setVisibility(View.GONE);
+                    dialogAudioRecordingBinding.submitRecLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    };
+
+    final Runnable fourthCircleRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (secondsRemainingFourth >= 0) {
+
+                int progress = (int) (((float) (30 - secondsRemainingFourth) / 30) * 100);
+                dialogAudioRecordingBinding.fourthProgress.setProgress(progress);
+                if (secondsRemainingFourth > 0) {
+                    secondsRemainingFourth--;
+                    handler.postDelayed(this, 1000);
+                } else {
+                    handler.removeCallbacks(fourthCircleRunnable);
+                    stopPlaying();
+                    //stopAudioPlaying();
+                    // dialogAudioRecordingBinding.listeningRecLayout.setVisibility(View.GONE);
+                    audioPlayed = false;
+                    recordDialog.dismiss();
+                }
+            }
+        }
+    };
+
+    @Override
+    public int calculateProgressBarProgress(String recordedTime) {
+        if (recordedTime != null && !recordedTime.isEmpty()) {
+            int totalTimeInSeconds = 300;
+            int recordedTimeInSeconds = Integer.parseInt(recordedTime);
+            return (int) (((float) recordedTimeInSeconds / totalTimeInSeconds) * 100);
+        } else {
+            return 0;
+        }
+    }
+
+    /*...........................................................................................................*/
     //if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 //                return;
 //            }
@@ -312,7 +603,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                         buffer.get(bytes);
                         Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
 
-                        detectFaces(bitmapImage); // Assuming you have a detectFaces method for processing
+                        detectFaces(bitmapImage);
                     } finally {
                         if (image != null) {
                             image.close();
@@ -1354,7 +1645,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
     }
 
-    //..............................................................................................
+    //................................. Audio record.............................................................
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
     boolean mStartPlaying = true;
@@ -1381,7 +1672,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
 
         recorder.start();
-//        startRecord.setText("Recording is inprogress...");
     }
 
     private void stopRecording() {
@@ -1431,8 +1721,16 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     private void stopPlaying() {
-        player.release();
-        player = null;
+        if (player != null) {
+            player.setOnCompletionListener(null);
+            if (player.isPlaying()) {
+                player.stop();
+            }
+            player.reset();
+            player.release();
+            player = null;
+        }
+        audioPlayed = false;
     }
 
     @Override
@@ -1452,16 +1750,6 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
     }
 
-    @Override
-    public void onClickPlayorStop() {
-        onPlay(mStartPlaying);
-        if (mStartPlaying) {
-            offersNowBinding.play.setImageResource(R.drawable.stop_icon);
-        } else {
-            offersNowBinding.play.setImageResource(R.drawable.play_icon);
-        }
-        mStartPlaying = !mStartPlaying;
-    }
 
     @Override
     public void onSelectWebCam(UsbDevice usbDevice) {
@@ -1487,6 +1775,17 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             stopPlaying();
         }
     };
+
+    @Override
+    public void onClickPlayorStop() {
+        onAudioPlay(mStartPlaying);
+        if (mStartPlaying) {
+            offersNowBinding.play.setImageResource(R.drawable.stop_icon);
+        } else {
+            offersNowBinding.play.setImageResource(R.drawable.play_icon);
+        }
+        mStartPlaying = !mStartPlaying;
+    }
 
     @Override
     public void onStop() {

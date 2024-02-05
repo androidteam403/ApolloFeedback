@@ -38,6 +38,12 @@
     <string name="label_camera_setup">Camera Setup</string>
     <string name="label_built_in_camera">Built-in Camera</string>
     <string name="label_webcam">Webcam</string>
+    <string name="stringcustomer_voice_feedback">Customer Voice Feedback</string>
+    <string name="stringrecording_starts">Recording starts @</string>
+    <string name="stringsec">Sec</string>
+    <string name="string_customer_voice_feedback">Customer\nVoice Feedback</string>
+    <string name="stringrecording">Recording</string>
+    <string name="stringsubmit">SUBMIT</string>
 
 
 </resources>

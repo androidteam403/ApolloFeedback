@@ -45,4 +45,6 @@ public interface OffersNowActivityCallback {
     void onClickPlayorStop();
 
     void onSelectWebCam(UsbDevice usbDevice);
+   void onClickAudioPlayorStop();
+    int calculateProgressBarProgress(String recordedTime);
 }
