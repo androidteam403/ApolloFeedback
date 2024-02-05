@@ -35,6 +35,9 @@
     <string name="label_test">Test</string>
     <string name="label_preview">Preview</string>
     <string name="label_available_credits">Available Credits:</string>
+    <string name="label_camera_setup">Camera Setup</string>
+    <string name="label_built_in_camera">Built-in Camera</string>
+    <string name="label_webcam">Webcam</string>
 
 
 </resources>

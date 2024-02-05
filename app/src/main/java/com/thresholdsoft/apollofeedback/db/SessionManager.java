@@ -35,6 +35,7 @@ public class SessionManager {
     private static final String PREF_KEY_AVERAGE = "PREF_KEY_AVERAGE";
     private static final String PREF_KEY_HAPPY = "PREF_KEY_HAPPY";
     private static final String PREF_KEY_EXCELLENT = "PREF_KEY_EXCELLENT";
+    private static final String PREF_KEY_WEBCAM = "PREF_KEY_WEBCAM";
 
 
     public SessionManager(Context context) {
@@ -168,6 +169,14 @@ public class SessionManager {
 
     public String getExcellentKey() {
         return preferences.getString(PREF_KEY_EXCELLENT, "");
+    }
+
+    public void setWebcam(boolean isWebcam) {
+        preferences.edit().putBoolean(PREF_KEY_WEBCAM, isWebcam).apply();
+    }
+
+    public boolean isWebcam() {
+        return preferences.getBoolean(PREF_KEY_WEBCAM, false);
     }
 
 }

@@ -116,7 +116,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     private boolean isTrained = false;
 
-    private boolean iswebCam = true;
+    private final boolean iswebCam = false;
 
     public static Intent getStartIntent(Context mContext) {
         Intent intent = new Intent(mContext, OffersNowActivity.class);

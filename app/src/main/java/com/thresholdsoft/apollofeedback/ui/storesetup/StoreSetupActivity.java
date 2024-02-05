@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
@@ -59,6 +60,8 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 
     private int ratingStatus = 1;
 
+    private boolean isWebCam = false;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, StoreSetupActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -79,6 +82,14 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
     private void setUp() {
 //        checkPermissions();
 
+        if (isWebCam) {
+            activityStoreSetupBinding.builtinCamera.setChecked(false);
+            activityStoreSetupBinding.webcam.setChecked(true);
+        } else {
+            activityStoreSetupBinding.builtinCamera.setChecked(true);
+            activityStoreSetupBinding.webcam.setChecked(false);
+        }
+        cameraSetupListener();
         activityStoreSetupBinding.setCallback(this);
         storeSetupController = new StoreSteupController(this, this);
         storeSetupController.getStoreList();
@@ -126,6 +137,22 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 
     }
 
+    private void cameraSetupListener() {
+        activityStoreSetupBinding.cameraSetupRadioGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                if (checkedId == R.id.builtin_camera) {
+                    isWebCam = false;
+//                    Toast.makeText(StoreSetupActivity.this, "Switched to builtin_camera - " + activityStoreSetupBinding.builtinCamera.isChecked(), Toast.LENGTH_SHORT).show();
+                } else if (checkedId == R.id.webcam) {
+                    isWebCam = true;
+//                    Toast.makeText(StoreSetupActivity.this, "Switched webcam - " + activityStoreSetupBinding.webcam.isChecked(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
 //    private void checkPermissions() {
 //        if (ContextCompat.checkSelfPermission(StoreSetupActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
 //                != PackageManager.PERMISSION_GRANTED) {
@@ -333,6 +360,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
             getDataManager().setLabelAddress(activityStoreSetupBinding.storeAddress.getText().toString());
             getDataManager().setDcCode(activityStoreSetupBinding.dcCode.getText().toString());
             getDataManager().setStoreName(activityStoreSetupBinding.storeNameEdittext.getText().toString());
+            getDataManager().setWebcam(isWebCam);
 //            Toast.makeText(this, "" + deviceRegistrationResponse.getMessage(), Toast.LENGTH_SHORT).show();
 //            startActivity(OffersNowActivity.getStartIntent(StoreSetupActivity.this));
 //            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
