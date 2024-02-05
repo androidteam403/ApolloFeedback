@@ -13,7 +13,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/dimen30dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/start_record"
@@ -75,7 +76,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen15dp"
+                    android:layout_marginStart="@dimen/dimen15dp"
+                    android:layout_marginTop="@dimen/dimen15dp"
+                    android:layout_marginEnd="@dimen/dimen15dp"
+                    android:layout_marginBottom="@dimen/dimen15dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 

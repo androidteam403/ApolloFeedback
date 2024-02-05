@@ -91,7 +91,6 @@ public class VideoCaptureConfig implements Cloneable {
         getMutableConfig().putInt(OPTION_BIT_RATE, bitRate);
         return this;
     }
-
     /**
      * Returns true if has been setting this encoding bit rate.
      */

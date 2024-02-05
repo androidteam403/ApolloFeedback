@@ -334,6 +334,33 @@
 
         <!--        </LinearLayout>-->
 
+        <LinearLayout
+            android:id="@+id/audio_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen50dp"
+                android:layout_height="@dimen/dimen50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen5dp"
+                android:src="@drawable/audio_record" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen10dp"
+                android:gravity="center"
+                android:text="@string/string_customer_voice_feedback"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/settings"
             android:layout_width="@dimen/dimen70dp"
@@ -350,7 +377,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/dimen10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/start_record"

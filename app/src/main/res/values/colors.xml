@@ -31,5 +31,7 @@
     <color name="home_bottom_background">#FDB916</color>
     <color name="teal_blue">#176772</color>
     <color name="greY">#aaaaaa</color>
+    <color name="another_red">#ed1c24</color>
+    <color name="progress_bar_green">#3bb777</color>
 
 </resources>
