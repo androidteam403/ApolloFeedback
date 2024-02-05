@@ -67,7 +67,6 @@ import com.thresholdsoft.apollofeedback.databinding.ActivityOffersNowBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogAudioRecordingBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogSuccessFaceRecogBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogUsbListBinding;
-import com.thresholdsoft.apollofeedback.db.SessionManager;
 import com.thresholdsoft.apollofeedback.ui.itemspayment.ItemsPaymentActivity;
 import com.thresholdsoft.apollofeedback.ui.offersnow.adapter.ImageSlideAdapter;
 import com.thresholdsoft.apollofeedback.ui.offersnow.adapter.UsbWebcamAdapter;
@@ -116,10 +115,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private HandlerThread backgroundThread;
     private TextToSpeech textToSpeech;
     private FaceDetector faceDetector;
-
     private boolean isTrained = false;
 
-    private final boolean iswebCam = false;
+    private boolean iswebCam;
     private int secondsRemainingSecond = 30;
     private int secondsRemainingFourth = 30;
     private MediaRecorder mediaRecorder;
@@ -129,6 +127,8 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private Dialog recordDialog;
 
     private int pauseLength;
+    private boolean isFaceDetectionEnabled = true;
+
 
     public static Intent getStartIntent(Context mContext) {
         Intent intent = new Intent(mContext, OffersNowActivity.class);
@@ -163,20 +163,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         super.onCreate(savedInstanceState);
         offersNowBinding = DataBindingUtil.setContentView(this, R.layout.activity_offers_now);
         checkReadWritePermissions();
+        iswebCam = getDataManager().isWebcam();
         offersNowBinding.audioRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recordingDialog();
             }
         });
-        offersNowBinding.audioRecording.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recordingDialog();
-            }
-        });
     }
-
 
     /*.............................................Audio Recording................................................................*/
 
@@ -185,6 +179,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private GifDrawable gifDrawable;
 
     public void recordingDialog() {
+        isFaceDetectionEnabled = false;
         recordDialog = new Dialog(this);
         mStartPlaying = false;
         audioPlayed = false;
@@ -207,6 +202,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             public void onClick(View v) {
                 readytoRecordDelayedHandler.removeCallbacks(readytoRecordDelayedRunnable);
                 recordDialog.dismiss();
+                isFaceDetectionEnabled = true;
             }
         });
         dialogAudioRecordingBinding.close2.setOnClickListener(new View.OnClickListener() {
@@ -215,12 +211,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 recordDialog.dismiss();
                 stopRecording();
                 handler.removeCallbacks(secondCircleRunnable);
+                isFaceDetectionEnabled = true;
             }
         });
         dialogAudioRecordingBinding.close3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recordDialog.dismiss();
+                isFaceDetectionEnabled = true;
             }
         });
         dialogAudioRecordingBinding.close4.setOnClickListener(new View.OnClickListener() {
@@ -230,6 +228,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
                 stopPlaying();
                 stopAudioPlaying();
                 handler.removeCallbacks(fourthCircleRunnable);
+                isFaceDetectionEnabled = true;
             }
         });
         //  int durationInSec = Math.min(lengthinSec, 30 * 60);
@@ -329,7 +328,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             public void onPrepared(MediaPlayer mp) {
                 lengthinSec = Math.min(mediaPlayer.getDuration() / 1000, 30);
                 // dialogAudioRecordingBinding.recordingTime.setText(String.valueOf(lengthinSec));
-                if (fileName!=null) {
+                if (fileName != null) {
                     File audioFile = new File(fileName);
                     long fileSizeInBytes = audioFile.length();
                     long fileSizeInKB = fileSizeInBytes / 1024;
@@ -774,6 +773,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     Bitmap bitmapTemp;
 
     private void detectFaces(Bitmap bitmap) {
+        if (!isFaceDetectionEnabled) {
+            return;
+        }
         InputImage image = InputImage.fromBitmap(bitmap, 0);
         faceDetector.process(image)
                 .addOnSuccessListener(faces -> {
@@ -1294,7 +1296,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     protected void onResume() {
 
         List<String> scannedPrescriptionsPathList = new ArrayList<>();
-        getDateManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
+        getDataManager().setScannedPrescriptionsPath(scannedPrescriptionsPathList);
         offersNowBinding.setStoreName(getDataManager().getStoreName());
         feedbakSystemApiCallHandler.removeCallbacks(feedbakSystemApiCallRunnable);
 //        feedbakSystemApiCallHandler.postDelayed(feedbakSystemApiCallRunnable, 5000);
@@ -1322,9 +1324,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
     }
 
-    private SessionManager getDateManager() {
+ /*public SessionManager getDataManager() {
         return new SessionManager(this);
-    }
+    }*/
 
     @Override
     public void onClickRefreshIcon() {
@@ -1676,6 +1678,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     private void stopRecording() {
         isRecording = false;
+        isFaceDetectionEnabled = false;
         offersNowBinding.startRecordGif.setVisibility(View.GONE);
         offersNowBinding.startRecord.setVisibility(View.VISIBLE);
         recorder.stop();
@@ -1686,6 +1689,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
     private void startPlaying() {
         player = new MediaPlayer();
+        isFaceDetectionEnabled = false;
         try {
             player.setDataSource(fileName);
             player.prepare();
@@ -1731,6 +1735,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             player = null;
         }
         audioPlayed = false;
+        isFaceDetectionEnabled = true;
     }
 
     @Override
@@ -1963,6 +1968,9 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     }
 
     private void detectFacesFromWebCam(Bitmap bitmap) {
+      /*  if (!isFaceDetectionEnabled) {
+            return;
+        }*/
         InputImage image = InputImage.fromBitmap(bitmap, 0);
         faceDetector.process(image)
                 .addOnSuccessListener(faces -> {

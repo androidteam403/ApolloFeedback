@@ -510,6 +510,8 @@
                                         android:id="@+id/builtin_camera"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:buttonTint="@color/colorPrimary"
+                                        android:clickable="true"
                                         android:text="@string/label_built_in_camera"
                                         android:textColor="@color/black" />
 
@@ -518,6 +520,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="@dimen/dimen5dp"
+                                        android:buttonTint="@color/colorPrimary"
+                                        android:clickable="true"
                                         android:text="@string/label_webcam"
                                         android:textColor="@color/black" />
 

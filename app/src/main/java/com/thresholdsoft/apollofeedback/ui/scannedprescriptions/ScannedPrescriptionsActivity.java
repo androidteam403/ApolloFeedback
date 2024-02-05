@@ -213,7 +213,6 @@ public class ScannedPrescriptionsActivity extends BaseActivity implements Scanne
                                     finish();
                                 }
                             }
-
                         });
                         qrCodeDialog.show();
                     }

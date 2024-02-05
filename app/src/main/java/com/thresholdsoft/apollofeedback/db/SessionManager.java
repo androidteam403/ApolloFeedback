@@ -175,7 +175,7 @@ public class SessionManager {
         preferences.edit().putBoolean(PREF_KEY_WEBCAM, isWebcam).apply();
     }
 
-    public boolean isWebcam() {
+    public Boolean isWebcam() {
         return preferences.getBoolean(PREF_KEY_WEBCAM, false);
     }
 
