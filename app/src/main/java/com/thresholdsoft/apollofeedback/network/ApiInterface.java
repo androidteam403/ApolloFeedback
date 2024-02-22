@@ -36,11 +36,11 @@ import retrofit2.http.Url;
  * Author : NAVEEN.M
  */
 public interface ApiInterface {
-    /*@POST("SalesTransactionService.svc/FeedbackSystemV2API")
-    Call<FeedbackSystemResponse> FEEDBACK_SYSTEM_API_CALL(@Body FeedbackSystemRequest feedbackSystemRequest);*/
+    @POST("SalesTransactionService.svc/FeedbackSystemV2API")
+    Call<FeedbackSystemResponse> FEEDBACK_SYSTEM_API_CALL(@Body FeedbackSystemRequest feedbackSystemRequest);
 
-    @GET("https://jsonblob.com/api/jsonBlob/1192055082119454720")
-    Call<FeedbackSystemResponse> FEEDBACK_SYSTEM_API_CALL();
+    /*@GET("https://jsonblob.com/api/jsonBlob/1192055082119454720")
+    Call<FeedbackSystemResponse> FEEDBACK_SYSTEM_API_CALL();*/
 
 
     //https://jsonblob.com/1192055082119454720

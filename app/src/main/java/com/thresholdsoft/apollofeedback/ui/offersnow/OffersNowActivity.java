@@ -162,8 +162,10 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         offersNowBinding = DataBindingUtil.setContentView(this, R.layout.activity_offers_now);
-        checkReadWritePermissions();
         iswebCam = getDataManager().isWebcam();
+        checkReadWritePermissions();
+
+
         offersNowBinding.audioRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1664,6 +1666,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         recorder.setOutputFile(fileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
+
         try {
             isRecording = true;
             offersNowBinding.startRecord.setVisibility(View.GONE);
@@ -1887,10 +1890,12 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
 
         @Override
         public void onAttach(HashSet<UsbDevice> needNotifyDevices) {
-            List<UsbDevice> needNotifyDevicesList
-                    = (List<UsbDevice>) needNotifyDevices.stream()
-                    .collect(Collectors.toList());
-            showUsbDevicesDialog(needNotifyDevicesList);
+            if (iswebCam) {
+                List<UsbDevice> needNotifyDevicesList
+                        = (List<UsbDevice>) needNotifyDevices.stream()
+                        .collect(Collectors.toList());
+                showUsbDevicesDialog(needNotifyDevicesList);
+            }
         }
 
         @Override
@@ -1952,7 +1957,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         DialogUsbListBinding dialogUsbListBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_usb_list, null, false);
         webCamUsbDeviceDialog.setContentView(dialogUsbListBinding.getRoot());
         webCamUsbDeviceDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
+        webCamUsbDeviceDialog.setCancelable(false);
         UsbWebcamAdapter usbWebcamAdapter = new UsbWebcamAdapter(this, usbDevicesList, this);
         LinearLayoutManager mManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         dialogUsbListBinding.usbCamRecyclerview.setLayoutManager(mManager);
@@ -1975,9 +1980,14 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         faceDetector.process(image)
                 .addOnSuccessListener(faces -> {
                     if (!faces.isEmpty()) {
-                        showDialogs(this, "Please Wait...");
-                        clearCameraHelper();
-                        getController().zeroCodeApiCallWithoutName(webCamFile, bitmap);
+                        if (isFaceDetectionEnabled) {
+                            showDialogs(this, "Please Wait...");
+                            clearCameraHelper();
+                            getController().zeroCodeApiCallWithoutName(webCamFile, bitmap);
+                        } else {
+                            takePictureWebCamHandler.removeCallbacks(takePictureWebCamRunnable);
+                            takePictureWebCamHandler.postDelayed(takePictureWebCamRunnable, 5000);
+                        }
                        /* for (Face face : faces) {
                             Toast.makeText(this, "face detected", Toast.LENGTH_SHORT).show();
                         }*/

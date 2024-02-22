@@ -44,6 +44,7 @@
             android:exported="true" />
         <activity
             android:name=".ui.offersnow.OffersNowActivity"
+            android:configChanges="keyboard|keyboardHidden"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity

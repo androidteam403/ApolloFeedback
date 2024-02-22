@@ -23,9 +23,6 @@
 
 package com.serenegiant.usb;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -43,10 +40,10 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.Spinner;
 
-import com.serenegiant.usb.DeviceFilter;
-import com.serenegiant.usb.USBMonitor;
-
 import com.serenegiant.uvccamera.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CameraDialog extends DialogFragment {
     private static final String TAG = CameraDialog.class.getSimpleName();
@@ -66,7 +63,11 @@ public class CameraDialog extends DialogFragment {
     public static CameraDialog showDialog(final Activity parent/* add parameters here if you need */) {
         CameraDialog dialog = newInstance(/* add parameters here if you need */);
         try {
-            dialog.show(parent.getFragmentManager(), TAG);
+            if (false) {
+                dialog.show(parent.getFragmentManager(), TAG);
+            } else {
+                dialog = null;
+            }
         } catch (final IllegalStateException e) {
             dialog = null;
         }

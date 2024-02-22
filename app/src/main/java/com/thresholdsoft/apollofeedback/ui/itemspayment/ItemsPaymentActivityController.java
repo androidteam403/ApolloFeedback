@@ -95,8 +95,8 @@ public class ItemsPaymentActivityController {
             feedbackSystemRequest.setISFeedback(0);
             feedbackSystemRequest.setFeedbackRate("0");
             ApiInterface apiInterface = ApiClient.getApiService(new SessionManager(mContext).getEposUrl());
-            Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL();
-//            Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
+//            Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL();
+            Call<FeedbackSystemResponse> call = apiInterface.FEEDBACK_SYSTEM_API_CALL(feedbackSystemRequest);
             call.enqueue(new Callback<FeedbackSystemResponse>() {
                 @Override
                 public void onResponse(Call<FeedbackSystemResponse> call, Response<FeedbackSystemResponse> response) {
