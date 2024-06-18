@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/app_bg"
@@ -333,6 +334,13 @@
 
 
         <!--        </LinearLayout>-->
+        <EditText
+            android:id="@+id/voice_record_key_edit"
+            android:layout_width=".1dp"
+            android:layout_height=".1dp"
+            android:background="@color/white"
+            android:focusable="true"
+            android:importantForAutofill="no" />
 
         <LinearLayout
             android:id="@+id/audio_record"

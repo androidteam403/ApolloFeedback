@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -24,6 +26,7 @@ import com.thresholdsoft.apollofeedback.R;
 import com.thresholdsoft.apollofeedback.base.BaseActivity;
 import com.thresholdsoft.apollofeedback.databinding.ActivityStoreSetupBinding;
 import com.thresholdsoft.apollofeedback.databinding.DialogFeedbackCalibrationBinding;
+import com.thresholdsoft.apollofeedback.databinding.DialogVoiceRecordCalibrationBinding;
 import com.thresholdsoft.apollofeedback.ui.model.DeviceRegistrationResponse;
 import com.thresholdsoft.apollofeedback.ui.model.UserAddress;
 import com.thresholdsoft.apollofeedback.ui.offersnow.OffersNowActivity;
@@ -81,7 +84,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
 
     private void setUp() {
 //        checkPermissions();
-
+        getDataManager().setVoiceRecordKey("");
         if (isWebCam) {
             activityStoreSetupBinding.builtinCamera.setChecked(false);
             activityStoreSetupBinding.webcam.setChecked(true);
@@ -198,6 +201,7 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
         String terminalId = activityStoreSetupBinding.terminalIdText.getText().toString().trim();
         String dcCode = activityStoreSetupBinding.dcCode.getText().toString().trim();
         String storeName = activityStoreSetupBinding.storeNameEdittext.getText().toString().trim();
+        String voiceRecordKey = getDataManager().getVoiceRecordKey();
 
         if (terminalId.isEmpty()) {
             activityStoreSetupBinding.terminalIdText.setError("Please Enter Terminal Id");
@@ -221,6 +225,9 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
                 || getDataManager().getHappyKey().isEmpty()
                 || getDataManager().getExcellentKey().isEmpty()) {
             Toast.makeText(this, "Kindly finish Feedback Calibration", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (voiceRecordKey.isEmpty()) {
+            Toast.makeText(this, "Kindly finish Voice Record Calibration", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -388,6 +395,52 @@ public class StoreSetupActivity extends BaseActivity implements StoreSetupActivi
         smileyDialog("test");
     }
 
+    private String voiceRecordKeyText = "";
+    private Dialog voiceRecordCalibrationDialog;
+
+    @Override
+    public void onClickVoiceRecordCalibration() {
+        voiceRecordCalibrationDialog = new Dialog(this);
+        DialogVoiceRecordCalibrationBinding dialogVoiceRecordCalibrationBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_voice_record_calibration, null, false);
+        voiceRecordCalibrationDialog.setContentView(dialogVoiceRecordCalibrationBinding.getRoot());
+        voiceRecordCalibrationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialogVoiceRecordCalibrationBinding.voiceRecordKeyEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().isEmpty() && s.toString().length() > 0) {
+                    handler.removeCallbacks(voiceRecordKeySaveRunnable);
+                    voiceRecordKeyText = s.toString();
+                    handler.postDelayed(voiceRecordKeySaveRunnable, 300);
+                }
+            }
+        });
+        voiceRecordCalibrationDialog.show();
+    }
+
+    Handler handler = new Handler();
+    Runnable voiceRecordKeySaveRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!voiceRecordKeyText.isEmpty()) {
+                getDataManager().setVoiceRecordKey(voiceRecordKeyText);
+                if (voiceRecordCalibrationDialog != null && voiceRecordCalibrationDialog.isShowing()) {
+                    voiceRecordCalibrationDialog.dismiss();
+                }
+                handler.removeCallbacks(voiceRecordKeySaveRunnable);
+            }
+        }
+    };
     private DialogFeedbackCalibrationBinding feedBackbinding;
     private Dialog calibrationDialog;
     private String feedbackRatingFromPhysical = "";

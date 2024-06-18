@@ -33,9 +33,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.speech.tts.TextToSpeech;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -165,13 +169,18 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         iswebCam = getDataManager().isWebcam();
         checkReadWritePermissions();
 
-
         offersNowBinding.audioRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recordingDialog();
             }
         });
+        voiceRecordKeyTextChangedListener();
+        offersNowBinding.voiceRecordKeyEdit.requestFocus();
+        offersNowBinding.voiceRecordKeyEdit.setInputType(InputType.TYPE_NULL);
+        setOnTouchListener();
+
+
     }
 
     /*.............................................Audio Recording................................................................*/
@@ -2040,4 +2049,50 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
             }
         }
     };
+
+    private String voiceRecordKey = "";
+
+    private void voiceRecordKeyTextChangedListener() {
+        offersNowBinding.voiceRecordKeyEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().isEmpty() && s.toString().length() > 0) {
+                    voiceRecordKeyHandler.removeCallbacks(voiceRecordKeyRunnable);
+                    voiceRecordKey = s.toString();
+                    offersNowBinding.voiceRecordKeyEdit.setText("");
+                    voiceRecordKeyHandler.postDelayed(voiceRecordKeyRunnable, 300);
+                }
+            }
+        });
+    }
+
+    Handler voiceRecordKeyHandler = new Handler();
+    Runnable voiceRecordKeyRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (voiceRecordKey.equalsIgnoreCase(getDataManager().getVoiceRecordKey())) {
+                recordingDialog();
+            }
+        }
+    };
+
+    private void setOnTouchListener() {
+        offersNowBinding.parentLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                offersNowBinding.voiceRecordKeyEdit.requestFocus();
+                return false;
+            }
+        });
+    }
 }

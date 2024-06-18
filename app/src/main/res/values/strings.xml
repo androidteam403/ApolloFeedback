@@ -44,6 +44,8 @@
     <string name="string_customer_voice_feedback">Customer\nVoice Feedback</string>
     <string name="stringrecording">Recording</string>
     <string name="stringsubmit">SUBMIT</string>
+    <string name="label_voice_record_calibration">Voice Record Calibration</string>
+    <string name="label_voice_record_key">Voice Record Key:</string>
 
 
 </resources>

@@ -47,4 +47,6 @@ public interface StoreSetupActivityCallback {
     void onClickFeedbackCalibration();
 
     void onClickFeedbackTest();
+
+    void onClickVoiceRecordCalibration();
 }

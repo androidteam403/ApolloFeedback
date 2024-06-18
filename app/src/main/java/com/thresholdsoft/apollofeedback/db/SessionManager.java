@@ -36,6 +36,7 @@ public class SessionManager {
     private static final String PREF_KEY_HAPPY = "PREF_KEY_HAPPY";
     private static final String PREF_KEY_EXCELLENT = "PREF_KEY_EXCELLENT";
     private static final String PREF_KEY_WEBCAM = "PREF_KEY_WEBCAM";
+    private static final String PREF_KEY_VOICE_RECORD_KEY = "PREF_KEY_VOICE_RECORD_KEY";
 
 
     public SessionManager(Context context) {
@@ -177,6 +178,14 @@ public class SessionManager {
 
     public Boolean isWebcam() {
         return preferences.getBoolean(PREF_KEY_WEBCAM, false);
+    }
+
+    public void setVoiceRecordKey(String voiceRecordKey) {
+        preferences.edit().putString(PREF_KEY_VOICE_RECORD_KEY, voiceRecordKey).apply();
+    }
+
+    public String getVoiceRecordKey() {
+        return preferences.getString(PREF_KEY_VOICE_RECORD_KEY, "");
     }
 
 }

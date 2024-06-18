@@ -353,6 +353,21 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen5dp"
+                        android:layout_marginTop="@dimen/dimen10dp"
+                        android:layout_marginEnd="@dimen/dimen5dp"
+                        android:background="@drawable/bg_calibration_btn"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/roboto_bold"
+                        android:gravity="center"
+                        android:onClick="@{()-> callback.onClickVoiceRecordCalibration()}"
+                        android:text="@string/label_voice_record_calibration"
+                        android:textColor="@color/white"
+                        tools:ignore="RtlCompat" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/dimen5dp"
                         android:layout_marginBottom="@dimen/ten_sp"
