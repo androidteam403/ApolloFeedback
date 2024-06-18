@@ -1667,7 +1667,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private boolean isRecording = false;
 
-    private void startRecording() {
+    /*private void startRecording() {
 
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -1686,9 +1686,29 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         }
 
         recorder.start();
-    }
+    }*/
 
-    private void stopRecording() {
+    private void startRecording() {
+    recorder = new MediaRecorder();
+    recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+    recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+    recorder.setOutputFile(fileName);
+    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+    try {
+        isRecording = true;
+        offersNowBinding.startRecord.setVisibility(View.GONE);
+        offersNowBinding.startRecordGif.setVisibility(View.VISIBLE);
+        recorder.prepare();
+        recorder.start();
+    } catch (IOException e) {
+        Log.e("OFFERS_NOW_ACTIVITY", "prepare() or start() failed", e);
+        recorder.release();
+        recorder = null;
+    }
+}
+
+   /* private void stopRecording() {
         isRecording = false;
         isFaceDetectionEnabled = false;
         offersNowBinding.startRecordGif.setVisibility(View.GONE);
@@ -1697,7 +1717,26 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         recorder.release();
         recorder = null;
 //        startRecord.setText("Start Record");
+    }*/
+
+    private void stopRecording() {
+    if (recorder != null) {
+        try {
+            recorder.stop();
+        } catch (RuntimeException e) {
+            Log.e("OFFERS_NOW_ACTIVITY", "stop() failed", e);
+        } finally {
+            recorder.release();
+            recorder = null;
+            isRecording = false;
+            offersNowBinding.startRecordGif.setVisibility(View.GONE);
+            offersNowBinding.startRecord.setVisibility(View.VISIBLE);
+        }
+    } else {
+        Log.e("OFFERS_NOW_ACTIVITY", "recorder is null in stopRecording");
     }
+}
+
 
     private void startPlaying() {
         player = new MediaPlayer();
@@ -1750,7 +1789,7 @@ public class OffersNowActivity extends BaseActivity implements OffersNowActivity
         isFaceDetectionEnabled = true;
     }
 
-    @Override
+   @Override
     public void onCLickStartRecord() {
         if (!isRecording) {
             // Record to the external cache directory for visibility
